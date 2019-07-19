@@ -9,7 +9,7 @@ const ListTripItem = ({ trip: { cityFrom, cityTo } }) => (
       <span>{cityFrom}</span>
     </Grid.Column>
     <Grid.Column>
-      <span>{cityFrom}</span>
+      <span>{cityTo}</span>
     </Grid.Column>
     <Grid.Column>
       <Button primary>Купить</Button>
