@@ -1,8 +1,10 @@
 import { GET_TRIPS, GET_TRIPS_SUCCESS, GET_TRIPS_ERROR } from './constants';
 import api from '../../api';
 
-export const getTripsStart = () => ({
-  type: GET_TRIPS
+export const getTripsStart = ({ cityFrom, cityTo }) => ({
+  type: GET_TRIPS,
+  cityFrom,
+  cityTo
 });
 
 export const getTripsSuccess = trips => ({
@@ -15,9 +17,9 @@ export const getTripsError = error => ({
   error
 });
 
-export const getTrips = credentials => dispatch => {
-  dispatch(getTripsStart());
-  api.trips.get(credentials).then(
+export const getTrips = data => dispatch => {
+  dispatch(getTripsStart(data));
+  api.trips.get(data).then(
     trips => {
       return dispatch(getTripsSuccess(trips));
     },

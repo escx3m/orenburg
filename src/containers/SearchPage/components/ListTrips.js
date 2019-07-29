@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, Button, Segment } from 'semantic-ui-react';
 
-const ListTripItem = ({ trip: { cityFrom, cityTo } }) => (
+const ListTripItem = ({ trip: { fromTimeLocal, availableSeats } }) => (
   <Segment>
-    <Grid textAlign='center' columns={3}>
+    <Grid textAlign='center' verticalAlign="middle" columns={3}>
     <Grid.Column>
-      <span>{cityFrom}</span>
+      {`0${fromTimeLocal.getHours()}`.slice(-2)} : {`0${fromTimeLocal.getMinutes()}`.slice(-2)}
     </Grid.Column>
     <Grid.Column>
-      <span>{cityTo}</span>
+      <span>{availableSeats}</span>
     </Grid.Column>
     <Grid.Column>
       <Button primary>Купить</Button>
