@@ -8,3 +8,12 @@ export const cityOptions = [
   { key: 'volgograd', value: '10', text: 'Волгоград' },
   { key: 'astrakhan', value: '23', text: 'Астрахань' },
 ];
+
+export const cityTimeZones = [
+  { city: 'Элиста', timeZone: 'Europe/Moscow' },
+  { city: 'Ростов-на-Дону', timeZone: 'Europe/Moscow' },
+  { city: 'Волгоград', timeZone: 'Europe/Volgograd' },
+  { city: 'Астрахань', timeZone: 'Europe/Astrakhan' },
+]
+
+export const passengerStates = [2, 3];

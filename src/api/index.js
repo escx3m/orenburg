@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const getTrips = (params) => {
-  return axios.get('http://localhost:5000/api/trips', { params }).then(res => res.data )
+const getTrips = (data) => {
+  return axios.post('http://localhost:5000/api/trips', { data }).then(res => res.data )
 }
 
 export default {

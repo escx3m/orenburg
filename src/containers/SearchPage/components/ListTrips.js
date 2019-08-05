@@ -1,31 +1,37 @@
+/* eslint-disable no-script-url */
+
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Grid, Button, Segment } from 'semantic-ui-react';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
 
-const ListTripItem = ({ trip: { fromTimeLocal, availableSeats } }) => (
-  <Segment>
-    <Grid textAlign='center' verticalAlign="middle" columns={3}>
-    <Grid.Column>
-      {`0${fromTimeLocal.getHours()}`.slice(-2)} : {`0${fromTimeLocal.getMinutes()}`.slice(-2)}
-    </Grid.Column>
-    <Grid.Column>
-      <span>{availableSeats}</span>
-    </Grid.Column>
-    <Grid.Column>
-      <Button primary>Купить</Button>
-    </Grid.Column>
-  </Grid>
-  </Segment>
-);
-
-function ListTrips({ trips }) {
-  const listTrips = trips.map((trip, i) => <ListTripItem key={i} trip={trip} />)
+export default function ListTrips({ trips, cityFrom, cityTo }) {
   return (
-    <Segment.Group>
-      {listTrips}
-      <Segment><Link to="/personInfo">Next</Link></Segment>
-    </Segment.Group>
+    <React.Fragment>
+      <Typography component="h2" variant="h6" color="primary" gutterBottom>
+        {cityFrom} - {cityTo}
+      </Typography>
+      <Table size="medium">
+        <TableHead>
+          <TableRow>
+            <TableCell>Time</TableCell>
+            <TableCell>Seats</TableCell>
+            <TableCell align="right"></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {trips.map(({ fromTime, availableSeats }, index) => (
+            <TableRow key={index}>
+              <TableCell>{fromTime.hours} : {fromTime.minutes}</TableCell>
+              <TableCell>{availableSeats}</TableCell>
+              <TableCell align="right">Купить</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </React.Fragment>
   );
 }
-
-export default ListTrips;
