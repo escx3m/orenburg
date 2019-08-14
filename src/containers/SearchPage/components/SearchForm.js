@@ -1,125 +1,174 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { reduxForm, formValueSelector, Field } from 'redux-form';
-import { Form, Select, Button } from 'semantic-ui-react';
-import DatePicker from 'react-datepicker';
+import { makeStyles } from '@material-ui/core/styles';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Select from '@material-ui/core/Select';
+import Fab from '@material-ui/core/Fab';
+import SwapIcon from '@material-ui/icons/SwapVert';
+import Button from '@material-ui/core/Button';
+
+import { withFormik } from 'formik';
+
+import ruLocale from "date-fns/locale/ru";
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  DatePicker,
+} from '@material-ui/pickers';
 
 import { cityOptions } from '../constants';
 
-const renderDatePickerField = ({ input, label, meta: { touched, error }, ...custom }) => (
-  <DatePicker
-    {...input}
-    onBlur={() => input.onBlur()}
-    error={touched && error}
-    dateFormat="dd-MM-yyyy"
-    selected={input.value}
-    onChange={input.onChange}
-  />
-);
+const useStyles = makeStyles(theme => ({
+  form: {
+    width: '100%',
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  swapButtonAndDatePicker: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  fab: {
+    margin: theme.spacing(1),
+  },
+}));
 
-const renderSelectField = ({ input, label, meta: { touched, error }, ...custom }) => (
-  <Form.Field 
-    control={Select}
-    label={label}
-    value={input.value}
-    error={touched && error}
-    {...input}
-    onChange={(event, data) => {
-      input.onChange(data.value);
-    }}
-    {...custom}
-  />
-);
+const SearchForm = props => {
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setFieldValue,
+    setFieldError,
+  } = props;
 
-class SearchForm extends React.Component {
-  state = {
-    loading: false
-  };
+  const inputLabel = React.useRef(null);
+  const classes = useStyles();
 
-  handleSwitchButtonClick = e => {
+  const [labelWidth, setLabelWidth] = React.useState(0);
+  React.useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
+
+  const handleSwitchButtonClick = e => {
     e.preventDefault();
-    const { cityFrom, cityTo, change, reset } = this.props;
-    console.log(cityFrom, cityTo);
-    reset();
-    change('cityFrom', cityTo);
-    change('cityTo', cityFrom);
+    const { values: { cityFrom, cityTo }, setFieldValue, handleReset } = props;
+    handleReset();
+    setFieldValue('cityFrom', cityTo);
+    setFieldValue('cityTo', cityFrom);
   }
 
-  render() {
-    const { handleSubmit, cityFrom, cityTo } = this.props;
-    const cityFromOptions = cityOptions.filter(city => city.value !== cityTo);
-    const cityToOptions = cityOptions.filter(city => city.value !== cityFrom);
-    return (
-      <Form onSubmit={handleSubmit} style={{ marginTop: '3em' }}>
-        <Form.Group>
-          <Field name="cityFrom" component={renderSelectField} options={cityFromOptions} placeholder="Откуда" width={6} />
-          <Form.Field>
-            <Button icon='exchange' onClick={this.handleSwitchButtonClick} />
-          </Form.Field>
-          <Field name="cityTo" component={renderSelectField} options={cityToOptions} placeholder="Куда" width={6}/>
-          <Form.Field>
-            <Field name="date" component={renderDatePickerField} />
-          </Form.Field>
-          <Form.Field>
-            <Button fluid primary>Search</Button>
-          </Form.Field>
-        </Form.Group>
-      </Form>
-    )
-  }
-
-  // render() {
-  //   const { data, errors } = this.state;
-
-  //   return (
-  //     <Form onSubmit={this.onSubmit} style={{ marginTop: '3em' }}>
-  //       <Form.Group widths='equal'>
-  //         <Form.Field 
-  //           error={!!errors.from} 
-  //           control={Select} 
-  //           options={cityOptions} 
-  //           id="from"
-  //           name="from"
-  //           placeholder="Откуда"
-  //         />
-  //         {errors.from && <InlineError text={errors.from} />}
-  //         <Form.Field 
-  //           error={!!errors.from}
-  //           control={Select}
-  //           options={cityOptions}
-  //           id="to"
-  //           name="to"
-  //           placeholder="Куда"
-  //         />
-  //         {errors.from && <InlineError text={errors.from} />}
-  //         <Form.Field>
-  //           <DatePicker
-  //             selected={data.date}
-  //             onChange={this.handleDateChange}
-  //             dateFormat="dd-MM-yyyy"
-  //           />
-  //         </Form.Field>
-  //         <Form.Field>
-  //           <Button fluid primary>Search</Button>
-  //         </Form.Field>
-  //       </Form.Group>
-  //     </Form>
-  //   );
-  // }
+  const cityFromOptions = cityOptions.filter(city => city.value !== values.cityTo);
+  const cityToOptions = cityOptions.filter(city => city.value !== values.cityFrom);
+  
+  return (
+    <React.Fragment>
+      <form onSubmit={handleSubmit} className={classes.form}>
+        <FormControl className={classes.formControl} error={touched.cityFrom && errors.cityFrom} fullWidth variant="outlined">
+          <InputLabel ref={inputLabel} htmlFor="cityFrom">Откуда</InputLabel>
+          <Select
+            value={values.cityFrom}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            input={<OutlinedInput labelWidth={50}/>}
+            inputProps={{
+              name: 'cityFrom',
+              id: 'cityFrom',
+            }}
+          >
+            {cityFromOptions.map(city => (<MenuItem key={city.value} value={city.value}>{city.text}</MenuItem>))}
+          </Select>
+          {touched.cityFrom && errors.cityFrom && <FormHelperText>{errors.cityFrom}</FormHelperText>}
+        </FormControl>
+        <div className={classes.swapButtonAndDatePicker}>
+          <div>
+            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ruLocale}>
+              <DatePicker
+                cancelLabel="Отмена"
+                showTodayButton={true}
+                todayLabel="Сегодня"
+                inputVariant="outlined"
+                label="Когда"
+                disablePast
+                name='date'
+                value={values.date}
+                format="dd/MM/yyyy"
+                helperText={errors.date}
+                error={Boolean(errors.date)}
+                onError={(_, error) => setFieldError('date', error)}
+                onChange={date => date && setFieldValue('date', date, true)}
+              />
+            </MuiPickersUtilsProvider>
+          </div>
+          <div>
+            <Fab color="primary" onClick={handleSwitchButtonClick} size="small" aria-label="swap">
+              <SwapIcon />
+            </Fab>
+          </div>
+        </div>
+        <FormControl className={classes.formControl} error={touched.cityTo && errors.cityTo} fullWidth variant="outlined">
+          <InputLabel ref={inputLabel} htmlFor="cityTo">Куда</InputLabel>
+          <Select
+            value={values.cityTo}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            input={<OutlinedInput labelWidth={labelWidth}/>}
+            inputProps={{
+              name: 'cityTo',
+              id: 'cityTo',
+            }}
+          >
+            {cityToOptions.map(city => (<MenuItem key={city.value} value={city.value}>{city.text}</MenuItem>))}
+          </Select>
+          {touched.cityTo && errors.cityTo && <FormHelperText>{errors.cityTo}</FormHelperText>}
+        </FormControl>
+        <Button size="large" fullWidth onClick={handleSubmit} variant="contained" color="primary" >Поиск</Button>
+      </form>
+    </React.Fragment>
+  );
 }
 
-SearchForm = reduxForm({
-  form: 'searchFrom'
+export default withFormik({
+  mapPropsToValues: () => ({
+    cityFrom: '',
+    cityTo: '',
+    date: new Date(),
+  }),
+
+  validate: values => {
+    const errors = {};
+
+    if (!values.cityFrom) {
+      errors.cityFrom = 'Обязательное поле';
+    }
+
+    if (!values.cityTo) {
+      errors.cityTo = 'Обязательное поле';
+    }
+
+    if (!values.date) {
+      errors.date = 'Обязательное поле';
+    }
+
+    return errors;
+  },
+
+  handleSubmit: (values, { props }) => {
+    props.onSubmit(values);
+  },
 })(SearchForm);
-
-const mapStateToProps = (state => {
-  const selector = formValueSelector('searchFrom');
-  const cityFrom = selector(state, 'cityFrom');
-  const cityTo = selector(state, 'cityTo');
-  return {
-    cityFrom,
-    cityTo
-  };
-});
-
-export default connect(mapStateToProps)(SearchForm);

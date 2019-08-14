@@ -1,37 +1,77 @@
 /* eslint-disable no-script-url */
 
 import React from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
-export default function ListTrips({ trips, cityFrom, cityTo }) {
+import { cityOptions } from '../constants';
+
+const useStyles = makeStyles(theme => ({
+  divider: {
+    width: '100%',
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+  tripInfo: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  }
+}));
+
+const formatDate = (date) => {
+
+  let dd = date.getDate();
+  if (dd < 10) dd = '0' + dd;
+
+  let mm = date.getMonth() + 1;
+  if (mm < 10) mm = '0' + mm;
+
+  let yy = date.getFullYear() % 100;
+  if (yy < 10) yy = '0' + yy;
+
+  return dd + '.' + mm + '.' + yy;
+}
+
+export default function ListTrips({ trips, cityFrom, cityTo, date, handleButtonClick }) {
+  const classes = useStyles();
+  const cityFromText = cityOptions.find(({ value }) => value === cityFrom).text;
+  const cityToText = cityOptions.find(({ value }) => value === cityTo).text;
   return (
     <React.Fragment>
-      <Typography component="h2" variant="h6" color="primary" gutterBottom>
-        {cityFrom} - {cityTo}
+      <Typography className={classes.tripInfo} component="h3" variant="h5" color="primary" align="center" gutterBottom>
+        {cityFromText} - {cityToText} {formatDate(date)}
       </Typography>
-      <Table size="medium">
-        <TableHead>
-          <TableRow>
-            <TableCell>Time</TableCell>
-            <TableCell>Seats</TableCell>
-            <TableCell align="right"></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {trips.map(({ fromTime, availableSeats }, index) => (
-            <TableRow key={index}>
-              <TableCell>{fromTime.hours} : {fromTime.minutes}</TableCell>
-              <TableCell>{availableSeats}</TableCell>
-              <TableCell align="right">Купить</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <Grid container>
+        <Grid item xs={4}>
+          <Typography variant="body1" align="center">Время отправления</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography variant="body1" align="center">Свободных мест</Typography>
+        </Grid>
+        <Grid item xs={4}>
+        </Grid>
+      </Grid>
+      {trips.map(({ fromTime, availableSeats }, index) => (
+        <React.Fragment key={index}>
+          <Divider className={classes.divider}/>
+          <Grid container alignItems="center">
+            <Grid item xs={4}>
+              <Typography variant="body1" align="center">{`0${fromTime.hours}`.slice(-2)} : {`0${fromTime.minutes}`.slice(-2)}</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Typography variant="body1" align="center">{availableSeats}</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Grid container alignItems="flex-end" justify="flex-end" direction="row">
+                <Button onClick={handleButtonClick} variant="contained" color="primary">Купить</Button>
+              </Grid>
+            </Grid>
+          </Grid>
+        </React.Fragment>
+      ))}
     </React.Fragment>
   );
 }

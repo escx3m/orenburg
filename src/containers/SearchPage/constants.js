@@ -10,10 +10,10 @@ export const cityOptions = [
 ];
 
 export const cityTimeZones = [
-  { city: 'Элиста', timeZone: 'Europe/Moscow' },
-  { city: 'Ростов-на-Дону', timeZone: 'Europe/Moscow' },
-  { city: 'Волгоград', timeZone: 'Europe/Volgograd' },
-  { city: 'Астрахань', timeZone: 'Europe/Astrakhan' },
+  { city: '166', timeZone: 'Europe/Moscow' },
+  { city: '119', timeZone: 'Europe/Moscow' },
+  { city: '10', timeZone: 'Europe/Volgograd' },
+  { city: '23', timeZone: 'Europe/Astrakhan' },
 ]
 
 export const passengerStates = [2, 3];
