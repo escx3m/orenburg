@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchPage from './containers/SearchPage';
 import PersonInfoPage from './containers/PersonInfoPage';
+import OrderSuccessPage from './containers/OrderSuccessPage';
 
 function Copyright() {
   return (
@@ -41,16 +42,15 @@ function App() {
       <CssBaseline />
       <AppBar position="static">
         <Container maxWidth="sm" >
-          <Toolbar>
-            <Typography variant="h6" color="inherit">
+            <Typography variant="h6" color="inherit" align="center">
               Альфа-Тур
             </Typography>
-          </Toolbar>
         </Container>
       </AppBar>
       <Container maxWidth="sm" >
         <Route path="/" exact component={SearchPage} />
         <Route path="/personInfo" component={PersonInfoPage} />
+        <Route path="/orderSuccess" component={OrderSuccessPage} />
       </Container>
       <footer className={classes.footer}>
         <Copyright />

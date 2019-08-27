@@ -9,6 +9,8 @@ import Select from '@material-ui/core/Select';
 import Fab from '@material-ui/core/Fab';
 import SwapIcon from '@material-ui/icons/SwapVert';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+
 
 import { withFormik } from 'formik';
 
@@ -115,6 +117,19 @@ const SearchForm = props => {
               />
             </MuiPickersUtilsProvider>
           </div>
+          <FormControl className={classes.formControl} error={errors.seats && touched.seats} variant="outlined">
+            <InputLabel ref={inputLabel} htmlFor="seats">Мест</InputLabel>
+            <OutlinedInput
+              id="seats"
+              name="seats"
+              type="number"
+              value={values.seats}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              labelWidth={labelWidth}
+            />
+            {touched.seats && errors.seats && <FormHelperText>{errors.seats}</FormHelperText>}
+          </FormControl>
           <div>
             <Fab color="primary" onClick={handleSwitchButtonClick} size="small" aria-label="swap">
               <SwapIcon />
@@ -148,23 +163,23 @@ export default withFormik({
     cityFrom: '',
     cityTo: '',
     date: new Date(),
+    seats: 1,
   }),
 
   validate: values => {
     const errors = {};
-
     if (!values.cityFrom) {
       errors.cityFrom = 'Обязательное поле';
     }
-
     if (!values.cityTo) {
       errors.cityTo = 'Обязательное поле';
     }
-
     if (!values.date) {
       errors.date = 'Обязательное поле';
     }
-
+    if (values.seats < 1) {
+      errors.seats = 'Должно быть больше нуля';
+    }
     return errors;
   },
 

@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 import { cityOptions } from '../constants';
+import { ticketPrices } from '../../PersonInfoPage/constants';
 
 const useStyles = makeStyles(theme => ({
   divider: {
@@ -17,7 +18,6 @@ const useStyles = makeStyles(theme => ({
   },
   tripInfo: {
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
   }
 }));
 
@@ -39,10 +39,15 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, handleButtonC
   const classes = useStyles();
   const cityFromText = cityOptions.find(({ value }) => value === cityFrom).text;
   const cityToText = cityOptions.find(({ value }) => value === cityTo).text;
+  const dateText = formatDate(date);
+  const priceFrom = ticketPrices[`${cityFrom}-${cityTo}`] - 100;
   return (
     <React.Fragment>
-      <Typography className={classes.tripInfo} component="h3" variant="h5" color="primary" align="center" gutterBottom>
-        {cityFromText} - {cityToText} {formatDate(date)}
+      <Typography className={classes.tripInfo} component="h3" variant="h5" align="center">
+        {cityFromText} - {cityToText} от {priceFrom} р.
+      </Typography>
+      <Typography component="h3" variant="h5" align="center">
+        {dateText}
       </Typography>
       <Grid container>
         <Grid item xs={4}>
@@ -54,24 +59,27 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, handleButtonC
         <Grid item xs={4}>
         </Grid>
       </Grid>
-      {trips.map(({ fromTime, availableSeats }, index) => (
-        <React.Fragment key={index}>
-          <Divider className={classes.divider}/>
-          <Grid container alignItems="center">
-            <Grid item xs={4}>
-              <Typography variant="body1" align="center">{`0${fromTime.hours}`.slice(-2)} : {`0${fromTime.minutes}`.slice(-2)}</Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography variant="body1" align="center">{availableSeats}</Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Grid container alignItems="flex-end" justify="flex-end" direction="row">
-                <Button onClick={handleButtonClick} variant="contained" color="primary">Купить</Button>
+      {trips.map(({ fromTime, availableSeats }, index) => {
+        const timeText = `0${fromTime.hours}`.slice(-2) + ':' + `0${fromTime.minutes}`.slice(-2);
+        return (
+          <React.Fragment key={index}>
+            <Divider className={classes.divider}/>
+            <Grid container alignItems="center">
+              <Grid item xs={4}>
+                <Typography variant="body1" align="center">{timeText}</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="body1" align="center">{availableSeats}</Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Grid container alignItems="flex-end" justify="flex-end" direction="row">
+                  <Button onClick={() => handleButtonClick(cityFromText, cityToText, dateText, timeText)} variant="contained" color="primary">Забронировать</Button>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </React.Fragment>
-      ))}
+          </React.Fragment>
+        )
+      })}
     </React.Fragment>
   );
 }
