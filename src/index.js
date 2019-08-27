@@ -5,17 +5,9 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-
-import 'semantic-ui-css/semantic.min.css';
-import 'react-datepicker/dist/react-datepicker.css';
-import { registerLocale, setDefaultLocale } from 'react-datepicker';
-import ru from 'date-fns/locale/ru';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
 import rootReducer from './rootReducer';
-
-registerLocale('ru', ru);
-setDefaultLocale('ru');
 
 const store = createStore(
   rootReducer,
