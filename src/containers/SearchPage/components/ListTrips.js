@@ -29,10 +29,9 @@ const formatDate = (date) => {
   let mm = date.getMonth() + 1;
   if (mm < 10) mm = '0' + mm;
 
-  let yy = date.getFullYear() % 100;
-  if (yy < 10) yy = '0' + yy;
+  const yy = date.getFullYear();
 
-  return dd + '.' + mm + '.' + yy;
+  return yy + '-' + mm + '-' + dd;
 }
 
 export default function ListTrips({ trips, cityFrom, cityTo, date, handleButtonClick }) {
