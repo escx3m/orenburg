@@ -40,8 +40,13 @@ export const sendOrder = (passengers, redirectToSuccessPage) => dispatch => {
   dispatch(sendOrderStart());
   api.sendOrder(passengers).then(
     result => {
-      redirectToSuccessPage();
-      dispatch(sendOrderSuccess(result));
+      if (result === 'success') {
+        redirectToSuccessPage();
+        dispatch(sendOrderSuccess(result));
+      } else if (result === 'error') {
+        // TODO Обработать ошибку
+        console.log('Ошибка. Что-то с сервером');
+      }
     },
     error => dispatch(sendOrderError(error))
   );

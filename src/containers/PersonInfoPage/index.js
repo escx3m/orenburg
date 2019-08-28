@@ -4,13 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 import PassengerInfoDialog from './components/PassengerInfoDialog';
@@ -63,17 +59,22 @@ const PersonInfoPage = (props) => {
     orderSuccess,
     history,
   } = props;
-
-  const handleOrderButtonClick = (passengers) => {
-    sendOrder(passengers, () => history.push('/orderSuccess'))
+  
+  const data = {
+    passengers,
+    cityFrom,
+    cityTo,
+    date_time: `${dateText} ${timeText}`,
+  }
+  
+  const handleOrderButtonClick = (data) => {
+    sendOrder(data, () => history.push('/orderSuccess'))
   }
 
   const readyToOrder = passengers.length === seats;
-  const totalPrice = passengers.reduce((sum, { ticketPrice, child }) => {
-    return child ? sum + ticketPrice - 100 : sum + ticketPrice;
+  const totalPrice = passengers.reduce((sum, { ticketPrice }) => {
+    return sum + ticketPrice;
   }, 0);
-
-  console.log('props', props);
 
   return (
     <div>
@@ -134,7 +135,7 @@ const PersonInfoPage = (props) => {
         </Grid>
         <Grid item xs={12}>
           <Grid container justify="center">
-            <Button disabled={!readyToOrder} onClick={() => handleOrderButtonClick(passengers)} variant="contained" color="primary">Оформить бронь</Button>
+            <Button disabled={!readyToOrder} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Оформить бронь</Button>
           </Grid>
         </Grid>
         {error &&

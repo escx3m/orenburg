@@ -61,7 +61,7 @@ const PassengerInfoDialog = (props) => {
     handleClose();
   }
 
-  const calculateTicketPrice = (cityFrom, cityTo, addressFrom, addressTo) => {
+  const calculateTicketPrice = (cityFrom, cityTo, addressFrom, addressTo, child) => {
     let ticketRoute = `${cityFrom}-${cityTo}`
     if (addressFrom.toLowerCase() === 'аэропорт') {
       ticketRoute = `${cityFrom}air-${cityTo}`
@@ -69,7 +69,8 @@ const PassengerInfoDialog = (props) => {
       ticketRoute = `${cityFrom}-${cityTo}air`
     }
     console.log('ticketRoute', ticketRoute);
-    return ticketPrices[ticketRoute];
+    const ticketPrice = ticketPrices[ticketRoute]
+    return child ? ticketPrice - 100 : ticketPrice;
   }
 
   const handleSubmit = (values, formikBag) => {
@@ -82,8 +83,8 @@ const PassengerInfoDialog = (props) => {
       return;
     }
 
-    const { addressFrom, addressTo } = values;
-    const ticketPrice = calculateTicketPrice(cityFrom, cityTo, addressFrom, addressTo);
+    const { addressFrom, addressTo, child } = values;
+    const ticketPrice = calculateTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
     console.log('ticketPrice', ticketPrice);
     
     console.log('addPassenger');
