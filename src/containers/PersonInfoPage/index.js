@@ -56,7 +56,7 @@ const PersonInfoPage = (props) => {
     sendOrder,
     loading,
     error,
-    orderSuccess,
+    isSubmitting,
     history,
   } = props;
   
@@ -135,7 +135,7 @@ const PersonInfoPage = (props) => {
         </Grid>
         <Grid item xs={12}>
           <Grid container justify="center">
-            <Button disabled={!readyToOrder} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Оформить бронь</Button>
+            <Button disabled={!(readyToOrder && !loading)} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Оформить бронь</Button>
           </Grid>
         </Grid>
         {error &&
@@ -166,7 +166,7 @@ const PersonInfoPage = (props) => {
   );
 };
 
-const mapStateToProps = ({ trips: { seats, cityFrom, cityTo, cityFromText, cityToText, dateText, timeText }, passengers, order: { loading, error, orderSuccess } }) => ({
+const mapStateToProps = ({ trips: { seats, cityFrom, cityTo, cityFromText, cityToText, dateText, timeText }, passengers, order: { loading, error } }) => ({
   seats,
   cityFrom,
   cityTo,
@@ -177,7 +177,6 @@ const mapStateToProps = ({ trips: { seats, cityFrom, cityTo, cityFromText, cityT
   passengers,
   loading,
   error,
-  orderSuccess,
 })
 
 export default connect(mapStateToProps, { addPassenger, updatePassenger, sendOrder })(PersonInfoPage);
