@@ -69,11 +69,13 @@ export const PassengerForm = (props) => {
   return (
     <>
       <Field
+        required
         name="lastName"
         label="Фамилия"
         component={renderTextField}
       />
       <Field
+        required
         name="firstName"
         label="Имя"
         component={renderTextField}
@@ -84,6 +86,7 @@ export const PassengerForm = (props) => {
         component={renderTextField}
       />
       <Field
+        required
         name="phone"
         label="Телефон"
         component={renderTextField}

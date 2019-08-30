@@ -120,11 +120,9 @@ const PassengerInfoDialog = (props) => {
     }),
     Yup.object().shape({
       addressFrom: Yup.string()
-        .max(50, 'Слишком длинный адрес!')
-        .required('Обязательное поле'),
+        .max(50, 'Слишком длинный адрес!'),
       addressTo: Yup.string()
-        .max(50, 'Слишком длинный адрес!')
-        .required('Обязательное поле'),
+        .max(50, 'Слишком длинный адрес!'),
       comment: Yup.string()
         .max(150, 'Не более 150 символов!')
     }),
