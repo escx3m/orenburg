@@ -28,7 +28,7 @@ const getCombinedTrips = (trips, cityFrom, seats) => {
       .filter((tripTofilter) => {
         return fromTime === tripTofilter.fromTime;
       })
-      .map(({ fromTime, passengers, carScheme: { seats } }) => {
+      .map(({ fromTime, passengers, carScheme: { seats }, reserved }) => {
         const currentTime = moment().toISOString();
         const passengersCount = passengers.filter((item) => passengerStates.includes(item.state)).length;
         const { timeZone } = cityTimeZones.find((item) => item.city === cityFrom);
@@ -38,7 +38,7 @@ const getCombinedTrips = (trips, cityFrom, seats) => {
             minutes: moment.tz(fromTime, timeZone).minutes()
           },
           availableRoute: currentTime < fromTime,
-          availableSeats: seats - passengersCount,
+          availableSeats: seats - reserved - passengersCount,
         };
       })
       .reduce(({ fromTime, availableRoute, availableSeats }, item) => ({
