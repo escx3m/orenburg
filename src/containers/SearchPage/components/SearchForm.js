@@ -69,10 +69,12 @@ const SearchForm = props => {
 
   const handleSwitchButtonClick = e => {
     e.preventDefault();
-    const { values: { cityFrom, cityTo }, setFieldValue, handleReset } = props;
+    const { values: { cityFrom, cityTo, date, seats }, setFieldValue, handleReset } = props;
     handleReset();
     setFieldValue('cityFrom', cityTo);
     setFieldValue('cityTo', cityFrom);
+    setFieldValue('date', date);
+    setFieldValue('seats', seats);
   }
 
   const cityFromOptions = cityOptions.filter(city => city.value !== values.cityTo);
