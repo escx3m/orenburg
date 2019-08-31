@@ -29,6 +29,7 @@ const getCombinedTrips = (trips, cityFrom, seats) => {
         return fromTime === tripTofilter.fromTime;
       })
       .map(({ fromTime, passengers, carScheme: { seats } }) => {
+        const currentTime = moment().toISOString();
         const passengersCount = passengers.filter((item) => passengerStates.includes(item.state)).length;
         const { timeZone } = cityTimeZones.find((item) => item.city === cityFrom);
         return {
@@ -36,21 +37,23 @@ const getCombinedTrips = (trips, cityFrom, seats) => {
             hours: moment.tz(fromTime, timeZone).hour(),
             minutes: moment.tz(fromTime, timeZone).minutes()
           },
+          availableRoute: currentTime < fromTime,
           availableSeats: seats - passengersCount,
         };
       })
-      .reduce(({ fromTime, availableSeats }, item) => ({
+      .reduce(({ fromTime, availableRoute, availableSeats }, item) => ({
         fromTime,
+        availableRoute,
         availableSeats: availableSeats + item.availableSeats
       }))
-    ).filter(({ availableSeats }) => availableSeats >= seats);
+    );
   return combinedTrips;
 }
 const SearchPage = (props) => {
   const classes = useStyles();
   const submit = (data) => {
     const localTimeZone = cityTimeZones.find(({ city }) => city === data.cityFrom).timeZone;
-    const localTime = moment.tz(data.date, localTimeZone);
+    const localTime = moment(data.date).clone().tz(localTimeZone);
     props.getTrips({ ...data, dateStart: localTime.startOf('day').format(), dateEnd: localTime.endOf('day').format() });
   }
   
@@ -68,7 +71,7 @@ const SearchPage = (props) => {
       {loading && <CircularProgress disableShrink />}
       {showTrips
         ?
-          <ListTrips trips={combinedTrips} cityFrom={cityFrom} cityTo={cityTo} date={date} handleButtonClick={buyButtonClickHandler} />
+          <ListTrips trips={combinedTrips} cityFrom={cityFrom} cityTo={cityTo} date={date} seats={seats} handleButtonClick={buyButtonClickHandler} />
         :
           <Typography variant="h5" color="textSecondary" align="center"></Typography>
       }

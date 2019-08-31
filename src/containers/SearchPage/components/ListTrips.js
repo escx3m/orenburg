@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import moment from 'moment-timezone';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
@@ -34,7 +35,7 @@ const formatDate = (date) => {
   return yy + '-' + mm + '-' + dd;
 }
 
-export default function ListTrips({ trips, cityFrom, cityTo, date, handleButtonClick }) {
+export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handleButtonClick }) {
   const classes = useStyles();
   const cityFromText = cityOptions.find(({ value }) => value === cityFrom).text;
   const cityToText = cityOptions.find(({ value }) => value === cityTo).text;
@@ -58,26 +59,28 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, handleButtonC
         <Grid item xs={4}>
         </Grid>
       </Grid>
-      {trips.map(({ fromTime, availableSeats }, index) => {
+      {trips.map(({ fromTime, availableRoute, availableSeats }, index) => {
         const timeText = `0${fromTime.hours}`.slice(-2) + ':' + `0${fromTime.minutes}`.slice(-2);
-        return (
-          <React.Fragment key={index}>
-            <Divider className={classes.divider}/>
-            <Grid container alignItems="center">
-              <Grid item xs={4}>
-                <Typography variant="body1" align="center">{timeText}</Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography variant="body1" align="center">{availableSeats}</Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Grid container alignItems="flex-end" justify="flex-end" direction="row">
-                  <Button onClick={() => handleButtonClick(cityFromText, cityToText, dateText, timeText)} variant="contained" color="primary">Бронь</Button>
+        return availableRoute
+          ? (
+            <React.Fragment key={index}>
+              <Divider className={classes.divider}/>
+              <Grid container alignItems="center">
+                <Grid item xs={4}>
+                  <Typography variant="body1" align="center">{timeText}</Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography variant="body1" align="center">{availableSeats}</Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Grid container alignItems="flex-end" justify="flex-end" direction="row">
+                    <Button disabled={availableSeats < seats} onClick={() => handleButtonClick(cityFromText, cityToText, dateText, timeText)} variant="contained" color="primary">Бронь</Button>
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-          </React.Fragment>
-        )
+            </React.Fragment>
+          )
+          : '';
       })}
     </React.Fragment>
   );

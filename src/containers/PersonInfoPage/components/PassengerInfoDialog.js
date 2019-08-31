@@ -85,9 +85,7 @@ const PassengerInfoDialog = (props) => {
 
     const { addressFrom, addressTo, child } = values;
     const ticketPrice = calculateTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
-    console.log('ticketPrice', ticketPrice);
     
-    console.log('addPassenger');
     if (currentIndex === -1) {
       addPassenger({...values, ticketPrice});
     } else {
