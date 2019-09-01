@@ -27,21 +27,17 @@ const useStyles = makeStyles(theme => ({
 const PersonInfoPage = (props) => {
   const [open, setOpen] = React.useState(false);
   const [passengerValues, setPassengerValues] = React.useState({});
+  const [prevPassengerValues, setPrevPassengerValues] = React.useState({});
   const [currentIndex, setCurrentIndex] = React.useState(-1);
-
-  const handleClickOpen = (passengerValues, index) => () => {
-    setCurrentIndex(index);
-    setPassengerValues(passengerValues);
-    setOpen(true);
-  }
-
+  const [showTakeFromPrevButton, setShowTakeFromPrevButton] = React.useState(false);
+  
   const handleClose = () => {
     setPassengerValues({});
     setOpen(false);
   }
-
+  
   const classes = useStyles();
-
+  
   const { 
     passengers,
     seats,
@@ -59,6 +55,18 @@ const PersonInfoPage = (props) => {
     isSubmitting,
     history,
   } = props;
+
+  const handleClickOpen = (passengerValues, index) => () => {
+    setCurrentIndex(index);
+    setPassengerValues(passengerValues);
+    if (index === -1 && passengers.length > 0) {
+      setShowTakeFromPrevButton(true);
+      setPrevPassengerValues(passengers[passengers.length - 1]);
+    } else {
+      setShowTakeFromPrevButton(false);
+    }
+    setOpen(true);
+  }
   
   const data = {
     passengers,
@@ -157,6 +165,8 @@ const PersonInfoPage = (props) => {
         updatePassenger={updatePassenger}
         currentIndex={currentIndex}
         passengerValues={passengerValues}
+        showTakeFromPrevButton={showTakeFromPrevButton}
+        prevPassengerValues={prevPassengerValues}
         cityFrom={cityFrom}
         cityTo={cityTo}
         cityFromText={cityFromText}

@@ -33,6 +33,8 @@ const PassengerInfoDialog = (props) => {
     updatePassenger,
     currentIndex,
     passengerValues,
+    prevPassengerValues,
+    showTakeFromPrevButton,
     cityFrom,
     cityTo,
     cityFromText,
@@ -68,7 +70,6 @@ const PassengerInfoDialog = (props) => {
     } else if (addressTo.toLowerCase() === 'аэропорт') {
       ticketRoute = `${cityFrom}-${cityTo}air`
     }
-    console.log('ticketRoute', ticketRoute);
     const ticketPrice = ticketPrices[ticketRoute]
     return child ? ticketPrice - 100 : ticketPrice;
   }
@@ -95,6 +96,12 @@ const PassengerInfoDialog = (props) => {
     setSubmitting(false);
     setActiveStep(0);
     handleClose();
+  }
+
+  const setPrevPassengerValues = (setFieldValue) => {
+    Object.keys(prevPassengerValues).forEach(key => {
+      setFieldValue(key, prevPassengerValues[key]);
+    })
   }
 
   const steps = ['Личные данные', 'Адреса'];
@@ -158,7 +165,13 @@ const PassengerInfoDialog = (props) => {
             </Stepper>
             <DialogContent>
               <Form className={classes.form}>
-                <CurrentStep {...formikBag} cityFromText={cityFromText} cityToTex={cityToText}/>
+                <CurrentStep
+                  {...formikBag}
+                  cityFromText={cityFromText}
+                  cityToTex={cityToText}
+                  showTakeFromPrevButton={showTakeFromPrevButton}
+                  setPrevPassengerValues={() => setPrevPassengerValues(formikBag.setFieldValue)}
+                />
               </Form>
             </DialogContent>
             <DialogActions>
