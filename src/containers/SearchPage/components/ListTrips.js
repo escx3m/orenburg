@@ -41,7 +41,8 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
   const cityToText = cityOptions.find(({ value }) => value === cityTo).text;
   const dateText = formatDate(date);
   const priceFrom = ticketPrices[`${cityFrom}-${cityTo}`] - 100;
-  return (
+
+  const renderListTrips = (
     <React.Fragment>
       <Typography className={classes.tripInfo} component="h3" variant="h5" align="center">
         {cityFromText} - {cityToText} от {priceFrom} р.
@@ -84,4 +85,10 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
       })}
     </React.Fragment>
   );
+  
+  const renderNoTrips = (
+    <Typography variant="h5" color="textSecondary" align="center">Подходящих рейсов не найдено</Typography>
+  );
+
+  return !!trips.length ? renderListTrips : renderNoTrips;
 }

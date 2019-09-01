@@ -46,7 +46,7 @@ const getCombinedTrips = (trips, cityFrom, seats) => {
         availableRoute,
         availableSeats: availableSeats + item.availableSeats
       }))
-    );
+    ).filter(({ availableRoute }) => availableRoute);
   return combinedTrips;
 }
 const SearchPage = (props) => {
@@ -62,19 +62,14 @@ const SearchPage = (props) => {
     props.history.push('/personInfo');
   }
   
-  const { trips, cityFrom, cityTo, seats, date, loading } = props;
+  const { trips, cityFrom, cityTo, seats, date, loading, showTrips } = props;
   const combinedTrips = getCombinedTrips(trips, cityFrom, seats);
-  const showTrips = !!combinedTrips.length;
   return (
     <div className={classes.root}>
       <SearchForm onSubmit={submit} initialValues={{ date: new Date() }} trips={trips} />
       {loading && <CircularProgress disableShrink />}
-      {showTrips
-        ?
-          <ListTrips trips={combinedTrips} cityFrom={cityFrom} cityTo={cityTo} date={date} seats={seats} handleButtonClick={buyButtonClickHandler} />
-        :
-          <Typography variant="h5" color="textSecondary" align="center"></Typography>
-      }
+      {showTrips && <ListTrips trips={combinedTrips} cityFrom={cityFrom} cityTo={cityTo} date={date} seats={seats} handleButtonClick={buyButtonClickHandler} />
+}
     </div>
   );
 }
