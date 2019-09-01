@@ -25,21 +25,24 @@ export const trips = (state = initialState, action) => {
         seats,
         date,
         trips: [],
-        loading: true
+        loading: true,
+        showTrips: false,
       };
     case GET_TRIPS_SUCCESS:
       const { trips } = action;
       return {
         ...state,
         trips,
-        loading: false
+        loading: false,
+        showTrips: true,
       };
     case GET_TRIPS_ERROR:
       const { error } = action;
       return {
         ...state,
         error,
-        loading: false
+        loading: false,
+        showTrips: true,
       };
     case CHOOSE_TRIP:
       const { cityFromText, cityToText, dateText, timeText } = action;
