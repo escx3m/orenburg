@@ -66,6 +66,7 @@ const renderRadioGroup = ({ field, label, form: { touched, errors }, ...props })
 
 export const PassengerForm = (props) => {
   const showAgeGroup = props.values.child;
+  const { showTakeFromPrevButton, setPrevPassengerValues } = props;
   return (
     <>
       <Field
@@ -100,6 +101,11 @@ export const PassengerForm = (props) => {
         name="ageGroup"
         label="Возрастная группа"
         component={renderRadioGroup}
+      />}
+      {showTakeFromPrevButton && <Chip
+        label="Взять у предыдущего"
+        size="small"
+        onClick={() => setPrevPassengerValues()}
       />}
     </>
   );
