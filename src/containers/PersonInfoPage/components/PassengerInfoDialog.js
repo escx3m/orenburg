@@ -1,4 +1,6 @@
 import React from 'react';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -42,6 +44,8 @@ const PassengerInfoDialog = (props) => {
   } = props;
 
   const classes = useStyles();
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
   const [activeStep, setActiveStep] = React.useState(0);
 
   const isLastStep = () => {
@@ -155,7 +159,13 @@ const PassengerInfoDialog = (props) => {
       onSubmit={handleSubmit}
       render={(formikBag) => {
         return (
-          <Dialog fullScreen open={open} onClose={() => handleCancel(formikBag)} aria-labelledby="form-dialog-title">
+          <Dialog
+            fullScreen={fullScreen}
+            fullWidth
+            maxWidth="sm"
+            open={open}
+            onClose={() => handleCancel(formikBag)}
+            aria-labelledby="form-dialog-title">
             <Stepper activeStep={activeStep} className={classes.stepper}>
               {steps.map(label => (
                 <Step key={label}>
