@@ -155,7 +155,7 @@ const PassengerInfoDialog = (props) => {
       onSubmit={handleSubmit}
       render={(formikBag) => {
         return (
-          <Dialog open={open} onClose={() => handleCancel(formikBag)} aria-labelledby="form-dialog-title">
+          <Dialog fullScreen open={open} onClose={() => handleCancel(formikBag)} aria-labelledby="form-dialog-title">
             <Stepper activeStep={activeStep} className={classes.stepper}>
               {steps.map(label => (
                 <Step key={label}>
