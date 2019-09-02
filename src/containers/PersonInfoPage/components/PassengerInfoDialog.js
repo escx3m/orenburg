@@ -183,8 +183,6 @@ const PassengerInfoDialog = (props) => {
                   setPrevPassengerValues={() => setPrevPassengerValues(formikBag.setFieldValue)}
                 />
               </Form>
-            </DialogContent>
-            <DialogActions>
               <div style={{ width: '100%' }}>
                 <Box display="flex" p={1} bgcolor="background.paper">
                   <Box p={1} flexGrow={1}>
@@ -207,7 +205,7 @@ const PassengerInfoDialog = (props) => {
                   </Box>
                 </Box>
               </div>
-            </DialogActions>
+            </DialogContent>
           </Dialog>
         );
       }}
