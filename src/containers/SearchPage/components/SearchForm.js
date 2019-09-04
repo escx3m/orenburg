@@ -161,11 +161,12 @@ const SearchForm = props => {
 }
 
 export default withFormik({
-  mapPropsToValues: () => ({
+  mapPropsToValues: ({ initialValues }) => ({
     cityFrom: '',
     cityTo: '',
     date: new Date(),
     seats: 1,
+    ...initialValues
   }),
 
   validate: values => {
