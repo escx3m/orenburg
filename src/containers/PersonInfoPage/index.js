@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -18,7 +18,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import PassengerInfoDialog from './components/PassengerInfoDialog';
-import { updatePassenger, addPassenger, sendOrder } from './actions';
+import { updatePassenger, addPassenger, sendOrder, passangersReset } from './actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,12 +57,21 @@ const PersonInfoPage = (props) => {
     timeText,
     addPassenger,
     updatePassenger,
+    passangersReset,
     sendOrder,
     loading,
     error,
     isSubmitting,
     history,
   } = props;
+
+  useEffect(() => {
+    if (!(!!cityFrom && !!cityTo)) {
+      console.log(cityFrom, cityTo);
+      history.push('/');
+    }
+    passangersReset();
+  }, []);
 
   const handleClickOpen = (passengerValues, index) => () => {
     setCurrentIndex(index);
@@ -209,4 +218,4 @@ const mapStateToProps = ({ trips: { seats, cityFrom, cityTo, cityFromText, cityT
   error,
 })
 
-export default connect(mapStateToProps, { addPassenger, updatePassenger, sendOrder })(PersonInfoPage);
+export default connect(mapStateToProps, { addPassenger, updatePassenger, sendOrder, passangersReset })(PersonInfoPage);

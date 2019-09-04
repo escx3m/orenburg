@@ -5,6 +5,7 @@ import {
   SEND_ORDER,
   SEND_ORDER_SUCCESS,
   SEND_ORDER_ERROR,
+  RESET,
 } from './constants';
 
 export const passengers = (state = [], action) => {
@@ -25,7 +26,7 @@ export const passengers = (state = [], action) => {
         }
       );
     }
-    case 'reset': {
+    case RESET: {
       return [];
     }
     default: return state;
