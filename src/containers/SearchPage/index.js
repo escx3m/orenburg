@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment-timezone';
+import qs from 'query-string';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Typography from '@material-ui/core/Typography';
 
 import SearchForm from './components/SearchForm';
 import ListTrips from './components/ListTrips';
@@ -62,10 +62,11 @@ const SearchPage = (props) => {
     props.history.push('/personInfo');
   }
   
-  const { trips, cityFrom, cityTo, seats, date, loading, showTrips } = props;
+  const { trips, cityFrom, cityTo, seats, date, loading, showTrips, location } = props;
+  const { city_from, city_to } = (qs.parse(location.search, { ignoreQueryPrefix: true }));
   return (
     <div className={classes.root}>
-      <SearchForm onSubmit={submit} initialValues={{ date: new Date() }} trips={trips} />
+      <SearchForm onSubmit={submit} initialValues={{ cityFrom: city_from, cityTo: city_to }} trips={trips} />
       {loading && <CircularProgress disableShrink />}
       {showTrips && <ListTrips trips={trips} cityFrom={cityFrom} cityTo={cityTo} date={date} seats={seats} handleButtonClick={buyButtonClickHandler} />
 }
