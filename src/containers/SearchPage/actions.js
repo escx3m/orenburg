@@ -1,5 +1,5 @@
 import moment from 'moment-timezone';
-import { GET_TRIPS, GET_TRIPS_SUCCESS, GET_TRIPS_ERROR, CHOOSE_TRIP } from './constants';
+import { GET_TRIPS, GET_TRIPS_SUCCESS, GET_TRIPS_ERROR, CHOOSE_TRIP, RESET } from './constants';
 import api from '../../api';
 import { getCombinedTrips } from './index';
 
@@ -27,6 +27,10 @@ export const chooseTrip = (cityFromText, cityToText, dateText, timeText) => ({
   cityToText,
   dateText,
   timeText
+});
+
+export const tripsReset = () => ({
+  type: RESET
 });
 
 export const getTrips = data => async dispatch => {

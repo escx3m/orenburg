@@ -1,4 +1,4 @@
-import { GET_TRIPS, GET_TRIPS_SUCCESS, GET_TRIPS_ERROR, CHOOSE_TRIP } from './constants';
+import { GET_TRIPS, GET_TRIPS_SUCCESS, GET_TRIPS_ERROR, CHOOSE_TRIP, RESET } from './constants';
 
 const initialState = {
   trips: [],
@@ -53,7 +53,7 @@ export const trips = (state = initialState, action) => {
         dateText,
         timeText
       };
-    case 'reset': {
+    case RESET: {
       return initialState;
     }
     default: return state;

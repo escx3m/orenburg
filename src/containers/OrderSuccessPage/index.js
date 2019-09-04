@@ -5,6 +5,9 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
+import { passangersReset } from '../PersonInfoPage/actions';
+import { tripsReset } from '../SearchPage/actions';
+
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3, 2),
@@ -16,7 +19,8 @@ const OrderSuccessPage = (props) => {
 
   const handleClick = () => {
     history.push('/');
-    dispatch({ type: 'reset' });
+    dispatch(passangersReset());
+    dispatch(tripsReset());
   }
 
   const classes = useStyles();

@@ -5,6 +5,7 @@ import {
   SEND_ORDER,
   SEND_ORDER_SUCCESS,
   SEND_ORDER_ERROR,
+  RESET,
 } from './constants';
 import api from '../../api';
 
@@ -34,6 +35,10 @@ export const sendOrderSuccess = trips => ({
 
 export const sendOrderError = trips => ({
   type: SEND_ORDER_ERROR,
+});
+
+export const passangersReset = () => ({
+  type: RESET
 });
 
 export const sendOrder = (passengers, redirectToSuccessPage) => dispatch => {
