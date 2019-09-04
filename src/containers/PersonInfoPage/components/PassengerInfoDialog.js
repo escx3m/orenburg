@@ -16,7 +16,7 @@ import * as Yup from 'yup';
 import { PassengerForm, AddressForm } from './formSteps';
 import { ticketPrices } from '../constants';
 
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const phoneRegExp = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,11}(\s*)?$/;
 
 const useStyles = makeStyles(theme => ({
   stepper: {
