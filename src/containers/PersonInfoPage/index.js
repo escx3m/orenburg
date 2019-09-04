@@ -5,9 +5,17 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
+import PersonIcon from '@material-ui/icons/Person';
+import PhoneIcon from '@material-ui/icons/Phone';
+import ForwardIcon from '@material-ui/icons/Forward';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import PassengerInfoDialog from './components/PassengerInfoDialog';
 import { updatePassenger, addPassenger, sendOrder } from './actions';
@@ -87,7 +95,7 @@ const PersonInfoPage = (props) => {
   return (
     <div>
       <Typography variant="h5" component="h2" align="center">
-        {cityFromText} - {cityToText}
+        {cityFromText} <ArrowForwardIcon /> {cityToText}
       </Typography>
       <Typography variant="h5" color="textSecondary" align="center">
         {dateText} {timeText}
@@ -98,18 +106,30 @@ const PersonInfoPage = (props) => {
             <Divider />
               <Grid container justify="center" spacing={1} className={classes.root}>
                 <Grid item xs={8}>
-                  <Typography variant="h5" component="h2">
-                    {`${lastName} ${firstName} ${middleName}`}
-                  </Typography>
-                  <Typography variant="body1" color="textSecondary">
-                    {`тел: ${phone}`}
-                  </Typography>
-                  <Typography variant="body1" color="textSecondary">
-                    откуда: {addressFrom}
-                  </Typography>
-                  <Typography variant="body1" color="textSecondary">
-                    куда: {addressTo} 
-                  </Typography>
+                  <ListItem>
+                    <ListItemIcon>
+                      <PersonIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={`${lastName} ${firstName} ${middleName}`} />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemIcon>
+                      <PhoneIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={phone} />
+                  </ListItem>
+                  {addressFrom && <ListItem>
+                    <ListItemIcon>
+                      <ArrowBackIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={addressFrom} />
+                  </ListItem>}
+                  {addressTo && <ListItem>
+                    <ListItemIcon>
+                      <ArrowForwardIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={addressTo} />
+                  </ListItem>}
                 </Grid>
                 <Grid item xs={4}>
                   <Grid container justify="flex-end">

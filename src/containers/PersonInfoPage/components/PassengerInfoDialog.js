@@ -78,6 +78,17 @@ const PassengerInfoDialog = (props) => {
     return child ? ticketPrice - 100 : ticketPrice;
   }
 
+  const calculateTotalTicketPrice = (cityFrom, cityTo, addressFrom, addressTo, child) => {
+    const Elista = '166';
+    if ([cityFrom, cityTo].every(city => ['119', '23'].includes(city))) {
+      const ticketPriceToElista = calculateTicketPrice(cityFrom, Elista, addressFrom, '', child);
+      const ticketPriceFromElista = calculateTicketPrice(Elista, cityTo, '', addressTo, child);
+      return ticketPriceToElista + ticketPriceFromElista;
+    } else {
+      return calculateTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
+    }
+  }
+
   const handleSubmit = (values, formikBag) => {
     const { setSubmitting, setTouched, resetForm } = formikBag;
 
@@ -89,7 +100,7 @@ const PassengerInfoDialog = (props) => {
     }
 
     const { addressFrom, addressTo, child } = values;
-    const ticketPrice = calculateTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
+    const ticketPrice = calculateTotalTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
     
     if (currentIndex === -1) {
       addPassenger({...values, ticketPrice});
@@ -178,7 +189,7 @@ const PassengerInfoDialog = (props) => {
                 <CurrentStep
                   {...formikBag}
                   cityFromText={cityFromText}
-                  cityToTex={cityToText}
+                  cityToText={cityToText}
                   showTakeFromPrevButton={showTakeFromPrevButton}
                   setPrevPassengerValues={() => setPrevPassengerValues(formikBag.setFieldValue)}
                 />
