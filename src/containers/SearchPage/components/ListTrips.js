@@ -35,12 +35,21 @@ const formatDate = (date) => {
   return yy + '-' + mm + '-' + dd;
 }
 
+const calculatePriceFrom = (cityFrom, cityTo) => {
+  const Elista = '166';
+  if ([cityFrom, cityTo].every(city => ['119', '23'].includes(city))) {
+    return ticketPrices[`${cityFrom}-${Elista}`] + ticketPrices[`${Elista}-${cityTo}`] - 200;
+  } else {
+    return ticketPrices[`${cityFrom}-${cityTo}`] - 100;
+  }
+}
+
 export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handleButtonClick }) {
   const classes = useStyles();
   const cityFromText = cityOptions.find(({ value }) => value === cityFrom).text;
   const cityToText = cityOptions.find(({ value }) => value === cityTo).text;
   const dateText = formatDate(date);
-  const priceFrom = ticketPrices[`${cityFrom}-${cityTo}`] - 100;
+  const priceFrom = calculatePriceFrom(cityFrom, cityTo);
 
   const renderListTrips = (
     <React.Fragment>

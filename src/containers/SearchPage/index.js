@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const getCombinedTrips = (trips, cityFrom, seats) => {
+export const getCombinedTrips = (trips, cityFrom) => {
   const combinedTrips = trips
     .reduce((acc, item) => {
       if (!acc.includes(item.fromTime)) acc.push(item.fromTime)
@@ -63,12 +63,11 @@ const SearchPage = (props) => {
   }
   
   const { trips, cityFrom, cityTo, seats, date, loading, showTrips } = props;
-  const combinedTrips = getCombinedTrips(trips, cityFrom, seats);
   return (
     <div className={classes.root}>
       <SearchForm onSubmit={submit} initialValues={{ date: new Date() }} trips={trips} />
       {loading && <CircularProgress disableShrink />}
-      {showTrips && <ListTrips trips={combinedTrips} cityFrom={cityFrom} cityTo={cityTo} date={date} seats={seats} handleButtonClick={buyButtonClickHandler} />
+      {showTrips && <ListTrips trips={trips} cityFrom={cityFrom} cityTo={cityTo} date={date} seats={seats} handleButtonClick={buyButtonClickHandler} />
 }
     </div>
   );
