@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
 import Toolbar from '@material-ui/core/Toolbar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -19,7 +20,7 @@ function Copyright() {
   );
 }
 
-function App() {
+function App({ history }) {
   const useStyles = makeStyles(theme => ({
     root: {
       display: 'flex',
@@ -34,17 +35,29 @@ function App() {
       padding: theme.spacing(4),
       marginTop: 'auto',
     },
+    homeLink: {
+     color: '#fff',
+     textDecoration: 'none',
+    },
+    appBar: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      height: '50px',
+    }
   }));
 
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="static">
+      <AppBar position="static" className={classes.appBar}>
         <Container maxWidth="sm" >
+          <a href='https://alphatour.ru' className={classes.homeLink}>
             <Typography variant="h6" color="inherit" align="center">
               Альфа-Тур
             </Typography>
+          </a>
         </Container>
       </AppBar>
       <Container maxWidth="sm" >
