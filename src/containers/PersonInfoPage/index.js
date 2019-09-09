@@ -20,6 +20,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import PassengerInfoDialog from './components/PassengerInfoDialog';
 import { updatePassenger, addPassenger, sendOrder, passangersReset } from './actions';
 
+const { ym } = window;
+
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3, 2),
@@ -67,7 +69,6 @@ const PersonInfoPage = (props) => {
 
   useEffect(() => {
     if (!(!!cityFrom && !!cityTo)) {
-      console.log(cityFrom, cityTo);
       history.push('/');
     }
     passangersReset();
@@ -93,6 +94,7 @@ const PersonInfoPage = (props) => {
   }
   
   const handleOrderButtonClick = (data) => {
+    ym(34728795, 'reachGoal', 'success_booking57480196');
     sendOrder(data, () => history.push('/orderSuccess'))
   }
 

@@ -2,8 +2,6 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
-import Box from '@material-ui/core/Box';
-import Toolbar from '@material-ui/core/Toolbar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,7 +18,7 @@ function Copyright() {
   );
 }
 
-function App({ history }) {
+function App() {
   const useStyles = makeStyles(theme => ({
     root: {
       display: 'flex',
