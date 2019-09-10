@@ -94,7 +94,7 @@ const PersonInfoPage = (props) => {
   }
   
   const handleOrderButtonClick = (data) => {
-    ym(34728795, 'reachGoal', 'success_booking57480196');
+    ym(34728795, 'reachGoal', 'success_booking');
     sendOrder(data, () => history.push('/orderSuccess'))
   }
 

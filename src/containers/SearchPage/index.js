@@ -54,14 +54,14 @@ export const getCombinedTrips = (trips, cityFrom) => {
 const SearchPage = (props) => {
   const classes = useStyles();
   const submit = (data) => {
-    ym(34728795, 'reachGoal', 'search57480151');
+    ym(34728795, 'reachGoal', 'search');
     const localTimeZone = cityTimeZones.find(({ city }) => city === data.cityFrom).timeZone;
     const localTime = moment(data.date).clone().tz(localTimeZone);
     props.getTrips({ ...data, dateStart: localTime.startOf('day').format(), dateEnd: localTime.endOf('day').format() });
   }
   
   const buyButtonClickHandler = (cityFromText, cityToText, dateText, timeText) => {
-    ym(34728795, 'reachGoal', 'booking57480187');
+    ym(34728795, 'reachGoal', 'booking');
     props.chooseTrip(cityFromText, cityToText, dateText, timeText);
     props.history.push('/personInfo');
   }
