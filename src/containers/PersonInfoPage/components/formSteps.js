@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Paper from "@material-ui/core/Paper";
+import ListItem from '@material-ui/core/ListItem';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -8,6 +11,109 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Chip from '@material-ui/core/Chip';
 import { Field } from 'formik';
+import Downshift from "downshift";
+
+const useStyles = makeStyles(theme => ({
+  stepper: {
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  container: {
+    flexGrow: 1,
+    position: "relative"
+  },
+  paper: {
+    position: "absolute",
+    zIndex: 100,
+    marginTop: theme.spacing(1),
+    left: 0,
+    right: 0
+  },
+}));
+
+const renderDownShift = (props) => {
+  const { ymaps } = window;
+  const {
+    classes,
+    items,
+    setItems,
+    field: { name, value },
+    form,
+    label,
+    city
+  } = props;
+
+  const handleChange = (e) => {
+    form.handleChange(e);
+    const inputValue = e.target.value.trim().toLowerCase();
+    ymaps.suggest(`${city} ${inputValue}`).then((items) => {
+      const newItems = items.map(item => ({ ...item, value: item.value.split(',').slice(2).join(',') }));
+      setItems(newItems);
+    });
+  }
+
+  return (
+    <Downshift
+      onChange={selection => {
+        const value = selection ? selection.value : '';
+        form.setFieldValue(name, value);
+      }}
+      itemToString={item => (item ? item.value : '')}
+    >
+      {({
+        getInputProps,
+        getItemProps,
+        getLabelProps,
+        getMenuProps,
+        isOpen,
+        inputValue,
+        highlightedIndex,
+        selectedItem,
+      }) => (
+        <div className={classes.container}>
+          <TextField {...getInputProps({
+            name,
+            onChange: handleChange,
+            onBlur: form.handleBlur,
+            value,
+            label,
+            variant: "outlined",
+            margin: "dense",
+            fullWidth: true
+          })} />
+          <div {...getMenuProps()}>
+            {isOpen
+              ? (
+                <Paper className={classes.paper} square>
+                  {items
+                    .map((item, index) => (
+                        <ListItem
+                          button
+                          {...getItemProps({
+                            key: item.value,
+                            index,
+                            item,
+                            style: {
+                              backgroundColor:
+                                highlightedIndex === index ? 'lightgray' : 'white',
+                              fontWeight: selectedItem === item ? 'bold' : 'normal',
+                            },
+                          })}
+                        >
+                          {item.value}
+                        </ListItem>
+                    ))}
+                </Paper>
+              )
+              : null}
+          </div>
+        </div>
+      )}
+    </Downshift>
+  );
+}
 
 const renderTextField = ({ field, form: { touched, errors }, ...props }) => (
   <TextField
@@ -112,6 +218,10 @@ export const PassengerForm = (props) => {
 }
 
 export const AddressForm = (props) => {
+  const classes = useStyles();
+
+  const [items, setItems] = useState([]);
+
   const { cityFromText, cityToText, setFieldValue } = props;
   const showAirport = city => ['Волгоград', 'Астрахань', 'Ростов-на-Дону'].includes(city);
   return (
@@ -119,7 +229,11 @@ export const AddressForm = (props) => {
       <Field
         name="addressFrom"
         label="Адрес откуда"
-        component={renderTextField}
+        items={items}
+        setItems={setItems}
+        classes={classes}
+        city={cityFromText}
+        component={renderDownShift}
       />
       {showAirport(cityFromText) && <Chip
         label="Аэропорт"
@@ -129,7 +243,11 @@ export const AddressForm = (props) => {
       <Field
         name="addressTo"
         label="Адрес куда"
-        component={renderTextField}
+        items={items}
+        setItems={setItems}
+        classes={classes}
+        city={cityToText}
+        component={renderDownShift}
       />
       {showAirport(cityToText) && <Chip
         label="Аэропорт"

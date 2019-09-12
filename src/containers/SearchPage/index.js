@@ -72,8 +72,7 @@ const SearchPage = (props) => {
     <div className={classes.root}>
       <SearchForm onSubmit={submit} initialValues={{ cityFrom: city_from, cityTo: city_to }} trips={trips} />
       {loading && <CircularProgress disableShrink />}
-      {showTrips && <ListTrips trips={trips} cityFrom={cityFrom} cityTo={cityTo} date={date} seats={seats} handleButtonClick={buyButtonClickHandler} />
-}
+      {showTrips && <ListTrips trips={trips} cityFrom={cityFrom} cityTo={cityTo} date={date} seats={seats} handleButtonClick={buyButtonClickHandler} />}
     </div>
   );
 }
