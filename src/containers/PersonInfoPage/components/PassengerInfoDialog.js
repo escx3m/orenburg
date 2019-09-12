@@ -69,9 +69,9 @@ const PassengerInfoDialog = (props) => {
 
   const calculateTicketPrice = (cityFrom, cityTo, addressFrom, addressTo, child) => {
     let ticketRoute = `${cityFrom}-${cityTo}`
-    if (addressFrom.toLowerCase().includes('аэропорт ')) {
+    if ((cityFrom !== '166') && addressFrom.toLowerCase().includes('аэропорт ')) {
       ticketRoute = `${cityFrom}air-${cityTo}`
-    } else if (addressTo.toLowerCase().includes('аэропорт ')) {
+    } else if ((cityTo !== '166') && addressTo.toLowerCase().includes('аэропорт ')) {
       ticketRoute = `${cityFrom}-${cityTo}air`
     }
     const ticketPrice = ticketPrices[ticketRoute]
