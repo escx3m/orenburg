@@ -222,8 +222,7 @@ export const AddressForm = (props) => {
 
   const [items, setItems] = useState([]);
 
-  const { cityFromText, cityToText, setFieldValue } = props;
-  const showAirport = city => ['Волгоград', 'Астрахань', 'Ростов-на-Дону'].includes(city);
+  const { cityFromText, cityToText } = props;
   return (
     <>
       <Field
@@ -235,11 +234,6 @@ export const AddressForm = (props) => {
         city={cityFromText}
         component={renderDownShift}
       />
-      {showAirport(cityFromText) && <Chip
-        label="Аэропорт"
-        size="small"
-        onClick={() => setFieldValue('addressFrom', 'Аэропорт')}
-      />}
       <Field
         name="addressTo"
         label="Адрес куда"
@@ -249,11 +243,6 @@ export const AddressForm = (props) => {
         city={cityToText}
         component={renderDownShift}
       />
-      {showAirport(cityToText) && <Chip
-        label="Аэропорт"
-        size="small"
-        onClick={() => setFieldValue('addressTo', 'Аэропорт')}
-      />}
       <Field
         name="comment"
         label="Комментарий"
