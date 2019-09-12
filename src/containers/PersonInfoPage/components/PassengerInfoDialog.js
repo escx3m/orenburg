@@ -69,9 +69,9 @@ const PassengerInfoDialog = (props) => {
 
   const calculateTicketPrice = (cityFrom, cityTo, addressFrom, addressTo, child) => {
     let ticketRoute = `${cityFrom}-${cityTo}`
-    if (addressFrom.toLowerCase() === 'аэропорт') {
+    if (addressFrom.toLowerCase().includes('аэропорт ')) {
       ticketRoute = `${cityFrom}air-${cityTo}`
-    } else if (addressTo.toLowerCase() === 'аэропорт') {
+    } else if (addressTo.toLowerCase().includes('аэропорт ')) {
       ticketRoute = `${cityFrom}-${cityTo}air`
     }
     const ticketPrice = ticketPrices[ticketRoute]
@@ -139,10 +139,6 @@ const PassengerInfoDialog = (props) => {
         .required('Обязательное поле'),
     }),
     Yup.object().shape({
-      addressFrom: Yup.string()
-        .max(50, 'Слишком длинный адрес!'),
-      addressTo: Yup.string()
-        .max(50, 'Слишком длинный адрес!'),
       comment: Yup.string()
         .max(150, 'Не более 150 символов!')
     }),
