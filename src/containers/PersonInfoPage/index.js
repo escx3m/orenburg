@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import uuidv4 from 'uuid/v4';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
@@ -13,7 +14,6 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import PersonIcon from '@material-ui/icons/Person';
 import PhoneIcon from '@material-ui/icons/Phone';
-import ForwardIcon from '@material-ui/icons/Forward';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
@@ -63,7 +63,7 @@ const PersonInfoPage = (props) => {
     sendOrder,
     loading,
     error,
-    isSubmitting,
+    idempotenceKey,
     history,
   } = props;
 
@@ -72,6 +72,7 @@ const PersonInfoPage = (props) => {
       history.push('/');
     }
     passangersReset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClickOpen = (passengerValues, index) => () => {
@@ -95,7 +96,11 @@ const PersonInfoPage = (props) => {
   
   const handleOrderButtonClick = (data) => {
     ym(34728795, 'reachGoal', 'success_booking');
-    sendOrder(data, () => history.push('/orderSuccess'))
+    const orderData = {
+      ...data,
+      idempotenceKey: idempotenceKey === '' ? uuidv4() : idempotenceKey
+    };
+    sendOrder(orderData, () => history.push('/orderSuccess'));
   }
 
   const readyToOrder = passengers.length === seats;
@@ -207,7 +212,7 @@ const PersonInfoPage = (props) => {
   );
 };
 
-const mapStateToProps = ({ trips: { seats, cityFrom, cityTo, cityFromText, cityToText, dateText, timeText }, passengers, order: { loading, error } }) => ({
+const mapStateToProps = ({ trips: { seats, cityFrom, cityTo, cityFromText, cityToText, dateText, timeText }, passengers, order: { loading, error }, payment: { idempotenceKey } }) => ({
   seats,
   cityFrom,
   cityTo,
@@ -218,6 +223,7 @@ const mapStateToProps = ({ trips: { seats, cityFrom, cityTo, cityFromText, cityT
   passengers,
   loading,
   error,
+  idempotenceKey,
 })
 
 export default connect(mapStateToProps, { addPassenger, updatePassenger, sendOrder, passangersReset })(PersonInfoPage);

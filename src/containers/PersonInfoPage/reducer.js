@@ -5,6 +5,9 @@ import {
   SEND_ORDER,
   SEND_ORDER_SUCCESS,
   SEND_ORDER_ERROR,
+  MAKE_PAYMENT,
+  MAKE_PAYMENT_SUCCESS,
+  MAKE_PAYMENT_ERROR,
   RESET,
 } from './constants';
 
@@ -56,3 +59,39 @@ export const order = (state = initialState, action) => {
     default: return state;
   }
 };
+
+const paymentInitialState = {
+  idempotenceKey: '',
+  loading: false,
+  error: '',
+};
+
+export const payment = (state = paymentInitialState, action) => {
+  switch(action.type) {
+    case MAKE_PAYMENT: {
+      return {
+        ...state,
+        loading: true,
+        idempotenceKey: action.idempotenceKey,
+        error: ''
+      };
+    }
+    case MAKE_PAYMENT_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        idempotenceKey: '',
+        error: ''
+      };
+    }
+    case MAKE_PAYMENT_ERROR: {
+      const { error } = action;
+      return { ...state, loading: false, error };
+    }
+    case 'reset': {
+      return initialState;
+    }
+    default: return state;
+  }
+};
+

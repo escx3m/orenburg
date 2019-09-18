@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import moment from 'moment-timezone';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';

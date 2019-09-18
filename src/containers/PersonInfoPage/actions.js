@@ -5,6 +5,9 @@ import {
   SEND_ORDER,
   SEND_ORDER_SUCCESS,
   SEND_ORDER_ERROR,
+  MAKE_PAYMENT,
+  MAKE_PAYMENT_SUCCESS,
+  MAKE_PAYMENT_ERROR,
   RESET,
 } from './constants';
 import api from '../../api';
@@ -41,18 +44,39 @@ export const passangersReset = () => ({
   type: RESET
 });
 
-export const sendOrder = (passengers, redirectToSuccessPage) => dispatch => {
-  dispatch(sendOrderStart());
-  api.sendOrder(passengers).then(
+export const sendOrder = (orderData, redirectToSuccessPage) => dispatch => {
+  dispatch(makePaymentStart(orderData));
+  api.sendOrder(orderData).then(
     result => {
-      if (result === 'success') {
-        redirectToSuccessPage();
-        dispatch(sendOrderSuccess(result));
-      } else if (result === 'error') {
-        // TODO Обработать ошибку
-        console.log('Ошибка. Что-то с сервером');
-      }
+      const { confirmation_url } = result.data.confirmation;
+      window.open(confirmation_url, '_self');
+      dispatch(sendOrderSuccess(result));
     },
     error => dispatch(sendOrderError(error))
   );
+}
+
+export const makePaymentStart = data => ({
+  type: MAKE_PAYMENT,
+  idempotenceKey: data.idempotenceKey
+});
+
+export const makePaymentSuccess = () => ({
+  type: MAKE_PAYMENT_SUCCESS,
+});
+
+export const makePaymentError = () => ({
+  type: MAKE_PAYMENT_ERROR,
+});
+
+export const makePayment = data => dispatch => {
+  dispatch(makePaymentStart(data));
+  api.makePayment(data)
+  .then(result => {
+      console.log('actions makePayment', result);
+      const { confirmation_url } = result.data.confirmation;
+      window.open(confirmation_url, '_self');
+      dispatch(makePaymentSuccess());
+    })
+    .catch(error => dispatch(makePaymentError(error)));
 }
