@@ -99,13 +99,14 @@ const PassengerInfoDialog = (props) => {
       return;
     }
 
-    const { addressFrom, addressTo, child } = values;
+    const { addressFrom, addressTo, child, phone } = values;
+    const phoneOnlyNumbers = phone.replace(/\D+/g,"");
     const ticketPrice = calculateTotalTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
     
     if (currentIndex === -1) {
-      addPassenger({...values, ticketPrice});
+      addPassenger({...values, ticketPrice, phone: phoneOnlyNumbers});
     } else {
-      updatePassenger(currentIndex, {...values, ticketPrice});
+      updatePassenger(currentIndex, {...values, ticketPrice, phone: phoneOnlyNumbers});
     }
     resetForm();
     setSubmitting(false);
