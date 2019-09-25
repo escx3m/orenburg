@@ -13,6 +13,8 @@ import Chip from '@material-ui/core/Chip';
 import { Field } from 'formik';
 import Downshift from "downshift";
 
+import { cityZones } from '../constants';
+
 const useStyles = makeStyles(theme => ({
   stepper: {
   },
@@ -44,12 +46,13 @@ const renderDownShift = (props) => {
     label,
     city
   } = props;
-
+  
   const handleChange = (e) => {
     form.handleChange(e);
     const inputValue = e.target.value.trim().toLowerCase();
-    ymaps.suggest(`${city} ${inputValue}`).then((items) => {
-      const newItems = items.map(item => ({ ...item, value: item.value.split(',').slice(2).join(',') }));
+    const boundedBy = cityZones[city];
+    ymaps.suggest(inputValue, { boundedBy }).then((items) => {
+      const newItems = items.map(item => ({ ...item, value: item.value.split(',').slice(1).join(',') }));
       setItems(newItems);
     });
   }

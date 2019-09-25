@@ -16,6 +16,8 @@ import * as Yup from 'yup';
 import { PassengerForm, AddressForm } from './formSteps';
 import { ticketPrices } from '../constants';
 
+const { ymaps } = window;
+
 const phoneRegExp = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,11}(\s*)?$/;
 
 const useStyles = makeStyles(theme => ({
@@ -103,11 +105,17 @@ const PassengerInfoDialog = (props) => {
     const phoneOnlyNumbers = phone.replace(/\D+/g,"");
     const ticketPrice = calculateTotalTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
     
-    if (currentIndex === -1) {
-      addPassenger({...values, ticketPrice, phone: phoneOnlyNumbers});
-    } else {
-      updatePassenger(currentIndex, {...values, ticketPrice, phone: phoneOnlyNumbers});
-    }
+    const addressFromPromise = addressFrom !== '' ? ymaps.geocode(addressFrom, { json: true, results: 1 }) : '';
+    const addressToPromise = addressTo !== '' ? ymaps.geocode(addressTo, { json: true, results: 1 }) : '';
+    Promise.all([addressFromPromise, addressToPromise]).then(coordinates => {
+      const coordinatesFrom = coordinates[0] !== '' ? coordinates[0].GeoObjectCollection.featureMember[0].GeoObject.Point.pos : '';
+      const coordinatesTo = coordinates[1] !== '' ? coordinates[1].GeoObjectCollection.featureMember[0].GeoObject.Point.pos : '';
+      if (currentIndex === -1) {
+        addPassenger({...values, ticketPrice, phone: phoneOnlyNumbers, coordinatesFrom, coordinatesTo});
+      } else {
+        updatePassenger(currentIndex, {...values, ticketPrice, phone: phoneOnlyNumbers, coordinatesFrom, coordinatesTo});
+      }
+    });
     resetForm();
     setSubmitting(false);
     setActiveStep(0);
