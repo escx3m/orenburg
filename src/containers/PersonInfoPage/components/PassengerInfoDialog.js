@@ -18,7 +18,7 @@ import { ticketPrices } from '../constants';
 
 const { ymaps } = window;
 
-const phoneRegExp = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,11}(\s*)?$/;
+const phoneRegExp = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){11}(\s*)?$/;
 
 const useStyles = makeStyles(theme => ({
   stepper: {
