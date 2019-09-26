@@ -136,7 +136,7 @@ const renderMultilineTextField = ({ field, form: { touched, errors }, ...props }
     {...props}
     fullWidth
     multiline
-    rows="4"
+    rows="6"
     margin="dense"
     variant="outlined"
     error={touched[field.name] && !!errors[field.name]}
@@ -226,6 +226,13 @@ export const AddressForm = (props) => {
   const [items, setItems] = useState([]);
 
   const { cityFromText, cityToText } = props;
+  const commentPlaceholder =
+`-Укажите в этом поле информацию для водителя.
+-Например время прилет/вылета, отправления/прибытия поезда и т.д.
+-Точный возраст детей
+-Наличие дополнительного багажа
+-Дополнительный телефон
+`;
   return (
     <>
       <Field
@@ -249,6 +256,7 @@ export const AddressForm = (props) => {
       <Field
         name="comment"
         label="Комментарий"
+        placeholder={commentPlaceholder}
         component={renderMultilineTextField}
       />
     </>
