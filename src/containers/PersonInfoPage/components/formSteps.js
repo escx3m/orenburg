@@ -13,6 +13,8 @@ import Chip from '@material-ui/core/Chip';
 import { Field } from 'formik';
 import Downshift from "downshift";
 
+import { cityZones } from '../constants';
+
 const useStyles = makeStyles(theme => ({
   stepper: {
   },
@@ -44,12 +46,13 @@ const renderDownShift = (props) => {
     label,
     city
   } = props;
-
+  
   const handleChange = (e) => {
     form.handleChange(e);
     const inputValue = e.target.value.trim().toLowerCase();
-    ymaps.suggest(`${city} ${inputValue}`).then((items) => {
-      const newItems = items.map(item => ({ ...item, value: item.value.split(',').slice(2).join(',') }));
+    const boundedBy = cityZones[city];
+    ymaps.suggest(inputValue, { boundedBy }).then((items) => {
+      const newItems = items.map(item => ({ ...item, value: item.value.split(',').slice(1).join(',') }));
       setItems(newItems);
     });
   }
@@ -133,7 +136,7 @@ const renderMultilineTextField = ({ field, form: { touched, errors }, ...props }
     {...props}
     fullWidth
     multiline
-    rows="4"
+    rows="6"
     margin="dense"
     variant="outlined"
     error={touched[field.name] && !!errors[field.name]}
@@ -223,6 +226,13 @@ export const AddressForm = (props) => {
   const [items, setItems] = useState([]);
 
   const { cityFromText, cityToText } = props;
+  const commentPlaceholder =
+`-Укажите в этом поле информацию для водителя.
+-Например время прилет/вылета, отправления/прибытия поезда и т.д.
+-Точный возраст детей
+-Наличие дополнительного багажа
+-Дополнительный телефон
+`;
   return (
     <>
       <Field
@@ -246,6 +256,7 @@ export const AddressForm = (props) => {
       <Field
         name="comment"
         label="Комментарий"
+        placeholder={commentPlaceholder}
         component={renderMultilineTextField}
       />
     </>
