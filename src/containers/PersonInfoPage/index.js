@@ -212,7 +212,7 @@ const PersonInfoPage = (props) => {
   );
 };
 
-const mapStateToProps = ({ trips: { seats, cityFrom, cityTo, cityFromText, cityToText, dateText, timeText }, passengers, order: { loading, error }, payment: { idempotenceKey } }) => ({
+const mapStateToProps = ({ trips: { seats, cityFrom, cityTo, cityFromText, cityToText, dateText, timeText }, passengers, payment: { idempotenceKey, loading, error } }) => ({
   seats,
   cityFrom,
   cityTo,

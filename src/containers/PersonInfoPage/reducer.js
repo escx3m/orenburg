@@ -5,9 +5,6 @@ import {
   SEND_ORDER,
   SEND_ORDER_SUCCESS,
   SEND_ORDER_ERROR,
-  MAKE_PAYMENT,
-  MAKE_PAYMENT_SUCCESS,
-  MAKE_PAYMENT_ERROR,
   RESET,
 } from './constants';
 
@@ -37,38 +34,14 @@ export const passengers = (state = [], action) => {
 };
 
 const initialState = {
-  loading: false,
-  error: '',
-};
-
-export const order = (state = initialState, action) => {
-  switch(action.type) {
-    case SEND_ORDER: {
-      return { ...state, loading: true };
-    }
-    case SEND_ORDER_SUCCESS: {
-      return { ...state, loading: false, error: '' };
-    }
-    case SEND_ORDER_ERROR: {
-      const { error } = action;
-      return { ...state, loading: false, error };
-    }
-    case 'reset': {
-      return initialState;
-    }
-    default: return state;
-  }
-};
-
-const paymentInitialState = {
   idempotenceKey: '',
   loading: false,
   error: '',
 };
 
-export const payment = (state = paymentInitialState, action) => {
+export const payment = (state = initialState, action) => {
   switch(action.type) {
-    case MAKE_PAYMENT: {
+    case SEND_ORDER: {
       return {
         ...state,
         loading: true,
@@ -76,7 +49,7 @@ export const payment = (state = paymentInitialState, action) => {
         error: ''
       };
     }
-    case MAKE_PAYMENT_SUCCESS: {
+    case SEND_ORDER_SUCCESS: {
       return {
         ...state,
         loading: false,
@@ -84,7 +57,7 @@ export const payment = (state = paymentInitialState, action) => {
         error: ''
       };
     }
-    case MAKE_PAYMENT_ERROR: {
+    case SEND_ORDER_ERROR: {
       const { error } = action;
       return { ...state, loading: false, error };
     }

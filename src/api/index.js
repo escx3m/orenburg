@@ -10,17 +10,9 @@ const sendOrder = async (data) => {
   return result;
 }
 
-const makePayment = async (data) => {
-  console.log('send payment');
-  const result = await axios.post('http://localhost:5000/api/payment', { data }).then(res => res)
-  console.log(result);
-  return result;
-}
-
 export default {
   trips: {
     get: getTrips
   },
-  sendOrder,
-  makePayment
+  sendOrder
 }

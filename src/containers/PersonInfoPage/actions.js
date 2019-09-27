@@ -5,9 +5,6 @@ import {
   SEND_ORDER,
   SEND_ORDER_SUCCESS,
   SEND_ORDER_ERROR,
-  MAKE_PAYMENT,
-  MAKE_PAYMENT_SUCCESS,
-  MAKE_PAYMENT_ERROR,
   RESET,
 } from './constants';
 import api from '../../api';
@@ -28,15 +25,16 @@ export const updatePassenger = (index, values) => ({
   values,
 });
 
-export const sendOrderStart = trips => ({
+export const sendOrderStart = data => ({
   type: SEND_ORDER,
+  idempotenceKey: data.idempotenceKey
 });
 
-export const sendOrderSuccess = trips => ({
+export const sendOrderSuccess = () => ({
   type: SEND_ORDER_SUCCESS,
 });
 
-export const sendOrderError = trips => ({
+export const sendOrderError = () => ({
   type: SEND_ORDER_ERROR,
 });
 
@@ -45,7 +43,7 @@ export const passangersReset = () => ({
 });
 
 export const sendOrder = (orderData, redirectToSuccessPage) => dispatch => {
-  dispatch(makePaymentStart(orderData));
+  dispatch(sendOrderStart(orderData));
   api.sendOrder(orderData).then(
     result => {
       const { confirmation_url } = result.data.confirmation;
@@ -54,29 +52,4 @@ export const sendOrder = (orderData, redirectToSuccessPage) => dispatch => {
     },
     error => dispatch(sendOrderError(error))
   );
-}
-
-export const makePaymentStart = data => ({
-  type: MAKE_PAYMENT,
-  idempotenceKey: data.idempotenceKey
-});
-
-export const makePaymentSuccess = () => ({
-  type: MAKE_PAYMENT_SUCCESS,
-});
-
-export const makePaymentError = () => ({
-  type: MAKE_PAYMENT_ERROR,
-});
-
-export const makePayment = data => dispatch => {
-  dispatch(makePaymentStart(data));
-  api.makePayment(data)
-  .then(result => {
-      console.log('actions makePayment', result);
-      const { confirmation_url } = result.data.confirmation;
-      window.open(confirmation_url, '_self');
-      dispatch(makePaymentSuccess());
-    })
-    .catch(error => dispatch(makePaymentError(error)));
 }

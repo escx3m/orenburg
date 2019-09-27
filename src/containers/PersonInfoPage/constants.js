@@ -4,9 +4,6 @@ export const UPDATE_PASSENGER = 'UPDATE_PASSENGER';
 export const SEND_ORDER = 'SEND_ORDER';
 export const SEND_ORDER_SUCCESS = 'SEND_ORDER_SUCCESS';
 export const SEND_ORDER_ERROR = 'SEND_ORDER_ERROR';
-export const MAKE_PAYMENT = 'MAKE_PAYMENT';
-export const MAKE_PAYMENT_SUCCESS = 'MAKE_PAYMENT_SUCCESS';
-export const MAKE_PAYMENT_ERROR = 'MAKE_PAYMENT_ERROR';
 
 export const RESET = 'passangers/RESET';
 
