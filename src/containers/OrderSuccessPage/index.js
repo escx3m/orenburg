@@ -16,12 +16,12 @@ const useStyles = makeStyles(theme => ({
   heroContent: {
     padding: theme.spacing(3, 0, 6),
   },
-  textIndent: {
-    textIndent: "1.5em"
-  },
   heroButtons: {
     marginTop: theme.spacing(4),
   },
+  href: {
+    textDecoration: "none",
+  }
 }));
 
 const OrderSuccessPage = (props) => {
@@ -39,18 +39,24 @@ const OrderSuccessPage = (props) => {
     <div className={classes.heroContent}>
       <Container maxWidth="sm">
         <Typography component="h5" variant="h5" align="center" color="textPrimary" gutterBottom>
-          Спасибо, что купили у нас билет.
+          Спасибо за покупку!
         </Typography>
-        <Typography className={classes.textIndent}>
-          Если нам понадобится какая-либо информация по вашей поездке, мы свяжемся с вами
-          по контактным номерам указанным в билете.
+        <br />
+        <Typography align="center" >
+          Если будет нужна дополнительная информация по поездке, мы с вами свяжемся.
         </Typography>
-        <Typography className={classes.textIndent}>
-          За день до поездки с 19:00 до 20:00 ожидайте смс с номером водителя и маркой машины. В указанный диапазон сбора
-          будьте готовы. За 5-10 минут до прибытия вам позвонит водитель.
+        <br />
+        <Typography align="center" >
+          За день до поездки с 19:00 до 20:00 вам придёт смс с телефоном водителя и маркой машины.
         </Typography>
-        <Typography className={classes.textIndent}>
-          Телефон диспетчерской <phone>8937464600</phone>
+        <br />
+        <Typography align="center" >
+          В указанный интервал сбора пассажиров будьте готовы. Водитель вам позвонит за 5-10 минут до прибытия.
+        </Typography>
+        <br />
+        <Typography align="center" >Круглосуточная диспетчерская:</Typography>
+        <Typography variant="h5" align="center" >
+          <a href="tel:+79374646000" className={classes.href}>8(937)464-6000</a>
         </Typography>
         <Grid container spacing={2} justify="center" className={classes.heroButtons}>
           <Grid item>

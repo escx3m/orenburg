@@ -52,7 +52,7 @@ const renderDownShift = (props) => {
     const inputValue = e.target.value.trim().toLowerCase();
     const boundedBy = cityZones[city];
     ymaps.suggest(inputValue, { boundedBy }).then((items) => {
-      const newItems = items.map(item => ({ ...item, value: item.value.split(',').slice(1).join(',') }));
+      const newItems = items.map(item => ({ ...item, value: item.value.split(',').slice(2).join(',') }));
       setItems(newItems);
     });
   }
@@ -226,7 +226,7 @@ export const AddressForm = (props) => {
   const [items, setItems] = useState([]);
 
   const { cityFromText, cityToText } = props;
-  const commentPlaceholder = `-Укажите доп. информацию для водителя.\n-Время прилета/вылета, отправления/прибытия поезда\n-Багаж, возраст детей, доп. телефон для связи.`;
+  const commentPlaceholder = `-Укажите доп. информацию для водителя.\r\n-Время прилета/вылета, отправления/прибытия поезда\r\n-Багаж, возраст детей, доп. телефон для связи.`;
   return (
     <>
       <Field
