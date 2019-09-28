@@ -29,6 +29,10 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontSize: 14,
   },
+  wrapIcon: {
+    verticalAlign: 'middle',
+    display: 'inline-flex'
+  },
   margin: {
     margin: theme.spacing(1),
   },
@@ -121,33 +125,25 @@ const PersonInfoPage = (props) => {
           <Grid key={seats - index} item xs={12}>
             <Divider />
               <Grid container justify="center" spacing={1} className={classes.root}>
-                <Grid item xs={8}>
-                  <ListItem>
-                    <ListItemIcon>
-                      <PersonIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={`${lastName} ${firstName} ${middleName}`} />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <PhoneIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={phone} />
-                  </ListItem>
-                  {addressFrom && <ListItem>
-                    <ListItemIcon>
-                      <ArrowBackIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={addressFrom} />
-                  </ListItem>}
-                  {addressTo && <ListItem>
-                    <ListItemIcon>
-                      <ArrowForwardIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={addressTo} />
-                  </ListItem>}
+                <Grid item xs={11}>
+                  <Grid container direction="row" alignItems="center">
+                    <Typography variant="subtitle1" className={classes.wrapIcon}>
+                      <PersonIcon />{`${lastName} ${firstName} ${middleName}`}
+                    </Typography>
+                  </Grid>
+                  <Grid container direction="row" alignItems="center">
+                    <Typography variant="subtitle1" className={classes.wrapIcon}>
+                      <PhoneIcon />{phone}
+                    </Typography>
+                  </Grid>
+                  {addressFrom && <Typography variant="subtitle1" className={classes.wrapIcon}>
+                      <ArrowBackIcon />{addressFrom}
+                    </Typography>}
+                  {addressTo && <Typography variant="subtitle1" className={classes.wrapIcon}>
+                      <ArrowForwardIcon />{addressTo}
+                    </Typography>}
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={1}>
                   <Grid container justify="flex-end">
                     <IconButton onClick={handleClickOpen(passengers[index], index)} aria-label="edit">
                       <EditIcon />
