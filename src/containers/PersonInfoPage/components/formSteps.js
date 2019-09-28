@@ -226,11 +226,7 @@ export const AddressForm = (props) => {
   const [items, setItems] = useState([]);
 
   const { cityFromText, cityToText } = props;
-  const commentPlaceholder =
-`-Укажите доп. информацию для водителя.
--Время прилета/вылета, отправления/прибытия поезда
--Багаж, возраст детей, доп. телефон для связи.
-`;
+  const commentPlaceholder = `-Укажите доп. информацию для водителя.\n-Время прилета/вылета, отправления/прибытия поезда\n-Багаж, возраст детей, доп. телефон для связи.`;
   return (
     <>
       <Field
