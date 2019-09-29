@@ -101,6 +101,7 @@ const PassengerInfoDialog = (props) => {
     }
 
     const { addressFrom, addressTo, child, phone } = values;
+    const ageGroup = child ? values.ageGroup : null;
     const phoneOnlyNumbers = phone.replace(/\D+/g,"");
     const ticketPrice = calculateTotalTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
     
@@ -110,9 +111,9 @@ const PassengerInfoDialog = (props) => {
       const coordinatesFrom = coordinates[0] !== '' ? coordinates[0].GeoObjectCollection.featureMember[0].GeoObject.Point.pos : '';
       const coordinatesTo = coordinates[1] !== '' ? coordinates[1].GeoObjectCollection.featureMember[0].GeoObject.Point.pos : '';
       if (currentIndex === -1) {
-        addPassenger({...values, ticketPrice, phone: phoneOnlyNumbers, coordinatesFrom, coordinatesTo});
+        addPassenger({...values, ticketPrice, phone: phoneOnlyNumbers, coordinatesFrom, coordinatesTo ,ageGroup});
       } else {
-        updatePassenger(currentIndex, {...values, ticketPrice, phone: phoneOnlyNumbers, coordinatesFrom, coordinatesTo});
+        updatePassenger(currentIndex, {...values, ticketPrice, phone: phoneOnlyNumbers, coordinatesFrom, coordinatesTo, ageGroup});
       }
     });
     resetForm();
