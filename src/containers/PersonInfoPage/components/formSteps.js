@@ -13,7 +13,7 @@ import Chip from '@material-ui/core/Chip';
 import { Field } from 'formik';
 import Downshift from "downshift";
 
-import { cityZones } from '../constants';
+import { cityZones, allowedAddressesRostov } from '../constants';
 
 const useStyles = makeStyles(theme => ({
   stepper: {
@@ -50,17 +50,27 @@ const renderDownShift = (props) => {
   const handleChange = (e) => {
     form.handleChange(e);
     const inputValue = e.target.value.trim().toLowerCase();
-    const boundedBy = cityZones[city];
-    ymaps.suggest(inputValue, { boundedBy }).then((items) => {
-      const newItems = items.map(item => ({ ...item, value: item.value.split(',').slice(2).join(',') }));
+    if (city !== 'Ростов-на-Дону') {
+      const boundedBy = cityZones[city];
+      ymaps.suggest(inputValue, { boundedBy }).then((items) => {
+        const newItems = items.map(item => ({ ...item, value: item.value.split(',').slice(1).filter(item => !item.includes('Калмыкия')).join(',') }));
+        setItems(newItems);      
+      });
+    } else {
+      const newItems = Object.keys(allowedAddressesRostov)
+        .filter(key => key.toLowerCase().includes(inputValue))
+        .map(item => ({ value: item }));
       setItems(newItems);
-    });
+    }
   }
 
   return (
     <Downshift
       onChange={selection => {
-        const value = selection ? selection.value : '';
+        let value = selection ? selection.value : '';
+        if (selection && allowedAddressesRostov.hasOwnProperty(selection.value)) {
+          value = allowedAddressesRostov[selection.value];
+        }
         form.setFieldValue(name, value);
       }}
       itemToString={item => (item ? item.value : '')}
