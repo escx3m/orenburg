@@ -83,7 +83,7 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
                 </Grid>
                 <Grid item xs={4}>
                   <Grid container alignItems="flex-end" justify="flex-end" direction="row">
-                    <Button disabled={availableSeats < seats} onClick={() => handleButtonClick(cityFromText, cityToText, dateText, timeText)} variant="contained" color="primary">Бронь</Button>
+                    <Button disabled={availableSeats < seats} onClick={() => handleButtonClick(cityFromText, cityToText, dateText, timeText)} variant="contained" color="primary">Купить</Button>
                   </Grid>
                 </Grid>
               </Grid>

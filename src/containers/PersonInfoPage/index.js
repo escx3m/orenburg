@@ -175,7 +175,7 @@ const PersonInfoPage = (props) => {
         </Grid>
         <Grid item xs={12}>
           <Grid container justify="center">
-            <Button disabled={!(readyToOrder && !loading)} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Оформить бронь</Button>
+            <Button disabled={!(readyToOrder && !loading)} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Оплатить</Button>
           </Grid>
         </Grid>
         {error &&

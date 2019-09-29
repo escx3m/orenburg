@@ -152,7 +152,7 @@ const SearchForm = props => {
           </Select>
           {touched.cityTo && errors.cityTo && <FormHelperText>{errors.cityTo}</FormHelperText>}
         </FormControl>
-        <Button size="large" fullWidth onClick={handleSubmit} variant="contained" color="primary" >Поиск</Button>
+        <Button size="large" fullWidth onClick={handleSubmit} variant="contained" color="primary" >Найти билеты</Button>
       </form>
     </React.Fragment>
   );
