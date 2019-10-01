@@ -136,12 +136,16 @@ const PersonInfoPage = (props) => {
                       <PhoneIcon />{phone}
                     </Typography>
                   </Grid>
-                  {addressFrom && <Typography variant="subtitle1" className={classes.wrapIcon}>
+                  {addressFrom && <Grid container direction="row" alignItems="center">
+                    <Typography variant="subtitle1" className={classes.wrapIcon}>
                       <ArrowBackIcon />{addressFrom}
-                    </Typography>}
-                  {addressTo && <Typography variant="subtitle1" className={classes.wrapIcon}>
+                    </Typography>
+                  </Grid>}
+                  {addressTo && <Grid container direction="row" alignItems="center">
+                    <Typography variant="subtitle1" className={classes.wrapIcon}>
                       <ArrowForwardIcon />{addressTo}
-                    </Typography>}
+                    </Typography>
+                  </Grid>}
                 </Grid>
                 <Grid item xs={1}>
                   <Grid container justify="flex-end">
