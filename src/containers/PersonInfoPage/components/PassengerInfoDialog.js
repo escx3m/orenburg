@@ -107,15 +107,23 @@ const PassengerInfoDialog = (props) => {
     
     const addressFromPromise = addressFrom !== '' ? ymaps.geocode(addressFrom, { json: true, results: 1 }) : '';
     const addressToPromise = addressTo !== '' ? ymaps.geocode(addressTo, { json: true, results: 1 }) : '';
-    Promise.all([addressFromPromise, addressToPromise]).then(coordinates => {
-      const coordinatesFrom = coordinates[0] !== '' ? coordinates[0].GeoObjectCollection.featureMember[0].GeoObject.Point.pos : '';
-      const coordinatesTo = coordinates[1] !== '' ? coordinates[1].GeoObjectCollection.featureMember[0].GeoObject.Point.pos : '';
-      if (currentIndex === -1) {
-        addPassenger({...values, ticketPrice, phone: phoneOnlyNumbers, coordinatesFrom, coordinatesTo ,ageGroup});
-      } else {
-        updatePassenger(currentIndex, {...values, ticketPrice, phone: phoneOnlyNumbers, coordinatesFrom, coordinatesTo, ageGroup});
-      }
-    });
+    Promise.all([addressFromPromise, addressToPromise])
+      .then(coordinates => {
+        const coordinatesFrom = coordinates[0] !== '' ? coordinates[0].GeoObjectCollection.featureMember[0].GeoObject.Point.pos : '';
+        const coordinatesTo = coordinates[1] !== '' ? coordinates[1].GeoObjectCollection.featureMember[0].GeoObject.Point.pos : '';
+        if (currentIndex === -1) {
+          addPassenger({...values, ticketPrice, phone: phoneOnlyNumbers, coordinatesFrom, coordinatesTo ,ageGroup});
+        } else {
+          updatePassenger(currentIndex, {...values, ticketPrice, phone: phoneOnlyNumbers, coordinatesFrom, coordinatesTo, ageGroup});
+        }
+      })
+      .catch(() => {
+        if (currentIndex === -1) {
+          addPassenger({...values, ticketPrice, phone: phoneOnlyNumbers ,ageGroup});
+        } else {
+          updatePassenger(currentIndex, {...values, ticketPrice, phone: phoneOnlyNumbers, ageGroup});
+        }
+      });
     resetForm();
     setSubmitting(false);
     setActiveStep(0);
