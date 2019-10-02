@@ -13,7 +13,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
 import { PassengerForm, AddressForm } from './formSteps';
-import { ticketPrices } from '../constants';
+import { ticketPrices, allowedAddressesRostov } from '../constants';
 
 const { ymaps } = window;
 
@@ -104,9 +104,13 @@ const PassengerInfoDialog = (props) => {
     const ageGroup = child ? values.ageGroup : null;
     const phoneOnlyNumbers = phone.replace(/\D+/g,"");
     const ticketPrice = calculateTotalTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
+
+    const addressFromForGeocode = cityFromText === 'Ростов-на-Дону' ? allowedAddressesRostov[addressFrom] || '' : addressFrom;
+    const addressFromFull = `${cityFromText}, ${addressFromForGeocode}`;
+    const addressToFull = `${cityToText}, ${addressTo}`;
     
-    const addressFromPromise = addressFrom !== '' ? ymaps.geocode(addressFrom, { json: true, results: 1 }) : '';
-    const addressToPromise = addressTo !== '' ? ymaps.geocode(addressTo, { json: true, results: 1 }) : '';
+    const addressFromPromise = addressFromFull !== '' ? ymaps.geocode(addressFromFull, { json: true, results: 1 }) : '';
+    const addressToPromise = addressToFull !== '' ? ymaps.geocode(addressToFull, { json: true, results: 1 }) : '';
     Promise.all([addressFromPromise, addressToPromise])
       .then(coordinates => {
         const coordinatesFrom = coordinates[0] !== '' ? coordinates[0].GeoObjectCollection.featureMember[0].GeoObject.Point.pos : '';
@@ -123,7 +127,7 @@ const PassengerInfoDialog = (props) => {
         } else {
           updatePassenger(currentIndex, {...values, ticketPrice, phone: phoneOnlyNumbers, ageGroup});
         }
-      });
+      });;
     resetForm();
     setSubmitting(false);
     setActiveStep(0);
