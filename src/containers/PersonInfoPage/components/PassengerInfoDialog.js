@@ -48,6 +48,8 @@ const PassengerInfoDialog = (props) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
   const [activeStep, setActiveStep] = React.useState(0);
+  const [fullAddressFrom, setFullAddressFrom] = React.useState('');
+  const [fullAddressTo, setFullAddressTo] = React.useState('');
 
   const isLastStep = () => {
     return activeStep === steps.length - 1;
@@ -105,12 +107,10 @@ const PassengerInfoDialog = (props) => {
     const phoneOnlyNumbers = phone.replace(/\D+/g,"");
     const ticketPrice = calculateTotalTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
 
-    const addressFromForGeocode = cityFromText === 'Ростов-на-Дону' ? allowedAddressesRostov[addressFrom] || '' : addressFrom;
-    const addressFromFull = `${cityFromText}, ${addressFromForGeocode}`;
-    const addressToFull = `${cityToText}, ${addressTo}`;
+    const addressFromForGeocode = cityFromText === 'Ростов-на-Дону' ? allowedAddressesRostov[addressFrom] || '' : fullAddressFrom;
     
-    const addressFromPromise = addressFromFull !== '' ? ymaps.geocode(addressFromFull, { json: true, results: 1 }) : '';
-    const addressToPromise = addressToFull !== '' ? ymaps.geocode(addressToFull, { json: true, results: 1 }) : '';
+    const addressFromPromise = addressFromForGeocode !== '' ? ymaps.geocode(addressFromForGeocode, { json: true, results: 1 }) : '';
+    const addressToPromise = fullAddressTo !== '' ? ymaps.geocode(fullAddressTo, { json: true, results: 1 }) : '';
     Promise.all([addressFromPromise, addressToPromise])
       .then(coordinates => {
         const coordinatesFrom = coordinates[0] !== '' ? coordinates[0].GeoObjectCollection.featureMember[0].GeoObject.Point.pos : '';
@@ -207,6 +207,8 @@ const PassengerInfoDialog = (props) => {
                   {...formikBag}
                   cityFromText={cityFromText}
                   cityToText={cityToText}
+                  setFullAddressFrom={setFullAddressFrom}
+                  setFullAddressTo={setFullAddressTo}
                   showTakeFromPrevButton={showTakeFromPrevButton}
                   setPrevPassengerValues={() => setPrevPassengerValues(formikBag.setFieldValue)}
                 />

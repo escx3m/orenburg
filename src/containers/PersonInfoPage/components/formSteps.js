@@ -40,8 +40,9 @@ const renderDownShift = (props) => {
   const { ymaps } = window;
   const {
     classes,
-    items,
-    setItems,
+    suggestedAdresses,
+    setSuggestedAdresses,
+    setFullAddress,
     field: { name, value },
     form,
     label,
@@ -55,12 +56,12 @@ const renderDownShift = (props) => {
       const newItems = Object.keys(allowedAddressesRostov)
         .filter(key => key.toLowerCase().includes(inputValue))
         .map(item => ({ value: item }));
-      setItems(newItems);
+      setSuggestedAdresses(newItems);
     } else {
       const boundedBy = cityZones[city];
       ymaps.suggest(inputValue, { boundedBy }).then((items) => {
-        const newItems = items.map(item => ({ ...item, value: item.value.split(',').filter(item => !item.includes('Калмыкия')).slice(2).filter(item => !item.includes('Калмыкия')).join(',') }));
-        setItems(newItems);      
+        const newItems = items.map((item, index) => ({ index, fullAddress: item.value, value: item.value.split(',').filter(item => !item.includes('Калмыкия')).slice(2).filter(item => !item.includes('Калмыкия')).join(',') }));
+        setSuggestedAdresses(newItems);
       });
     }
   }
@@ -87,7 +88,7 @@ const renderDownShift = (props) => {
           <TextField {...getInputProps({
             name,
             onChange: handleChange,
-            onBlur: form.handleBlur,
+            onBlur: () => setFullAddress(selectedItem.fullAddress),
             value,
             label,
             variant: "outlined",
@@ -98,12 +99,12 @@ const renderDownShift = (props) => {
             {isOpen
               ? (
                 <Paper className={classes.paper} square>
-                  {items
+                  {suggestedAdresses
                     .map((item, index) => (
-                        <ListItem
+                        <ListItem key={index}
                           button
                           {...getItemProps({
-                            key: item.value,
+                            key: index,
                             index,
                             item,
                             style: {
@@ -231,26 +232,28 @@ export const PassengerForm = (props) => {
 export const AddressForm = (props) => {
   const classes = useStyles();
 
-  const [items, setItems] = useState([]);
+  const [suggestedAdresses, setSuggestedAdresses] = useState([]);
 
-  const { cityFromText, cityToText } = props;
+  const { cityFromText, cityToText, setFullAddressFrom, setFullAddressTo } = props;
   const commentPlaceholder = `-Укажите доп. информацию для водителя.\r\n-Время прилета/вылета, отправления/прибытия поезда\r\n-Багаж, возраст детей, доп. телефон для связи.`;
   return (
     <>
       <Field
         name="addressFrom"
         label="Адрес откуда"
-        items={items}
-        setItems={setItems}
+        suggestedAdresses={suggestedAdresses}
+        setSuggestedAdresses={setSuggestedAdresses}
         classes={classes}
         city={cityFromText}
+        setFullAddress={setFullAddressFrom}
         component={renderDownShift}
       />
       <Field
         name="addressTo"
         label="Адрес куда"
-        items={items}
-        setItems={setItems}
+        suggestedAdresses={suggestedAdresses}
+        setSuggestedAdresses={setSuggestedAdresses}
+        setFullAddress={setFullAddressTo}
         classes={classes}
         city={cityToText}
         component={renderDownShift}
