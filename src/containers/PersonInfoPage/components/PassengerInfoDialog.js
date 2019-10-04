@@ -83,13 +83,18 @@ const PassengerInfoDialog = (props) => {
 
   const calculateTotalTicketPrice = (cityFrom, cityTo, addressFrom, addressTo, child) => {
     const Elista = '166';
+    let result = 0;
     if ([cityFrom, cityTo].every(city => ['119', '23'].includes(city))) {
       const ticketPriceToElista = calculateTicketPrice(cityFrom, Elista, addressFrom, '', child);
       const ticketPriceFromElista = calculateTicketPrice(Elista, cityTo, '', addressTo, child);
-      return ticketPriceToElista + ticketPriceFromElista;
+      result = ticketPriceToElista + ticketPriceFromElista;
     } else {
-      return calculateTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
+      result = calculateTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
     }
+    if ([cityFrom, cityTo].includes('119') && [addressFrom, addressTo].includes('Аэропорт(Платов)')) {
+      result += 1500;
+    }
+    return result;
   }
 
   const handleSubmit = (values, formikBag) => {
