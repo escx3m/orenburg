@@ -63,8 +63,8 @@ function App() {
         <Route path="/personInfo" component={PersonInfoPage} />
         <Route path="/orderSuccess" component={OrderSuccessPage} />
       </Container>
-      <footer className={classes.footer}>
-        <Copyright />
+        <footer className={classes.footer}>
+      <Copyright />
       </footer>
     </div>
   );

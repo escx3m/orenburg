@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import ModalWin from './components/ModalWin';
+
 import { connect } from 'react-redux';
 import uuidv4 from 'uuid/v4';
 import { makeStyles } from '@material-ui/core/styles';
@@ -106,7 +108,7 @@ const PersonInfoPage = (props) => {
     };
     sendOrder(orderData, () => history.push('/orderSuccess'));
   }
-
+  const [disabledBntFind, setDisabledBtnFind] = useState(true);
   const readyToOrder = passengers.length === seats;
   const totalPrice = passengers.reduce((sum, { ticketPrice }) => {
     return sum + ticketPrice;
@@ -179,9 +181,10 @@ const PersonInfoPage = (props) => {
         </Grid>
         <Grid item xs={12}>
           <Grid container justify="center">
-            <Button disabled={!(readyToOrder && !loading)} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Оплатить</Button>
+            <Button disabled={!(readyToOrder && !loading && !disabledBntFind)} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Оплатить</Button>
           </Grid>
         </Grid>
+        <ModalWin toggleBtnFindTickets={ () => setDisabledBtnFind(!disabledBntFind)}/>
         {error &&
           <Grid item xs={12}>
             <Grid container justify="center">
