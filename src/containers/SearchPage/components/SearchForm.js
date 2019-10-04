@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -78,6 +78,8 @@ const SearchForm = props => {
   const cityFromOptions = cityOptions.filter(city => city.value !== values.cityTo);
   const cityToOptions = cityOptions.filter(city => city.value !== values.cityFrom);
   
+  
+  
   return (
     <React.Fragment>
       <form onSubmit={handleSubmit} className={classes.form}>
@@ -154,6 +156,7 @@ const SearchForm = props => {
         </FormControl>
         <Button size="large" fullWidth onClick={handleSubmit} variant="contained" color="primary" >Найти билеты</Button>
       </form>
+      
     </React.Fragment>
   );
 }

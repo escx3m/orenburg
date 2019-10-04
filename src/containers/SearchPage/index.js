@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment-timezone';
 import qs from 'query-string';
@@ -8,6 +8,7 @@ import SearchForm from './components/SearchForm';
 import ListTrips from './components/ListTrips';
 import { getTrips, chooseTrip } from './actions';
 import { cityTimeZones, passengerStates } from './constants';
+
 
 const { ym } = window;
 
@@ -70,9 +71,12 @@ const SearchPage = (props) => {
 
   return (
     <div className={classes.root}>
+      
       <SearchForm onSubmit={submit} initialValues={{ cityFrom: city_from, cityTo: city_to }} trips={trips} />
+      
       {loading && <CircularProgress disableShrink />}
       {showTrips && <ListTrips trips={trips} cityFrom={cityFrom} cityTo={cityTo} date={date} seats={seats} handleButtonClick={buyButtonClickHandler} />}
+            
     </div>
   );
 }
