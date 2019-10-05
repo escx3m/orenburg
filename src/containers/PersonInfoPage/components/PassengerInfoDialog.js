@@ -42,6 +42,7 @@ const PassengerInfoDialog = (props) => {
     cityTo,
     cityFromText,
     cityToText,
+    seats,
   } = props;
 
   const classes = useStyles();
@@ -92,7 +93,8 @@ const PassengerInfoDialog = (props) => {
       result = calculateTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
     }
     if ([cityFrom, cityTo].includes('119') && [addressFrom, addressTo].includes('Аэропорт(Платов)')) {
-      result += 1500;
+      const priceToAirport = Math.max(500, 1500 / seats);
+      result += priceToAirport;
     }
     return result;
   }

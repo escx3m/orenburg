@@ -207,6 +207,7 @@ const PersonInfoPage = (props) => {
         cityTo={cityTo}
         cityFromText={cityFromText}
         cityToText={cityToText}
+        seats={seats}
       />
     </div>
   );
