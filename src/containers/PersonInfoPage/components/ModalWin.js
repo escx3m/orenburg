@@ -1,10 +1,31 @@
 import { Modal, Button, Checkbox } from 'antd';
 import React from 'react';
-import './App.css';
 import 'antd/dist/antd.css';
 import offer from './offero';
 import confidential from './confidential';
+import styled from 'styled-components';
+
+const StyledPolicy = styled.div`
+  margin: 10px auto;
+
+.link-to-doc {
+  color: blue;
+}
+
+.link-to-doc:hover {
+  cursor: pointer;
+}
+
+.Button{
+  width: 400px;
+}
+
+.policy {
+  width: 100% !important;
+}
+`;
   
+
 class ModalWin extends React.Component {
   state = { 
     confidentialVisible: false,
@@ -61,12 +82,13 @@ class ModalWin extends React.Component {
 
   render() {
     return (
-        <div className="div-policy">
+        <StyledPolicy className="div-policy">
           <Checkbox 
             onChange={this.props.toggleBtnFindTickets}
           ></Checkbox> Я соглашаюсь с <span className="link-to-doc" onClick={this.showOfferModal}> условиями </span>
             и <span className="link-to-doc" onClick={this.showConfidentialModal}> политикой конфиденциальности </span>         
           <Modal
+            width="100%"
             title="Условия предоставления услуг"
             visible={this.state.offerVisible}
             onCancel={this.handleOfferCancel}
@@ -80,6 +102,7 @@ class ModalWin extends React.Component {
             {offer}
           </Modal>
           <Modal
+            width="100%"
             title="Политика конфиденциальности"
             visible={this.state.confidentialVisible}
             onCancel={this.handleConfidentialCancel}
@@ -93,7 +116,7 @@ class ModalWin extends React.Component {
             {confidential}
           </Modal>
           <br/>
-        </div>
+        </StyledPolicy>
     );
   }
 }
