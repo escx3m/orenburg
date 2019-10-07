@@ -49,7 +49,7 @@ body{
     cursor: pointer;
 }
 .div-policy {
-    margin: 10px;
+    margin: 10px auto;
 }
 .Content{
     text-align: center;
@@ -64,12 +64,6 @@ body{
 .Content2{
     margin:10px, 0;
     width: 400px;
-}
-Footer{
-    color:black;
-    position: absolute;
-    bottom: 0;
-    align-self: center;
 }
 .Button{
     width: 400px;

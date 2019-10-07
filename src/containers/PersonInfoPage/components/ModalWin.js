@@ -61,7 +61,6 @@ class ModalWin extends React.Component {
 
   render() {
     return (
-      <div>
         <div className="div-policy">
           <Checkbox 
             onChange={this.props.toggleBtnFindTickets}
@@ -95,7 +94,6 @@ class ModalWin extends React.Component {
           </Modal>
           <br/>
         </div>
-      </div>
     );
   }
 }
