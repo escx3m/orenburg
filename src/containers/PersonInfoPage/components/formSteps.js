@@ -13,7 +13,7 @@ import Chip from '@material-ui/core/Chip';
 import { Field } from 'formik';
 import Downshift from "downshift";
 
-import { cityZones, allowedAddressesRostov } from '../constants';
+import { cityZones, fastAccessLocation } from '../constants';
 
 
 const useStyles = makeStyles(theme => ({
@@ -53,15 +53,16 @@ const renderDownShift = (props) => {
     form.handleChange(e);
     const inputValue = e.target.value.trim().toLowerCase();
     if (city === 'Ростов-на-Дону' && name === 'addressFrom') {
-      const newItems = Object.keys(allowedAddressesRostov)
-        .filter(key => key.toLowerCase().includes(inputValue))
-        .map(item => ({ value: item }));
+      const newItems = fastAccessLocation[city].filter(({ value }) => value.toLowerCase().includes(inputValue));
       setSuggestedAdresses(newItems);
     } else {
       const boundedBy = cityZones[city];
+      const itemsFastAccess = fastAccessLocation[city].filter(({ value }) => value.toLowerCase().includes(inputValue));
       ymaps.suggest(inputValue, { boundedBy }).then((items) => {
-        const newItems = items.map((item, index) => ({ index, fullAddress: item.value, value: item.value.split(',').filter(item => !item.includes('Калмыкия')).slice(2).filter(item => !item.includes('Калмыкия')).join(',') }));
-        setSuggestedAdresses(newItems);
+        const itemsFromYandex = items
+          .filter(item => item.value.includes(city))
+          .map((item, index) => ({ index, fullAddress: item.value, value: item.value.split(',').filter(item => !item.includes('Калмыкия')).slice(2).join(',') }));
+        setSuggestedAdresses([...itemsFastAccess, ...itemsFromYandex]);
       });
     }
   }
@@ -88,7 +89,10 @@ const renderDownShift = (props) => {
           <TextField {...getInputProps({
             name,
             onChange: handleChange,
-            onBlur: () => setFullAddress(selectedItem.fullAddress),
+            onBlur: () => {
+              selectedItem && setFullAddress(selectedItem.fullAddress);
+              setSuggestedAdresses([]);
+            },
             value,
             label,
             variant: "outlined",

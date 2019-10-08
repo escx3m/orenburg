@@ -13,7 +13,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
 import { PassengerForm, AddressForm } from './formSteps';
-import { ticketPrices, allowedAddressesRostov } from '../constants';
+import { ticketPrices } from '../constants';
 
 const { ymaps } = window;
 
@@ -114,9 +114,7 @@ const PassengerInfoDialog = (props) => {
     const phoneOnlyNumbers = phone.replace(/\D+/g,"");
     const ticketPrice = calculateTotalTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
 
-    const addressFromForGeocode = cityFromText === 'Ростов-на-Дону' ? allowedAddressesRostov[addressFrom] || '' : fullAddressFrom;
-    
-    const addressFromPromise = addressFromForGeocode !== '' ? ymaps.geocode(addressFromForGeocode, { json: true, results: 1 }) : '';
+    const addressFromPromise = fullAddressFrom !== '' ? ymaps.geocode(fullAddressFrom, { json: true, results: 1 }) : '';
     const addressToPromise = fullAddressTo !== '' ? ymaps.geocode(fullAddressTo, { json: true, results: 1 }) : '';
     Promise.all([addressFromPromise, addressToPromise])
       .then(coordinates => {
