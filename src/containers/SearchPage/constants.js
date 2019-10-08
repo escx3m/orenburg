@@ -18,4 +18,8 @@ export const cityTimeZones = [
   { city: '23', timeZone: 'Europe/Astrakhan' },
 ]
 
+export const timeWindowPhoneRedir = {
+  maxMinutes: 120,
+}
+
 export const passengerStates = [2, 3];

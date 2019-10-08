@@ -1,14 +1,16 @@
 /* eslint-disable no-script-url */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import { Modal } from 'antd';
 
-import { cityOptions } from '../constants';
+import { cityOptions, timeWindowPhoneRedir } from '../constants';
 import { ticketPrices } from '../../PersonInfoPage/constants';
+
 
 const useStyles = makeStyles(theme => ({
   divider: {
@@ -49,6 +51,14 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
   const cityToText = cityOptions.find(({ value }) => value === cityTo).text;
   const dateText = formatDate(date);
   const priceFrom = calculatePriceFrom(cityFrom, cityTo);
+  
+  const diffMinutes = (t1, t2) => {
+    let diff = (t2.getTime() - t1.getTime()) / 1000;
+    diff /= 60;
+    return Math.abs(Math.round(diff));
+  };
+
+  const [visiblePhoneRedirect, setVisiblePhoneRedirect] = useState(false);
 
   const renderListTrips = (
     <React.Fragment>
@@ -70,6 +80,7 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
       </Grid>
       {trips.map(({ fromTime, availableRoute, availableSeats }, index) => {
         const timeText = `0${fromTime.hours}`.slice(-2) + ':' + `0${fromTime.minutes}`.slice(-2);
+        console.log(diffMinutes(new Date(), new Date(fromTime.time)));
         return availableRoute
           ? (
             <React.Fragment key={index}>
@@ -83,9 +94,19 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
                 </Grid>
                 <Grid item xs={4}>
                   <Grid container alignItems="flex-end" justify="flex-end" direction="row">
-                    <Button disabled={availableSeats < seats} onClick={() => handleButtonClick(cityFromText, cityToText, dateText, timeText)} variant="contained" color="primary">Купить</Button>
+                    <Button disabled={availableSeats < seats} onClick={(diffMinutes(new Date(fromTime.time), new Date()) < timeWindowPhoneRedir.maxMinutes) ? () => setVisiblePhoneRedirect(!visiblePhoneRedirect) : () => handleButtonClick(cityFromText, cityToText, dateText, timeText)} variant="contained" color="primary">Купить</Button>
+                    <Modal
+                      title="Перенаправление"
+                      visible={ visiblePhoneRedirect }
+                      onCancel={ () => {setVisiblePhoneRedirect(!visiblePhoneRedirect)} }
+                      footer={<Button type="primary" onClick={ () => {setVisiblePhoneRedirect(!visiblePhoneRedirect)} }>Ok</Button>}
+                    >
+                      <p>Продажа билетов через сайт прекращается за 2 часа до отправления.</p>
+                      <p>Пожалуйста, позвоните по телефону <a href="tel:+79374646000">+7 (937) 464-6000</a> и забронируйте себе билет.</p>
+                    </Modal>
                   </Grid>
                 </Grid>
+                
               </Grid>
             </React.Fragment>
           )

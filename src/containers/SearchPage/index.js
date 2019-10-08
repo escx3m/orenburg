@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment-timezone';
 import qs from 'query-string';
@@ -36,6 +36,7 @@ export const getCombinedTrips = (trips, cityFrom) => {
         const { timeZone } = cityTimeZones.find((item) => item.city === cityFrom);
         return {
           fromTime: {
+            time: fromTime,
             hours: moment.tz(fromTime, timeZone).hour(),
             minutes: moment.tz(fromTime, timeZone).minutes()
           },
@@ -64,14 +65,13 @@ const SearchPage = (props) => {
     ym(34728795, 'reachGoal', 'booking');
     props.chooseTrip(cityFromText, cityToText, dateText, timeText);
     props.history.push('/personInfo');
-  }
+  } 
   
   const { trips, cityFrom, cityTo, seats, date, loading, showTrips, location } = props;
   const { city_from, city_to } = (qs.parse(location.search, { ignoreQueryPrefix: true }));
 
   return (
     <div className={classes.root}>
-      
       <SearchForm onSubmit={submit} initialValues={{ cityFrom: city_from, cityTo: city_to }} trips={trips} />
       
       {loading && <CircularProgress disableShrink />}
