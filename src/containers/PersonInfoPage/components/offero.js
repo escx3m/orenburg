@@ -1,6 +1,60 @@
 import React from 'react';
-export default (
-    <div className="c7">
+import styled from 'styled-components';
+
+const Policy = styled.div`
+  .c0 {
+    margin-left: 72pt;
+    orphans: 2;
+    widows: 2;
+    padding-left: 0pt;
+  }
+  
+  .c2{
+    font-weight: bold;
+  }
+  
+  .c3 {
+    margin-left: 144pt;
+    padding-left: 0pt;
+  }
+  
+  .c4 {
+  margin-left: 108pt;
+  orphans: 2;
+  widows: 2;
+  padding-left: 0pt;
+  }
+  
+  .c7 {
+    padding: 40px 60px 80px 60px; 
+  }
+  
+  .c7 > * {
+    margin: 0;
+    padding:0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .c8 {
+  margin-left: 36pt;
+  padding-left: 0pt;
+  }
+  
+  .c9{   
+    height: 11pt;
+  }
+  
+  .c11 {
+  margin-left: 36pt;
+  text-indent: 36pt;
+  }
+  
+  .c12 {
+  margin-left: 72pt;
+  }
+`;
+
+export default (<Policy className="c7">
         <p class="c6"><span class="c2">Общие положения</span></p>
         <p class="c6">
             <span class="c2">ПУБЛИЧНЫЙ ДОГОВОР (ОФЕРТА)</span>
@@ -293,4 +347,4 @@ export default (
         <ol class="c1 lst-kix_z1ler87li2ke-1 start" start="1">
             <li class="c0"><span>Индивидуальный предприниматель Бадмаев Михаил Викторович, 358000, Элиста, ул. Ленина 251а, ИНН 08050065023, ОГРН 306784711600283 р/с 40802810600000025441 в ОАО «ПСКБ» к/с 30101810000000000852, БИК 044030852</span></li>
         </ol>
-    </div>);
+    </Policy>);
