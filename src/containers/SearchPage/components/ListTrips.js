@@ -80,7 +80,6 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
       </Grid>
       {trips.map(({ fromTime, availableRoute, availableSeats }, index) => {
         const timeText = `0${fromTime.hours}`.slice(-2) + ':' + `0${fromTime.minutes}`.slice(-2);
-        console.log(diffMinutes(new Date(), new Date(fromTime.time)));
         return availableRoute
           ? (
             <React.Fragment key={index}>

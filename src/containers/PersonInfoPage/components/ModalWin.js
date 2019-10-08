@@ -49,7 +49,6 @@ class ModalWin extends React.Component {
   };
 
   handleOfferOk = e => {
-    console.log(e);
     this.setState((state) => ({
       ...state,
       offerVisible: false
@@ -57,7 +56,6 @@ class ModalWin extends React.Component {
   };
 
   handleOfferCancel = e => {
-    console.log(e);
     this.setState((state) => ({
       ...state,
       offerVisible: false
@@ -65,7 +63,6 @@ class ModalWin extends React.Component {
   };
 
   handleConfidentialOk = e => {
-    console.log(e);
     this.setState((state) => ({
       ...state,
       confidentialVisible: false
@@ -73,7 +70,6 @@ class ModalWin extends React.Component {
   };
 
   handleConfidentialCancel = e => {
-    console.log(e);
     this.setState((state) => ({
       ...state,
       confidentialVisible: false

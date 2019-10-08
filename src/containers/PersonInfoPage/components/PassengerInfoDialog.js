@@ -128,7 +128,7 @@ const PassengerInfoDialog = (props) => {
       })
       .catch(() => {
         if (currentIndex === -1) {
-          addPassenger({...values, ticketPrice, phone: phoneOnlyNumbers ,ageGroup});
+          addPassenger({...values, ticketPrice, phone: phoneOnlyNumbers, ageGroup});
         } else {
           updatePassenger(currentIndex, {...values, ticketPrice, phone: phoneOnlyNumbers, ageGroup});
         }

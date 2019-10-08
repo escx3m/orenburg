@@ -70,8 +70,7 @@ const renderDownShift = (props) => {
   return (
     <Downshift
       onChange={selection => {
-        const value = selection ? selection.value : '';
-        form.setFieldValue(name, value);
+        selection && form.setFieldValue(name, selection.value);
       }}
       itemToString={item => (item ? item.value : '')}
     >
@@ -82,16 +81,26 @@ const renderDownShift = (props) => {
         getMenuProps,
         isOpen,
         inputValue,
-        highlightedIndex,
+        clearSelection,
         selectedItem,
       }) => (
         <div className={classes.container}>
           <TextField {...getInputProps({
             name,
-            onChange: handleChange,
+            onChange: (e) => {
+              handleChange(e);
+              clearSelection();
+            },
             onBlur: () => {
-              selectedItem && setFullAddress(selectedItem.fullAddress);
-              setSuggestedAdresses([]);
+              if (city === 'Ростов-на-Дону' && name === 'addressFrom' && !selectedItem) {
+                form.setFieldValue(name, '');
+              }
+              if (selectedItem) {
+                setFullAddress(selectedItem.fullAddress);
+                form.setFieldValue(name, selectedItem.value);
+              } else {
+                setFullAddress('');
+              }
             },
             value,
             label,
@@ -110,12 +119,7 @@ const renderDownShift = (props) => {
                           {...getItemProps({
                             key: index,
                             index,
-                            item,
-                            style: {
-                              backgroundColor:
-                                highlightedIndex === index ? 'lightgray' : 'white',
-                              fontWeight: selectedItem === item ? 'bold' : 'normal',
-                            },
+                            item
                           })}
                         >
                           {item.value}
