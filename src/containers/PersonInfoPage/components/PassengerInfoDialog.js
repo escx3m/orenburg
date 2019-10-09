@@ -212,7 +212,9 @@ const PassengerInfoDialog = (props) => {
                   {...formikBag}
                   cityFromText={cityFromText}
                   cityToText={cityToText}
+                  fullAddressFrom={fullAddressFrom}
                   setFullAddressFrom={setFullAddressFrom}
+                  fullAddressTo={fullAddressTo}
                   setFullAddressTo={setFullAddressTo}
                   showTakeFromPrevButton={showTakeFromPrevButton}
                   setPrevPassengerValues={() => setPrevPassengerValues(formikBag.setFieldValue)}

@@ -42,6 +42,7 @@ const renderDownShift = (props) => {
     classes,
     suggestedAdresses,
     setSuggestedAdresses,
+    fullAddress,
     setFullAddress,
     field: { name, value },
     form,
@@ -73,6 +74,7 @@ const renderDownShift = (props) => {
         selection && form.setFieldValue(name, selection.value);
       }}
       itemToString={item => (item ? item.value : '')}
+      initialSelectedItem={{ value, fullAddress }}
     >
       {({
         getInputProps,
@@ -242,7 +244,7 @@ export const AddressForm = (props) => {
 
   const [suggestedAdresses, setSuggestedAdresses] = useState([]);
 
-  const { cityFromText, cityToText, setFullAddressFrom, setFullAddressTo } = props;
+  const { cityFromText, cityToText, fullAddressFrom, fullAddressTo, setFullAddressFrom, setFullAddressTo } = props;
   const commentPlaceholder = `-Укажите доп. информацию для водителя.\r\n-Время прилета/вылета, отправления/прибытия поезда\r\n-Багаж, возраст детей, доп. телефон для связи.`;
   return (
     <>
@@ -253,6 +255,7 @@ export const AddressForm = (props) => {
         setSuggestedAdresses={setSuggestedAdresses}
         classes={classes}
         city={cityFromText}
+        fullAddress={fullAddressFrom}
         setFullAddress={setFullAddressFrom}
         component={renderDownShift}
       />
@@ -261,6 +264,7 @@ export const AddressForm = (props) => {
         label="Адрес куда"
         suggestedAdresses={suggestedAdresses}
         setSuggestedAdresses={setSuggestedAdresses}
+        fullAddress={fullAddressTo}
         setFullAddress={setFullAddressTo}
         classes={classes}
         city={cityToText}
