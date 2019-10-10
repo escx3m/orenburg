@@ -12,6 +12,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Chip from '@material-ui/core/Chip';
 import { Field } from 'formik';
 import Downshift from "downshift";
+import ModalWinBaggage from './ModalWinBaggage';
 
 import { cityZones, fastAccessLocation } from '../constants';
 
@@ -235,6 +236,7 @@ export const PassengerForm = (props) => {
         size="small"
         onClick={() => setPrevPassengerValues()}
       />}
+       <ModalWinBaggage />
     </>
   );
 }
