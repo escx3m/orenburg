@@ -193,9 +193,13 @@ const renderRadioGroup = ({ field, label, form: { touched, errors }, ...props })
   </FormControl>
 );
 
+
+
 export const PassengerForm = (props) => {
   const showAgeGroup = props.values.child;
   const { showTakeFromPrevButton, setPrevPassengerValues } = props;
+
+
   return (
     <>
       <Field
@@ -236,7 +240,7 @@ export const PassengerForm = (props) => {
         size="small"
         onClick={() => setPrevPassengerValues()}
       />}
-       <ModalWinBaggage />
+       <ModalWinBaggage styles={{borderRadius:'5px'}} />
     </>
   );
 }
