@@ -13,6 +13,7 @@ import Chip from '@material-ui/core/Chip';
 import { Field } from 'formik';
 import Downshift from "downshift";
 import ModalWinBaggage from './ModalWinBaggage';
+import ModalDocs from './ModalDocs';
 
 import { cityZones, fastAccessLocation } from '../constants';
 
@@ -176,6 +177,19 @@ const renderCheckbox = ({ field, label, form: { touched, errors }, ...props }) =
     label={label}
   />
 );
+const renderSendDocs = ({ field, label, form: { touched, errors }, ...props }) => (
+  <FormControlLabel
+    control={
+      <Checkbox
+        {...field}
+        checked={field.value}
+        color="primary"
+      />
+    }
+    label={label}
+  />
+);
+
 
 const renderRadioGroup = ({ field, label, form: { touched, errors }, ...props }) => (
   <FormControl component="fieldset">
@@ -197,6 +211,7 @@ const renderRadioGroup = ({ field, label, form: { touched, errors }, ...props })
 
 export const PassengerForm = (props) => {
   const showAgeGroup = props.values.child;
+  const showSendDocs = props.values.sendDocs;
   const { showTakeFromPrevButton, setPrevPassengerValues } = props;
 
 
@@ -235,12 +250,33 @@ export const PassengerForm = (props) => {
         label="Возрастная группа"
         component={renderRadioGroup}
       />}
+      <Field
+        name="sendDocs"
+        label="Нужен отчетный документ"
+        component={renderCheckbox}
+      />
+      {showSendDocs && <Field
+        name="birthday"
+        label="Дата рождения"
+        component={renderTextField}
+      />}
+      {showSendDocs && <Field
+        name="passport"
+        label="Серия и номер паспорта"
+        component={renderTextField}
+      />}
+      <Field
+        name="baggage"
+        label="Габаритный багаж"
+        component={renderCheckbox}
+      />
       {showTakeFromPrevButton && <Chip
         label="Взять у предыдущего"
         size="small"
         onClick={() => setPrevPassengerValues()}
       />}
        <ModalWinBaggage styles={{borderRadius:'5px'}} />
+       <ModalDocs />
     </>
   );
 }

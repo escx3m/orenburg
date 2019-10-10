@@ -43,8 +43,9 @@ export default function SimpleModal() {
 
   return (
     <div>
+
       <span style={{cursor:'pointer', color:'#3f51b5'}} onClick={handleOpen}>
-      Правила провоза багажа
+      Как получить отчетные документы?
       </span>
       <Modal
         aria-labelledby="simple-modal-title"
@@ -53,14 +54,13 @@ export default function SimpleModal() {
         onClose={handleClose}
       >
         <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Правила провоза багажа</h2>
+          <h2 id="simple-modal-title">Как получить отчетные документы?</h2>
           <p id="simple-modal-description"></p>
-          <p>Бесплатно одно место багажа на одного человека размером 80 x 50 x 30 см. и весом не более 23 кг.</p>
-          <p>Стоимость дополнительного багажа 100 рублей.</p>
-          <p>Дополнительный багаж оплачивается водителю.</p>
-          <p>Животные перевозятся только в клетках и с согласования всех остальных пассажиров.</p>
-          <p>В случае габаритного багажа (длина одного измерения более 100 см или вес более 23 кг), уточните у оператора возможность его провоза.</p>
-           <Button variant="contained" color="primary" className={classes.button} type="button"  onClick={handleClose} style={{float:'right'}}>Ok</Button>
+          <ol><li>Указать галочку "Нужен отчетный документ"</li>
+          <li>Заполнить поля "Дата рождения" и "Серия и номер паспорта"</li>
+          <li>Получить отчетные документы вы можете в офис компании.</li>
+          <li>Если у вас нет возможности приехать в офисе, то вы можете воспользоваться платной услугой доставки отчетных документов. Стоимость 150 рублей.</li></ol>
+                       <Button variant="contained" color="primary" className={classes.button} type="button"  onClick={handleClose} style={{float:'right'}}>Ok</Button>
         </div>
       </Modal>
     </div>
