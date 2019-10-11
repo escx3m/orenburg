@@ -22,4 +22,84 @@ export const timeWindowPhoneRedir = {
   maxMinutes: 120,
 }
 
+export const waysTime = [
+  {
+    fromCityId: '166', 
+    toCityId: '119', 
+    wayTime: {
+      hours: 4, 
+      minutes: 0,
+    } 
+  },
+  {
+    fromCityId: '119', 
+    toCityId: '166', 
+    wayTime: {
+      hours: 4, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '166', 
+    toCityId: '10', 
+    wayTime: {
+      hours: 4, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '10', 
+    toCityId: '166', 
+    wayTime: {
+      hours: 5, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '166', 
+    toCityId: '23', 
+    wayTime: {
+      hours: 6, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '119', 
+    toCityId: '23', 
+    wayTime: {
+      hours: 12, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '23', 
+    toCityId: '119', 
+    wayTime: {
+      hours: 12, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '10', 
+    toCityId: '23', 
+    wayTime: {
+      hours: 5, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '23', 
+    toCityId: '10', 
+    wayTime: {
+      hours: 5, 
+      minutes: 0,
+    }
+  },
+];
+
+export const arriveInterval = {
+  hours: 1,
+  minutes: 0,
+}
+
 export const passengerStates = [2, 3];

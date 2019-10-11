@@ -6,9 +6,9 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import moment from 'moment-timezone';
 import { Modal } from 'antd';
-
-import { cityOptions, timeWindowPhoneRedir } from '../constants';
+import { cityOptions, timeWindowPhoneRedir, arriveInterval, cityTimeZones, waysTime } from '../constants';
 import { ticketPrices } from '../../PersonInfoPage/constants';
 
 
@@ -49,8 +49,12 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
   const classes = useStyles();
   const cityFromText = cityOptions.find(({ value }) => value === cityFrom).text;
   const cityToText = cityOptions.find(({ value }) => value === cityTo).text;
+  const cityFromTZ = cityTimeZones.find( value => value.city === cityFrom).timeZone;
+  const cityToTZ = cityTimeZones.find(( value ) => value.city === cityTo).timeZone;
+  const localTime = moment(date.date).clone().tz(cityFromTZ);
   const dateText = formatDate(date);
   const priceFrom = calculatePriceFrom(cityFrom, cityTo);
+  const { wayTime } = waysTime.find(({ fromCityId, toCityId }) => (fromCityId === cityFrom && toCityId === cityTo));
   
   const diffMinutes = (t1, t2) => {
     let diff = (t2.getTime() - t1.getTime()) / 1000;
@@ -69,31 +73,47 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
         {dateText}
       </Typography>
       <Grid container>
-        <Grid item xs={4}>
-          <Typography variant="body1" align="center">Время отправления</Typography>
+        <Grid item xs={3}>
+          <Typography variant="body1" align="center">Отпр.</Typography>
         </Grid>
-        <Grid item xs={4}>
-          <Typography variant="body1" align="center">Свободных мест</Typography>
+        <Grid item xs={3}>
+          <Typography variant="body1" align="center">Приб.</Typography>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
+          <Typography variant="body1" align="center">Кол-во мест</Typography>
         </Grid>
       </Grid>
       {trips.map(({ fromTime, availableRoute, availableSeats }, index) => {
-        const timeText = `0${fromTime.hours}`.slice(-2) + ':' + `0${fromTime.minutes}`.slice(-2);
+
+        let departureTimeText = `0${(fromTime.hours - arriveInterval.hours) % 24}`.slice(-2) 
+            + ':' + `0${fromTime.minutes - arriveInterval.minutes}`.slice(-2)
+            
+            + ' - ' + `0${fromTime.hours}`.slice(-2) + ':' + `0${fromTime.minutes}`.slice(-2);
+        
+        let arrivalTimeText = `0${(fromTime.hours + wayTime.hours 
+            + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour()) - arriveInterval.hours) % 24}`.slice(-2) 
+            + ':' + `0${fromTime.minutes + wayTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes()) - arriveInterval.minutes}`.slice(-2)
+            
+            + ' - ' + `0${(fromTime.hours + wayTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2) 
+            + ':' + `0${fromTime.minutes + wayTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())}`.slice(-2);
+        
         return availableRoute
           ? (
             <React.Fragment key={index}>
               <Divider className={classes.divider}/>
               <Grid container alignItems="center">
-                <Grid item xs={4}>
-                  <Typography variant="body1" align="center">{timeText}</Typography>
+                <Grid item xs={3}>
+                  <Typography variant="body1" align="center">{departureTimeText}</Typography>
                 </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="body1" align="center">{availableSeats}</Typography>
+                <Grid item xs={3}>
+                  <Typography variant="body1" align="center">{arrivalTimeText}</Typography>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={3}>
+                <Typography variant="body1" align="center">{availableSeats}</Typography>
+                </Grid>
+                <Grid item xs={3}>
                   <Grid container alignItems="flex-end" justify="flex-end" direction="row">
-                    <Button disabled={availableSeats < seats} onClick={(diffMinutes(new Date(fromTime.time), new Date()) < timeWindowPhoneRedir.maxMinutes) ? () => setVisiblePhoneRedirect(!visiblePhoneRedirect) : () => handleButtonClick(cityFromText, cityToText, dateText, timeText)} variant="contained" color="primary">Купить</Button>
+                    <Button disabled={availableSeats < seats} onClick={(diffMinutes(new Date(fromTime.time), new Date()) < timeWindowPhoneRedir.maxMinutes) ? () => setVisiblePhoneRedirect(!visiblePhoneRedirect) : () => handleButtonClick(cityFromText, cityToText, dateText, departureTimeText)} variant="contained" color="primary">Купить</Button>
                     <Modal
                       title="Перенаправление"
                       visible={ visiblePhoneRedirect }

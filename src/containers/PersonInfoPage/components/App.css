@@ -1,0 +1,88 @@
+body{
+    background: white;
+}
+.c0 {
+    margin-left: 72pt;
+    orphans: 2;
+    widows: 2;
+    padding-left: 0pt;
+}
+.c2{
+    font-weight: bold;
+}
+.c3 {
+    margin-left: 144pt;
+    padding-left: 0pt;
+}
+.c4 {
+	margin-left: 108pt;
+	orphans: 2;
+	widows: 2;
+	padding-left: 0pt;
+}
+.c7 {
+    padding: 40px 60px 80px 60px; 
+}
+.c7 > * {
+    margin: 0;
+    padding:0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.c8 {
+	margin-left: 36pt;
+	padding-left: 0pt;
+}
+.c9{   
+    height: 11pt;
+}
+.c11 {
+	margin-left: 36pt;
+	text-indent: 36pt;
+}
+.c12 {
+	margin-left: 72pt;
+}
+.link-to-doc {
+    color: blue;
+}
+.link-to-doc:hover {
+    cursor: pointer;
+}
+.div-policy {
+    margin: 10px;
+}
+.Content{
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding-top: 30px;
+    background: white;
+}
+.Content1{
+    width: 400px;
+}
+.Content2{
+    margin:10px, 0;
+    width: 400px;
+}
+Footer{
+    color:black;
+    bottom: 0;
+    align-self: center;
+}
+.Button{
+    width: 400px;
+}
+
+.policy {
+    width: 100% !important;
+}
+
+#swap {
+    position:absolute;
+    top: 10%;
+    left:50%;
+    z-index: 1;
+    font-size: 20px;
+    
+}
