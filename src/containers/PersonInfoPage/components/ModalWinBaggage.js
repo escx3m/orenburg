@@ -27,11 +27,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SimpleModal() {
+export default function SimpleModal(props) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(false);
+  const { open, setOpen } = props;
 
   const handleOpen = () => {
     setOpen(true);
@@ -43,9 +43,6 @@ export default function SimpleModal() {
 
   return (
     <div>
-      <span style={{cursor:'pointer', color:'#3f51b5'}} onClick={handleOpen}>
-      Правила провоза багажа
-      </span>
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"

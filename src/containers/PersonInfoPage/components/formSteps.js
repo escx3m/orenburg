@@ -170,6 +170,11 @@ const renderCheckbox = ({ field, label, form: { touched, errors }, ...props }) =
     control={
       <Checkbox
         {...field}
+        onChange={(e) => {
+          const { setOpenModal } = props;
+          !field.value && setOpenModal && setOpenModal(true);
+          field.onChange(e);
+        }}
         checked={field.value}
         color="primary"
       />
@@ -177,19 +182,6 @@ const renderCheckbox = ({ field, label, form: { touched, errors }, ...props }) =
     label={label}
   />
 );
-const renderSendDocs = ({ field, label, form: { touched, errors }, ...props }) => (
-  <FormControlLabel
-    control={
-      <Checkbox
-        {...field}
-        checked={field.value}
-        color="primary"
-      />
-    }
-    label={label}
-  />
-);
-
 
 const renderRadioGroup = ({ field, label, form: { touched, errors }, ...props }) => (
   <FormControl component="fieldset">
@@ -207,13 +199,12 @@ const renderRadioGroup = ({ field, label, form: { touched, errors }, ...props })
   </FormControl>
 );
 
-
-
 export const PassengerForm = (props) => {
   const showAgeGroup = props.values.child;
   const showSendDocs = props.values.sendDocs;
   const { showTakeFromPrevButton, setPrevPassengerValues } = props;
-
+  const [openDocsModal, setOpenDocsModal] = React.useState(false);
+  const [openBaggageModal, setOpenBaggageModal] = React.useState(false);
 
   return (
     <>
@@ -250,9 +241,16 @@ export const PassengerForm = (props) => {
         label="Возрастная группа"
         component={renderRadioGroup}
       />}
+       <Field
+        name="baggage"
+        label="Дополнительный багаж"
+        setOpenModal={setOpenBaggageModal}
+        component={renderCheckbox}
+      />
       <Field
         name="sendDocs"
         label="Нужен отчетный документ"
+        setOpenModal={setOpenDocsModal}
         component={renderCheckbox}
       />
       {showSendDocs && <Field
@@ -265,18 +263,13 @@ export const PassengerForm = (props) => {
         label="Серия и номер паспорта"
         component={renderTextField}
       />}
-      <Field
-        name="baggage"
-        label="Габаритный багаж"
-        component={renderCheckbox}
-      />
       {showTakeFromPrevButton && <Chip
         label="Взять у предыдущего"
         size="small"
         onClick={() => setPrevPassengerValues()}
       />}
-       <ModalWinBaggage styles={{borderRadius:'5px'}} />
-       <ModalDocs />
+       <ModalWinBaggage open={openBaggageModal} setOpen={setOpenBaggageModal} styles={{borderRadius:'5px'}} />
+       <ModalDocs open={openDocsModal} setOpen={setOpenDocsModal} />
     </>
   );
 }

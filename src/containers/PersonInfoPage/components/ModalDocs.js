@@ -27,11 +27,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SimpleModal() {
+export default function SimpleModal(props) {
   const classes = useStyles();
+    
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(false);
+  const { open, setOpen } = props;
 
   const handleOpen = () => {
     setOpen(true);
@@ -43,10 +44,6 @@ export default function SimpleModal() {
 
   return (
     <div>
-
-      <span style={{cursor:'pointer', color:'#3f51b5'}} onClick={handleOpen}>
-      Как получить отчетные документы?
-      </span>
       <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
@@ -60,7 +57,7 @@ export default function SimpleModal() {
           <li>Заполнить поля "Дата рождения" и "Серия и номер паспорта"</li>
           <li>Получить отчетные документы вы можете в офис компании.</li>
           <li>Если у вас нет возможности приехать в офисе, то вы можете воспользоваться платной услугой доставки отчетных документов. Стоимость 150 рублей.</li></ol>
-                       <Button variant="contained" color="primary" className={classes.button} type="button"  onClick={handleClose} style={{float:'right'}}>Ok</Button>
+          <Button variant="contained" color="primary" className={classes.button} type="button"  onClick={handleClose} style={{float:'right'}}>Ok</Button>
         </div>
       </Modal>
     </div>
