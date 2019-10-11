@@ -27,7 +27,7 @@ export const waysTime = [
     fromCityId: '166', 
     toCityId: '119', 
     wayTime: {
-      hours: 4, 
+      hours: 5, 
       minutes: 0,
     } 
   },
@@ -35,7 +35,7 @@ export const waysTime = [
     fromCityId: '119', 
     toCityId: '166', 
     wayTime: {
-      hours: 4, 
+      hours: 5, 
       minutes: 0,
     }
   },
@@ -51,7 +51,7 @@ export const waysTime = [
     fromCityId: '10', 
     toCityId: '166', 
     wayTime: {
-      hours: 5, 
+      hours: 4, 
       minutes: 0,
     }
   },
@@ -59,23 +59,47 @@ export const waysTime = [
     fromCityId: '166', 
     toCityId: '23', 
     wayTime: {
-      hours: 6, 
+      hours: 4, 
       minutes: 0,
+    }
+  },
+  {
+    fromCityId: '23', 
+    toCityId: '166', 
+    wayTime: {
+      hours: 3, 
+      minutes: 30,
     }
   },
   {
     fromCityId: '119', 
     toCityId: '23', 
     wayTime: {
-      hours: 12, 
-      minutes: 0,
+      hours: 11, 
+      minutes: 30,
     }
   },
   {
     fromCityId: '23', 
     toCityId: '119', 
     wayTime: {
+      hours: 10, 
+      minutes: 30,
+    }
+  },
+  {
+    fromCityId: '119', 
+    toCityId: '10', 
+    wayTime: {
       hours: 12, 
+      minutes: 30,
+    }
+  },
+  {
+    fromCityId: '10', 
+    toCityId: '119', 
+    wayTime: {
+      hours: 10, 
       minutes: 0,
     }
   },
@@ -84,7 +108,7 @@ export const waysTime = [
     toCityId: '23', 
     wayTime: {
       hours: 5, 
-      minutes: 0,
+      minutes: 30,
     }
   },
   {
@@ -92,7 +116,7 @@ export const waysTime = [
     toCityId: '10', 
     wayTime: {
       hours: 5, 
-      minutes: 0,
+      minutes: 30,
     }
   },
 ];
