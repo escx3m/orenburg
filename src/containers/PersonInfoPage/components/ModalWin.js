@@ -3,29 +3,7 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import offer from './offero';
 import confidential from './confidential';
-import styled from 'styled-components';
-
-const StyledPolicy = styled.div`
-  margin: 10px auto;
-
-.link-to-doc {
-  color: blue;
-}
-
-.link-to-doc:hover {
-  cursor: pointer;
-}
-
-.Button{
-  width: 400px;
-}
-
-.policy {
-  width: 100% !important;
-}
-`;
   
-
 class ModalWin extends React.Component {
   state = { 
     confidentialVisible: false,
@@ -78,7 +56,7 @@ class ModalWin extends React.Component {
 
   render() {
     return (
-        <StyledPolicy className="div-policy">
+        <div style={{margin: '10px auto'}} className="div-policy">
           <Checkbox 
             onChange={this.props.toggleBtnFindTickets}
           ></Checkbox> Я соглашаюсь с <span className="link-to-doc" onClick={this.showOfferModal}> условиями </span>
@@ -90,7 +68,7 @@ class ModalWin extends React.Component {
             onCancel={this.handleOfferCancel}
             className="policy"
             footer={
-              <Button type="primary" onClick={this.handleOfferOk}>
+              <Button type="primary" style={{color: 'blue', cursor: 'pointer'}} onClick={this.handleOfferOk}>
                 Ok
               </Button>
             }
@@ -99,12 +77,12 @@ class ModalWin extends React.Component {
           </Modal>
           <Modal
             width="100%"
-            title="Политика конфиденциальности"
+            title="Политика в отношении обработки персональных данных"
             visible={this.state.confidentialVisible}
             onCancel={this.handleConfidentialCancel}
             className="policy"
             footer={
-              <Button type="primary" onClick={this.handleConfidentialOk}>
+              <Button type="primary" style={{color: 'blue'}} onClick={this.handleConfidentialOk}>
                 Ok
               </Button>
             }
@@ -112,7 +90,7 @@ class ModalWin extends React.Component {
             {confidential}
           </Modal>
           <br/>
-        </StyledPolicy>
+        </div>
     );
   }
 }

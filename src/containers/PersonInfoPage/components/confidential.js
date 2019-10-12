@@ -1,179 +1,82 @@
 import React from 'react';
-export default (
-    <div>
-        <h1>Privacy Policy</h1>
-        <p>Effective date: October 20, 2018</p>
-        <p>Crmbus ("us", "we", or "our") operates the Crmbus mobile application (the "Service").</p>
-        <p>This page informs you of our policies regarding the collection, use, 
-        and disclosure of personal data when you use our Service and the choices
-        you have associated with that data. Our Privacy Policy  for Crmbus is 
-        managed through <a href="https://www.freeprivacypolicy.com/free-privacy-policy-generator.php">Free Privacy Policy</a>.</p>
-
-<p>We use your data to provide and improve the Service. By using the 
-Service, you agree to the collection and use of information in 
-accordance with this policy. Unless otherwise defined in this Privacy 
-Policy, terms used in this Privacy Policy have the same meanings as in 
-our Terms and Conditions.</p>
-
-
-<h2>Information Collection And Use</h2>
-
-<p>We collect several different types of information for various purposes to provide and improve our Service to you.</p>
-
-<h3>Types of Data Collected</h3>
-
-<h4>Personal Data</h4>
-
-<p>While using our Service, we may ask you to provide us with certain 
-personally identifiable information that can be used to contact or 
-identify you ("Personal Data"). Personally identifiable information may 
-include, but is not limited to:</p>
-
-<ul>
-<li>Email address</li><li>First name and last name</li><li>Phone number</li><li>Address, State, Province, ZIP/Postal code, City</li><li>Cookies and Usage Data</li>
-</ul>
-
-<h4>Usage Data</h4>
-
-<p>When you access the Service by or through a mobile device, we may 
-collect certain information automatically, including, but not limited 
-to, the type of mobile device you use, your mobile device unique ID, the
- IP address of your mobile device, your mobile operating system, the 
-type of mobile Internet browser you use, unique device identifiers and 
-other diagnostic data ("Usage Data").</p>
-
-<h4>Tracking &amp; Cookies Data</h4>
-<p>We use cookies and similar tracking technologies to track the activity on our Service and hold certain information.</p>
-<p>Cookies are files with small amount of data which may include an 
-anonymous unique identifier. Cookies are sent to your browser from a 
-website and stored on your device. Tracking technologies also used are 
-beacons, tags, and scripts to collect and track information and to 
-improve and analyze our Service.</p>
-<p>You can instruct your browser to refuse all cookies or to indicate 
-when a cookie is being sent. However, if you do not accept cookies, you 
-may not be able to use some portions of our Service.</p>
-<p>Examples of Cookies we use:</p>
-<ul>
-    <li><strong>Session Cookies.</strong> We use Session Cookies to operate our Service.</li>
-    <li><strong>Preference Cookies.</strong> We use Preference Cookies to remember your preferences and various settings.</li>
-    <li><strong>Security Cookies.</strong> We use Security Cookies for security purposes.</li>
-</ul>
-
-<h2>Use of Data</h2>
-    
-<p>Crmbus uses the collected data for various purposes:</p>    
-<ul>
-    <li>To provide and maintain the Service</li>
-    <li>To notify you about changes to our Service</li>
-    <li>To allow you to participate in interactive features of our Service when you choose to do so</li>
-    <li>To provide customer care and support</li>
-    <li>To provide analysis or valuable information so that we can improve the Service</li>
-    <li>To monitor the usage of the Service</li>
-    <li>To detect, prevent and address technical issues</li>
-</ul>
-
-<h2>Transfer Of Data</h2>
-<p>Your information, including Personal Data, may be transferred to — 
-and maintained on — computers located outside of your state, province, 
-country or other governmental jurisdiction where the data protection 
-laws may differ than those from your jurisdiction.</p>
-<p>If you are located outside Russian Federation and choose to provide 
-information to us, please note that we transfer the data, including 
-Personal Data, to Russian Federation and process it there.</p>
-<p>Your consent to this Privacy Policy followed by your submission of such information represents your agreement to that transfer.</p>
-<p>Crmbus will take all steps reasonably necessary to ensure that your 
-data is treated securely and in accordance with this Privacy Policy and 
-no transfer of your Personal Data will take place to an organization or a
- country unless there are adequate controls in place including the 
-security of your data and other personal information.</p>
-
-<h2>Disclosure Of Data</h2>
-
-<h3>Legal Requirements</h3>
-<p>Crmbus may disclose your Personal Data in the good faith belief that such action is necessary to:</p>
-<ul>
-    <li>To comply with a legal obligation</li>
-    <li>To protect and defend the rights or property of Crmbus</li>
-    <li>To prevent or investigate possible wrongdoing in connection with the Service</li>
-    <li>To protect the personal safety of users of the Service or the public</li>
-    <li>To protect against legal liability</li>
-</ul>
-
-<h2>Security Of Data</h2>
-<p>The security of your data is important to us, but remember that no 
-method of transmission over the Internet, or method of electronic 
-storage is 100% secure. While we strive to use commercially acceptable 
-means to protect your Personal Data, we cannot guarantee its absolute 
-security.</p>
-
-<h2>Service Providers</h2>
-<p>We may employ third party companies and individuals to facilitate our
- Service ("Service Providers"), to provide the Service on our behalf, to
- perform Service-related services or to assist us in analyzing how our 
-Service is used.</p>
-<p>These third parties have access to your Personal Data only to perform
- these tasks on our behalf and are obligated not to disclose or use it 
-for any other purpose.</p>
-
-<h3>Analytics</h3>
-<p>We may use third-party Service Providers to monitor and analyze the use of our Service.</p>    
-<ul>
-        <li>
-        <p><strong>Google Analytics</strong></p>
-        <p>Google Analytics is a web analytics service offered by Google
- that tracks and reports website traffic. Google uses the data collected
- to track and monitor the use of our Service. This data is shared with 
-other Google services. Google may use the collected data to 
-contextualize and personalize the ads of its own advertising network.</p>
-                <p>You may opt-out of certain Google Analytics features 
-through your mobile device settings, such as your device advertising 
-settings or by following the instructions provided by Google in their 
-Privacy Policy: <a href="https://policies.google.com/privacy?hl=en">https://policies.google.com/privacy?hl=en</a></p>        <p>For more information on the privacy practices of Google, please visit the Google Privacy &amp; Terms web page: <a href="https://policies.google.com/privacy?hl=en">https://policies.google.com/privacy?hl=en</a></p>
-    </li>
-                            <li>
-        <p><strong>Flurry Analytics</strong></p>
-        <p>Flurry Analytics service is provided by Yahoo! Inc.</p>
-        <p>You can opt-out from Flurry Analytics service to prevent 
-Flurry Analytics from using and sharing your information by visiting the
- Flurry's Opt-out page: <a href="https://dev.flurry.com/secure/optOut.do">https://dev.flurry.com/secure/optOut.do</a></p>
-        <p>For more information on the privacy practices and policies of Yahoo!, please visit their Privacy Policy page: <a href="https://policies.yahoo.com/us/en/yahoo/privacy/policy/index.htm">https://policies.yahoo.com/us/en/yahoo/privacy/policy/index.htm</a></p>
-    </li>
-        </ul>
-
-
-<h2>Links To Other Sites</h2>
-<p>Our Service may contain links to other sites that are not operated by
- us. If you click on a third party link, you will be directed to that 
-third party's site. We strongly advise you to review the Privacy Policy 
-of every site you visit.</p>
-<p>We have no control over and assume no responsibility for the content,
- privacy policies or practices of any third party sites or services.</p>
-
-
-<h2>Children's Privacy</h2>
-<p>Our Service does not address anyone under the age of 18 ("Children").</p>
-<p>We do not knowingly collect personally identifiable information from 
-anyone under the age of 18. If you are a parent or guardian and you are 
-aware that your Children has provided us with Personal Data, please 
-contact us. If we become aware that we have collected Personal Data from
- children without verification of parental consent, we take steps to 
-remove that information from our servers.</p>
-
-
-<h2>Changes To This Privacy Policy</h2>
-<p>We may update our Privacy Policy from time to time. We will notify 
-you of any changes by posting the new Privacy Policy on this page.</p>
-<p>We will let you know via email and/or a prominent notice on our 
-Service, prior to the change becoming effective and update the 
-"effective date" at the top of this Privacy Policy.</p>
-<p>You are advised to review this Privacy Policy periodically for any 
-changes. Changes to this Privacy Policy are effective when they are 
-posted on this page.</p>
-
-
-<h2>Contact Us</h2>
-<p>If you have any questions about this Privacy Policy, please contact us:</p>
-<ul>
-            <li>By visiting this page on our website: <a href="https://crmbus.ru/contacts">https://crmbus.ru/contacts</a></li>
-      
-        </ul></div>);
+export default (<div>
+    <ol>
+        <li>Общие положения
+        <p>Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. №152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных ИП Бадмаев Михаил Викторович (далее – Оператор).</p>
+        <ol>
+            <li>Оператор ставит своей важнейшей целью и условием осуществления своей деятельности соблюдение прав и свобод человека и гражданина при обработке его персональных данных, в том числе защиты прав на неприкосновенность частной жизни, личную и семейную тайну.</li>
+            <li>Настоящая политика Оператора в отношении обработки персональных данных (далее – Политика) применяется ко всей информации, которую Оператор может получить о посетителях веб-сайта <a href="https://alphatour.ru">alphatour.ru</a>.</li>
+        </ol>
+        </li>
+        
+        <li>Основные понятия, используемые в Политике
+        <ol>
+            <li>Автоматизированная обработка персональных данных – обработка персональных данных с помощью средств вычислительной техники;</li>
+            <li>Блокирование персональных данных – временное прекращение обработки персональных данных (за исключением случаев, если обработка необходима для уточнения персональных данных);</li>
+            <li>Веб-сайт – совокупность графических и информационных материалов, а также программ для ЭВМ и баз данных, обеспечивающих их доступность в сети интернет по сетевому адресу <a href="https://alphatour.ru">alphatour.ru</a>;</li>
+            <li>Информационная система персональных данных — совокупность содержащихся в базах данных персональных данных, и обеспечивающих их обработку информационных технологий и технических средств;</li>
+            <li>Обезличивание персональных данных — действия, в результате которых невозможно определить без использования дополнительной информации принадлежность персональных данных конкретному Пользователю или иному субъекту персональных данных;</li>
+            <li>Обработка персональных данных – любое действие (операция) или совокупность действий (операций), совершаемых с использованием средств автоматизации или без использования таких средств с персональными данными, включая сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, передачу (распространение, предоставление, доступ), обезличивание, блокирование, удаление, уничтожение персональных данных;</li>
+            <li>Оператор – государственный орган, муниципальный орган, юридическое или физическое лицо, самостоятельно или совместно с другими лицами организующие и (или) осуществляющие обработку персональных данных, а также определяющие цели обработки персональных данных, состав персональных данных, подлежащих обработке, действия (операции), совершаемые с персональными данными;</li>
+            <li>Персональные данные – любая информация, относящаяся прямо или косвенно к определенному или определяемому Пользователю веб-сайта <a href="https://alphatour.ru">alphatour.ru</a>;</li>
+            <li>Пользователь – любой посетитель веб-сайта <a href="https://alphatour.ru">alphatour.ru</a>;</li>
+            <li>Предоставление персональных данных – действия, направленные на раскрытие персональных данных определенному лицу или определенному кругу лиц;</li>
+            <li>Распространение персональных данных – любые действия, направленные на раскрытие персональных данных неопределенному кругу лиц (передача персональных данных) или на ознакомление с персональными данными неограниченного круга лиц, в том числе обнародование персональных данных в средствах массовой информации, размещение в информационно-телекоммуникационных сетях или предоставление доступа к персональным данным каким-либо иным способом;</li>
+            <li>Трансграничная передача персональных данных – передача персональных данных на территорию иностранного государства органу власти иностранного государства, иностранному физическому или иностранному юридическому лицу;</li>
+            <li>Уничтожение персональных данных – любые действия, в результате которых персональные данные уничтожаются безвозвратно с невозможностью дальнейшего восстановления содержания персональных данных в информационной системе персональных данных и (или) результате которых уничтожаются материальные носители персональных данных.</li>
+        </ol>
+        </li>
+        
+        <li>Оператор может обрабатывать следующие персональные данные Пользователя
+        <ol>
+            <li>Фамилия, имя, отчество;</li>
+            <li>Электронный адрес;</li>
+            <li>Номера телефонов;</li>
+            <li>Год, месяц, дата и место рождения;</li>
+            <li>Также на сайте происходит сбор и обработка обезличенных данных о посетителях (в т.ч. файлов «cookie») с помощью сервисов интернет-статистики (Яндекс Метрика и Гугл Аналитика и других).</li>
+            <li>Вышеперечисленные данные далее по тексту Политики объединены общим понятием Персональные данные.</li>
+        </ol>
+        </li>
+        
+        <li>Цели обработки персональных данных
+        <ol>
+            <li>Цель обработки персональных данных Пользователя — информирование Пользователя посредством отправки электронных писем; предоставление доступа Пользователю к сервисам, информации и/или материалам, содержащимся на веб-сайте.</li>
+            <li>Также Оператор имеет право направлять Пользователю уведомления о новых продуктах и услугах, специальных предложениях и различных событиях. Пользователь всегда может отказаться от получения информационных сообщений, направив Оператору письмо на адрес электронной почты <a href="mailto:someone@example.com?Subject=Hello%20again" target="_top">alphatour08@mail.ru</a> с пометкой «Отказ от уведомлениях о новых продуктах и услугах и специальных предложениях».</li>
+            <li>Обезличенные данные Пользователей, собираемые с помощью сервисов интернет-статистики, служат для сбора информации о действиях Пользователей на сайте, улучшения качества сайта и его содержания.</li>
+        </ol>
+        </li>
+        
+        <li>Правовые основания обработки персональных данных
+        <ol>
+            <li>Оператор обрабатывает персональные данные Пользователя только в случае их заполнения и/или отправки Пользователем самостоятельно через специальные формы, расположенные на сайте <a href="https://alphatour.ru">alphatour.ru</a> . Заполняя соответствующие формы и/или отправляя свои персональные данные Оператору, Пользователь выражает свое согласие с данной Политикой.</li>
+            <li>Оператор обрабатывает обезличенные данные о Пользователе в случае, если это разрешено в настройках браузера Пользователя (включено сохранение файлов «cookie» и использование технологии JavaScript).</li>    
+        </ol>
+        </li>
+        
+        <li>Порядок сбора, хранения, передачи и других видов обработки персональных данных
+        <div>Безопасность персональных данных, которые обрабатываются Оператором, обеспечивается путем реализации правовых, организационных и технических мер, необходимых для выполнения в полном объеме требований действующего законодательства в области защиты персональных данных.</div>
+        <ol>
+            <li>Оператор обеспечивает сохранность персональных данных и принимает все возможные меры, исключающие доступ к персональным данным неуполномоченных лиц.</li>
+            <li>Персональные данные Пользователя никогда, ни при каких условиях не будут переданы третьим лицам, за исключением случаев, связанных с исполнением действующего законодательства.</li>
+            <li>В случае выявления неточностей в персональных данных, Пользователь может актуализировать их самостоятельно, путем направления Оператору уведомление на адрес электронной почты Оператора <a href="mailto:someone@example.com?Subject=Hello%20again" target="_top">alphatour08@mail.ru</a> с пометкой «Актуализация персональных данных».</li>
+            <li>Срок обработки персональных данных является неограниченным. Пользователь может в любой момент отозвать свое согласие на обработку персональных данных, направив Оператору уведомление посредством электронной почты на электронный адрес Оператора <a href="mailto:someone@example.com?Subject=Hello%20again" target="_top">alphatour08@mail.ru</a> с пометкой «Отзыв согласия на обработку персональных данных».</li>
+        </ol>
+        </li>
+        
+        <li>Трансграничная передача персональных данных
+        <ol>
+            <li>Оператор до начала осуществления трансграничной передачи персональных данных обязан убедиться в том, что иностранным государством, на территорию которого предполагается осуществлять передачу персональных данных, обеспечивается надежная защита прав субъектов персональных данных.</li>
+            <li>Трансграничная передача персональных данных на территории иностранных государств, не отвечающих вышеуказанным требованиям, может осуществляться только в случае наличия согласия в письменной форме субъекта персональных данных на трансграничную передачу его персональных данных и/или исполнения договора, стороной которого является субъект персональных данных.</li>            
+        </ol>
+        </li>
+        
+        <li>Заключительные положения
+        <ol>
+            <li>Пользователь может получить любые разъяснения по интересующим вопросам, касающимся обработки его персональных данных, обратившись к Оператору с помощью электронной почты <a href="mailto:someone@example.com?Subject=Hello%20again" target="_top">alphatour08@mail.ru</a>.</li>
+            <li>В данном документе будут отражены любые изменения политики обработки персональных данных Оператором. Политика действует бессрочно до замены ее новой версией.</li>
+            <li>Актуальная версия Политики в свободном доступе расположена в сети Интернет по адресу <a href="https://alphatour.ru/conf">https://alphatour.ru/conf</a>.</li>
+        </ol>
+        </li>
+        
+    </ol>
+    </div>);
