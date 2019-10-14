@@ -43,15 +43,15 @@ const PersonInfoPage = (props) => {
   const [prevPassengerValues, setPrevPassengerValues] = React.useState({});
   const [currentIndex, setCurrentIndex] = React.useState(-1);
   const [showTakeFromPrevButton, setShowTakeFromPrevButton] = React.useState(false);
-  
+
   const handleClose = () => {
     setPassengerValues({});
     setOpen(false);
   }
-  
+
   const classes = useStyles();
-  
-  const { 
+
+  const {
     passengers,
     seats,
     cityFrom,
@@ -89,14 +89,14 @@ const PersonInfoPage = (props) => {
     }
     setOpen(true);
   }
-  
+
   const data = {
     passengers,
     cityFrom,
     cityTo,
     date_time: `${dateText} ${timeText}`,
   }
-  
+
   const handleOrderButtonClick = (data) => {
     ym(34728795, 'reachGoal', 'success_booking');
     const orderData = {
@@ -123,56 +123,81 @@ const PersonInfoPage = (props) => {
         {passengers.map(({ lastName, firstName, middleName, phone, addressFrom, addressTo }, index) => (
           <Grid key={seats - index} item xs={12}>
             <Divider />
-              <Grid container justify="center" spacing={1} className={classes.root}>
-                <Grid item xs={11}>
-                  <Grid container direction="row" alignItems="center">
-                    <Typography variant="subtitle1" className={classes.wrapIcon}>
-                      <PersonIcon />{`${lastName} ${firstName} ${middleName}`}
-                    </Typography>
-                  </Grid>
-                  <Grid container direction="row" alignItems="center">
-                    <Typography variant="subtitle1" className={classes.wrapIcon}>
-                      <PhoneIcon />{phone}
-                    </Typography>
-                  </Grid>
-                  {addressFrom && <Grid container direction="row" alignItems="center">
-                    <Typography variant="subtitle1" className={classes.wrapIcon}>
-                      <ArrowBackIcon />{addressFrom}
-                    </Typography>
-                  </Grid>}
-                  {addressTo && <Grid container direction="row" alignItems="center">
-                    <Typography variant="subtitle1" className={classes.wrapIcon}>
-                      <ArrowForwardIcon />{addressTo}
-                    </Typography>
-                  </Grid>}
+            <Grid container justify="center" spacing={1} className={classes.root}>
+              <Grid item xs={11}>
+                <Grid container direction="row" alignItems="center">
+                  <Typography variant="subtitle1" className={classes.wrapIcon}>
+                    <PersonIcon />{`${lastName} ${firstName} ${middleName}`}
+                  </Typography>
                 </Grid>
-                <Grid item xs={1}>
-                  <Grid container justify="flex-end">
-                    <IconButton onClick={handleClickOpen(passengers[index], index)} aria-label="edit">
-                      <EditIcon />
-                    </IconButton>
-                  </Grid>
+                <Grid container direction="row" alignItems="center">
+                  <Typography variant="subtitle1" className={classes.wrapIcon}>
+                    <PhoneIcon />{phone}
+                  </Typography>
+                </Grid>
+                {addressFrom && <Grid container direction="row" alignItems="center">
+                  <Typography variant="subtitle1" className={classes.wrapIcon}>
+                    <ArrowBackIcon />{addressFrom}
+                  </Typography>
+                </Grid>}
+                {addressTo && <Grid container direction="row" alignItems="center">
+                  <Typography variant="subtitle1" className={classes.wrapIcon}>
+                    <ArrowForwardIcon />{addressTo}
+                  </Typography>
+                </Grid>}
+              </Grid>
+              <Grid item xs={1}>
+                <Grid container justify="flex-end">
+                  <IconButton onClick={handleClickOpen(passengers[index], index)} aria-label="edit">
+                    <EditIcon />
+                  </IconButton>
                 </Grid>
               </Grid>
+            </Grid>
           </Grid>
         ))}
         {Array.from({ length: seats - passengers.length }).map((_, index) => (
           <Grid key={index} item xs={12}>
             <Divider />
-              <Grid container justify="center" spacing={1} className={classes.root}>
-                <Button onClick={handleClickOpen({}, -1)} size="large" variant="outlined" className={classes.margin}>
-                  пассажир №{passengers.length + index + 1}
-                </Button>
-              </Grid>
+            <Grid container justify="center" spacing={1} className={classes.root}>
+              <Button onClick={handleClickOpen({}, -1)} size="large" variant="outlined" className={classes.margin}>
+                пассажир №{passengers.length + index + 1}
+              </Button>
+            </Grid>
           </Grid>
         ))}
         <Grid item xs={12}>
           {readyToOrder
-            ? <Typography variant="h5" component="h2" align="center">
-                Итого к оплате: {totalPrice} р.
-              </Typography>
+            ? <div>
+              <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                <Grid xs={6}>
+                  <Typography color="textSecondary" variant="h5" component="h2" align="right">
+                    Стоимость:&nbsp;
+                  </Typography>
+                </Grid>
+                <Grid xs={6}>
+                  <Typography color="textSecondary" variant="h5" component="h2">{totalPrice} р.</Typography>
+                </Grid>
+              </Grid>
+              <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                <Grid xs={6}>
+                  <Typography color="textSecondary" variant="h5" component="h2" align="right">
+                    Скидка:&nbsp;
+                  </Typography>
+                </Grid>
+                <Grid xs={6}><Typography color="textSecondary" variant="h5" component="h2">100 р.</Typography></Grid>
+              </Grid>
+              <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                <Grid xs={6}>
+                  <Typography variant="h5" component="h2" align="right">
+                    К оплате:&nbsp;
+                  </Typography>
+                </Grid>
+                <Grid xs={6}><Typography variant="h5" component="h2">{totalPrice - 100} р.</Typography></Grid>
+              </Grid>
+            </div>
             : <Typography variant="h5" component="h2" align="center">
-                Заполните данные пассажиров
+              Заполните данные пассажиров
               </Typography>
           }
         </Grid>
@@ -181,7 +206,7 @@ const PersonInfoPage = (props) => {
             <Button disabled={!(readyToOrder && !loading && !disabledBntFind)} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Оплатить</Button>
           </Grid>
         </Grid>
-        <ModalWin toggleBtnFindTickets={ () => setDisabledBtnFind(!disabledBntFind)}/>
+        <ModalWin toggleBtnFindTickets={() => setDisabledBtnFind(!disabledBntFind)} />
         {error &&
           <Grid item xs={12}>
             <Grid container justify="center">
@@ -192,7 +217,7 @@ const PersonInfoPage = (props) => {
             </Grid>
           </Grid>
         }
-        
+
       </Grid>
       <PassengerInfoDialog
         open={open}
