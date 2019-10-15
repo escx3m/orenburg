@@ -9,8 +9,7 @@ import Button from '@material-ui/core/Button';
 import moment from 'moment-timezone';
 import { Modal } from 'antd';
 import { cityOptions, timeWindowPhoneRedir, arriveInterval, cityTimeZones, waysTime } from '../constants';
-import { ticketPrices } from '../../PersonInfoPage/constants';
-import { from } from 'rxjs';
+import { ticketPrices, discountChild } from '../../PersonInfoPage/constants';
 
 const useStyles = makeStyles(theme => ({
   divider: {
@@ -39,9 +38,9 @@ const formatDate = (date) => {
 const calculatePriceFrom = (cityFrom, cityTo) => {
   const Elista = '166';
   if ([cityFrom, cityTo].every(city => ['119', '23'].includes(city))) {
-    return ticketPrices[`${cityFrom}-${Elista}`] + ticketPrices[`${Elista}-${cityTo}`] - 200;
+    return ticketPrices[`${cityFrom}-${Elista}`] + ticketPrices[`${Elista}-${cityTo}`] - discountChild * 2;
   } else {
-    return ticketPrices[`${cityFrom}-${cityTo}`] - 100;
+    return ticketPrices[`${cityFrom}-${cityTo}`] - discountChild;
   }
 }
 

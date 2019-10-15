@@ -13,7 +13,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
 import { PassengerForm, AddressForm } from './formSteps';
-import { ticketPrices } from '../constants';
+import { ticketPrices, discountChild } from '../constants';
 
 const { ymaps } = window;
 
@@ -79,7 +79,7 @@ const PassengerInfoDialog = (props) => {
       ticketRoute = `${cityFrom}-${cityTo}air`
     }
     const ticketPrice = ticketPrices[ticketRoute]
-    return child ? ticketPrice - 100 : ticketPrice;
+    return child ? ticketPrice - discountChild : ticketPrice;
   }
 
   const calculateTotalTicketPrice = (cityFrom, cityTo, addressFrom, addressTo, child) => {

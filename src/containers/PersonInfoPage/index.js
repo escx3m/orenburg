@@ -18,6 +18,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import PassengerInfoDialog from './components/PassengerInfoDialog';
 import { updatePassenger, addPassenger, sendOrder, passangersReset } from './actions';
+import { discountSale } from './constants';
 
 const { ym } = window;
 
@@ -107,9 +108,16 @@ const PersonInfoPage = (props) => {
   }
   const [disabledBntFind, setDisabledBtnFind] = useState(true);
   const readyToOrder = passengers.length === seats;
-  const totalPrice = passengers.reduce((sum, { ticketPrice }) => {
+  const priceToPay = passengers.reduce((sum, { ticketPrice }) => {
     return sum + ticketPrice;
   }, 0);
+
+  let totalDiscount = discountSale * passengers.length;
+    if ([cityFrom, cityTo].every(city => ['119', '23'].includes(city))) {
+      totalDiscount *= 2;
+    }
+
+  const fullPrice = priceToPay + totalDiscount;
 
   return (
     <div>
@@ -169,33 +177,33 @@ const PersonInfoPage = (props) => {
         <Grid item xs={12}>
           {readyToOrder
             ? <div>
-              <Grid direction="row" container xs={12} justify="center" alignItems="center">
-                <Grid xs={6}>
-                  <Typography color="textSecondary" variant="h5" component="h2" align="right">
-                    Стоимость:&nbsp;
-                  </Typography>
+                <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                  <Grid xs={6}>
+                    <Typography color="textSecondary" variant="h5" component="h2" align="right">
+                      Стоимость:&nbsp;
+                    </Typography>
+                  </Grid>
+                  <Grid xs={6}>
+                    <Typography color="textSecondary" variant="h5" component="h2">{fullPrice} р.</Typography>
+                  </Grid>
                 </Grid>
-                <Grid xs={6}>
-                  <Typography color="textSecondary" variant="h5" component="h2">{totalPrice} р.</Typography>
+                <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                  <Grid xs={6}>
+                    <Typography color="textSecondary" variant="h5" component="h2" align="right">
+                      Скидка:&nbsp;
+                    </Typography>
+                  </Grid>
+                  <Grid xs={6}><Typography color="textSecondary" variant="h5" component="h2">{totalDiscount} р.</Typography></Grid>
                 </Grid>
-              </Grid>
-              <Grid direction="row" container xs={12} justify="center" alignItems="center">
-                <Grid xs={6}>
-                  <Typography color="textSecondary" variant="h5" component="h2" align="right">
-                    Скидка:&nbsp;
-                  </Typography>
+                <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                  <Grid xs={6}>
+                    <Typography variant="h5" component="h2" align="right">
+                      К оплате:&nbsp;
+                    </Typography>
+                  </Grid>
+                  <Grid xs={6}><Typography variant="h5" component="h2">{priceToPay} р.</Typography></Grid>
                 </Grid>
-                <Grid xs={6}><Typography color="textSecondary" variant="h5" component="h2">100 р.</Typography></Grid>
-              </Grid>
-              <Grid direction="row" container xs={12} justify="center" alignItems="center">
-                <Grid xs={6}>
-                  <Typography variant="h5" component="h2" align="right">
-                    К оплате:&nbsp;
-                  </Typography>
-                </Grid>
-                <Grid xs={6}><Typography variant="h5" component="h2">{totalPrice - 100} р.</Typography></Grid>
-              </Grid>
-            </div>
+              </div>
             : <Typography variant="h5" component="h2" align="center">
               Заполните данные пассажиров
               </Typography>

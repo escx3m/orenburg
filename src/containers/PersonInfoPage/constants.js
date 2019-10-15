@@ -7,25 +7,29 @@ export const SEND_ORDER_ERROR = 'SEND_ORDER_ERROR';
 
 export const RESET = 'passangers/RESET';
 
+export const discountChild = 100;
+
+export const discountSale = 100;
+
 export const ticketPrices = {
-  '166-10': 800,
-  '10-166': 800,
-  '166-10air': 900,
-  '10air-166': 900,
-  '119-166': 1000,
-  '166-119': 1000,
-  '119air-166': 1000,
-  '166-119air': 1000,
-  '23-166': 800,
-  '166-23': 800,
-  '23air-166': 900,
-  '166-23air': 900,
-  '23-10': 1000,
-  '10-23': 1000,
-  '23air-10': 1200,
-  '10-23air': 1200,
-  '119-23': 1800,
-  '23-119': 1800,
+  '166-10': 800 - discountSale,
+  '10-166': 800 - discountSale,
+  '166-10air': 900 - discountSale,
+  '10air-166': 900 - discountSale,
+  '119-166': 1000 - discountSale,
+  '166-119': 1000 - discountSale,
+  '119air-166': 1000 - discountSale,
+  '166-119air': 1000 - discountSale,
+  '23-166': 800 - discountSale,
+  '166-23': 800 - discountSale,
+  '23air-166': 900 - discountSale,
+  '166-23air': 900 - discountSale,
+  '23-10': 1000 - discountSale,
+  '10-23': 1000 - discountSale,
+  '23air-10': 1200 - discountSale,
+  '10-23air': 1200 - discountSale,
+  '119-23': 1800 - discountSale,
+  '23-119': 1800 - discountSale,
 }
 
 export const cityZones = {
