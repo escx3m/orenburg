@@ -84,6 +84,7 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
       </Grid>
       {trips.map(({ fromTime, availableRoute, availableSeats }, index) => {
 
+        const timeText = `0${fromTime.hours}`.slice(-2) + ':' + `0${fromTime.minutes}`.slice(-2);
         let departureTimeText, arrivalTimeText;
         let lowBrdDepTime = {
           hours: 0,
@@ -240,7 +241,7 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
                 </Grid>
                 <Grid item xs={3}>
                   <Grid container alignItems="flex-end" justify="flex-end" direction="row">
-                    <Button disabled={availableSeats < seats} onClick={(diffMinutes(new Date(fromTime.time), new Date()) < timeWindowPhoneRedir.maxMinutes) ? () => setVisiblePhoneRedirect(!visiblePhoneRedirect) : () => handleButtonClick(cityFromText, cityToText, dateText, departureTimeText)} variant="contained" color="primary">Купить</Button>
+                    <Button disabled={availableSeats < seats} onClick={(diffMinutes(new Date(fromTime.time), new Date()) < timeWindowPhoneRedir.maxMinutes) ? () => setVisiblePhoneRedirect(!visiblePhoneRedirect) : () => handleButtonClick(cityFromText, cityToText, dateText, timeText)} variant="contained" color="primary">Купить</Button>
                     <Modal
                       title="Перенаправление"
                       visible={visiblePhoneRedirect}
