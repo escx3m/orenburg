@@ -92,7 +92,7 @@ const PassengerInfoDialog = (props) => {
     } else {
       result = calculateTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
     }
-    if ([cityFrom, cityTo].includes('119') && [addressFrom, addressTo].includes('Аэропорт(Платов)')) {
+    if ([cityFrom, cityTo].includes('119') && [addressFrom, addressTo].includes('Аэропорт Платов')) {
       const priceToAirport = Math.max(500, 1500 / seats);
       result += priceToAirport;
     }
