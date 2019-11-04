@@ -5,7 +5,6 @@ const getTrips = (data) => {
 }
 
 const sendOrder = async (data) => {
-  console.log('send order', data);
   const result = axios.post('http://localhost:5000/api/order', { data }).then(res => res )
   return result;
 }

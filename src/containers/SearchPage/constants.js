@@ -126,4 +126,4 @@ export const arriveInterval = {
   minutes: 0,
 }
 
-export const passengerStates = [2, 3];
+export const passengerStates = [1, 2, 3];

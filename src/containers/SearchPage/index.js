@@ -21,18 +21,32 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const getCombinedTrips = (trips, cityFrom) => {
-  const combinedTrips = trips
-    .reduce((acc, item) => {
-      if (!acc.includes(item.fromTime)) acc.push(item.fromTime)
+  const correctedTrips = trips.map(trip => {
+    if ([10, 23].includes(trip.fromCityId) && trip.external === 1) {
+      const fromTime = moment(trip.fromTime).subtract(1, 'hours').toISOString();
+      return { ...trip, fromTime };
+    }
+    return trip;
+  });
+
+  const combinedTrips = correctedTrips
+    .map(trip => {
+      return trip;
+    })
+    .reduce((acc, trip) => {
+      if (!acc.includes(trip.fromTime)) acc.push(trip.fromTime)
       return acc;
     }, [])
-    .map((fromTime) => trips
+    .map((fromTime) => correctedTrips
       .filter((tripTofilter) => {
         return fromTime === tripTofilter.fromTime;
       })
-      .map(({ fromTime, passengers, carScheme: { seats }, reserved }) => {
+      .map(({ fromTime, passengers, carScheme, reserved }) => {
+        const seats = carScheme ? carScheme.seats : 0;
         const currentTime = moment().toISOString();
         const passengersCount = passengers.filter((item) => passengerStates.includes(item.state)).length;
+        if (seats === 0) {
+        }
         const { timeZone } = cityTimeZones.find((item) => item.city === cityFrom);
         return {
           fromTime: {
