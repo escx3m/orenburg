@@ -61,9 +61,9 @@ const SearchPage = (props) => {
     props.getTrips({ ...data, dateStart: localTime.startOf('day').format(), dateEnd: localTime.endOf('day').format() });
   }
   
-  const buyButtonClickHandler = (cityFromText, cityToText, dateText, timeText) => {
+  const buyButtonClickHandler = (cityFromText, cityToText, dateText, timeText, departureTimeText, arrivalTimeText) => {
     ym(34728795, 'reachGoal', 'booking');
-    props.chooseTrip(cityFromText, cityToText, dateText, timeText);
+    props.chooseTrip(cityFromText, cityToText, dateText, timeText, departureTimeText, arrivalTimeText);
     props.history.push('/personInfo');
   } 
   

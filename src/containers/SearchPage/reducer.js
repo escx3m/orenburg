@@ -45,13 +45,15 @@ export const trips = (state = initialState, action) => {
         showTrips: true,
       };
     case CHOOSE_TRIP:
-      const { cityFromText, cityToText, dateText, timeText } = action;
+      const { cityFromText, cityToText, dateText, timeText, departureTimeText, arrivalTimeText } = action;
       return {
         ...state,
         cityFromText,
         cityToText,
         dateText,
-        timeText
+        timeText,
+        departureTimeText,
+        arrivalTimeText,
       };
     case RESET: {
       return initialState;

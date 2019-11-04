@@ -19,7 +19,13 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import PassengerInfoDialog from './components/PassengerInfoDialog';
 import { updatePassenger, addPassenger, sendOrder, passangersReset } from './actions';
 import { discountSale } from './constants';
+import car2 from './image/car2.png';
+import { Steps, Modal } from 'antd';
+import './index.css';
+import PassengersForm from './components/PassengersForm';
+import 'antd/dist/antd.css';
 
+const { Step } = Steps;
 const { ym } = window;
 
 const useStyles = makeStyles(theme => ({
@@ -36,7 +42,27 @@ const useStyles = makeStyles(theme => ({
   margin: {
     margin: theme.spacing(1),
   },
+  personInfo: {
+    width: '100%',
+    textAlign: 'center',
+    marginTop: 50,
+  },
+  elista: {
+    color: 'black',  
+    fontSize: 24,
+  },
+  head: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  buttonModal: {
+    background: '#3f51b5', 
+    color:'white',
+  },
 }));
+
 
 const PersonInfoPage = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -44,6 +70,42 @@ const PersonInfoPage = (props) => {
   const [prevPassengerValues, setPrevPassengerValues] = React.useState({});
   const [currentIndex, setCurrentIndex] = React.useState(-1);
   const [showTakeFromPrevButton, setShowTakeFromPrevButton] = React.useState(false);
+
+  useEffect(() => {
+    if (!(!!cityFrom && !!cityTo)) {
+      history.push('/');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const [isChildTicket, setIsChildTicket] = useState(false);
+  const [isDocs, setIsDocs] = useState(false);
+  const [isModalDocs, setModalDocs] = useState(false);
+  
+  
+
+  const placeOrder = (data) => {
+    // ym(34728795, 'reachGoal', 'success_booking');
+    const orderData = {
+      ...data,
+      idempotenceKey: idempotenceKey === '' ? uuidv4() : idempotenceKey
+    };
+    console.log(orderData);
+    // sendOrder(orderData, () => history.push('/orderSuccess'));
+  }
+  // const [disabledBntFind, setDisabledBtnFind] = useState(true);
+  // const readyToOrder = passengers.length === seats;
+
+  const [visibleBaggage, setVisibleBaggage] = useState(false);
+  const [visibleDocs, setVisibleDocs] = useState(false);
+  const handleCloseBaggage = () => {
+    setVisibleBaggage(false);
+  }
+
+  const handleCloseDocs = () => {
+    setVisibleDocs(false);
+  }
+
 
   const handleClose = () => {
     setPassengerValues({});
@@ -61,6 +123,8 @@ const PersonInfoPage = (props) => {
     cityToText,
     dateText,
     timeText,
+    departureTimeText,
+    arrivalTimeText,
     addPassenger,
     updatePassenger,
     passangersReset,
@@ -119,15 +183,78 @@ const PersonInfoPage = (props) => {
 
   const fullPrice = priceToPay + totalDiscount;
 
+
+
   return (
     <div>
-      <Typography variant="h5" component="h2" align="center">
+      {/* <Typography variant="h5" component="h2" align="center">
         {cityFromText} <ArrowForwardIcon /> {cityToText}
       </Typography>
       <Typography variant="h5" color="textSecondary" align="center">
         {dateText} {timeText}
-      </Typography>
-      <Grid container spacing={2} className={classes.root}>
+      </Typography> */}
+      
+      <div className={classes.personInfo}>
+      <div className={classes.head}>
+        <div className={classes.elista}>
+          <div>{cityFromText} <img src={car2} alt="car2" width="120" /> {cityToText}</div>
+          {/* <div >{dateText}</div> */}
+        </div>
+        <div style={{ marginTop: '20px' }}>
+          <Steps progressDot current={3}>
+            <Step title={departureTimeText} description="Отправка" />
+            <Step title={dateText} description="Дата" />
+            <Step title={arrivalTimeText} description="Прибытие" />
+          </Steps>
+        </div>
+      </div>
+      </div>
+
+      {cityFrom && cityTo && <PassengersForm
+        cityFrom={cityFrom}
+        cityTo={cityTo}
+        cityFromText={cityFromText}
+        cityToText={cityToText}
+        seats={seats}
+        visibleBaggage={visibleBaggage}
+        setVisibleBaggage={setVisibleBaggage}
+        visibleDocs={visibleDocs}
+        setVisibleDocs={setVisibleDocs}
+        placeOrder={placeOrder}
+      />}
+      <Modal
+        title="Правила провоза багажа"
+        visible={visibleBaggage}
+        onCancel={handleCloseBaggage}
+        footer={
+          <Button className={classes.buttonModal} type="primary" onClick={handleCloseBaggage}>Ok</Button>
+        }
+      >
+        <div>
+          <p>Бесплатно одно место багажа на одного человека размером 80 x 50 x 30 см. и весом не более 23 кг.</p>
+          <p>Стоимость дополнительного багажа 100 рублей.</p>
+          <p>Дополнительный багаж оплачивается водителю.</p>
+          <p>Животные перевозятся только в клетках и с согласования всех остальных пассажиров.</p>
+          <p>В случае габаритного багажа (длина одного измерения более 100 см или вес более 23 кг), уточните у оператора возможность его провоза.</p>
+        </div>
+      </Modal>
+      <Modal
+        title="Как получить отчетные документы?"
+        visible={visibleDocs}
+        onCancel={handleCloseDocs}
+        footer={
+          <Button  className={classes.buttonModal} type="primary" onClick={handleCloseDocs}>Ok</Button>
+        }
+      >
+        <ol>
+          <li>Указать галочку "Нужен отчетный документ"</li>
+          <li>Заполнить поля "Дата рождения" и "Серия и номер паспорта"</li>
+          <li>Получить отчетные документы вы можете в офис компании.</li>
+          <li>Если у вас нет возможности приехать в офисе, то вы можете воспользоваться платной услугой доставки отчетных документов. Стоимость 150 рублей.</li>
+        </ol>
+      </Modal>
+
+      {/* <Grid container spacing={2} className={classes.root}>
         {passengers.map(({ lastName, firstName, middleName, phone, addressFrom, addressTo }, index) => (
           <Grid key={seats - index} item xs={12}>
             <Divider />
@@ -241,18 +368,20 @@ const PersonInfoPage = (props) => {
         cityFromText={cityFromText}
         cityToText={cityToText}
         seats={seats}
-      />
+      /> */}
     </div>
   );
 };
 
-const mapStateToProps = ({ trips: { seats, cityFrom, cityTo, cityFromText, cityToText, dateText, timeText }, passengers, payment: { idempotenceKey, loading, error } }) => ({
+const mapStateToProps = ({ trips: { seats, cityFrom, cityTo, cityFromText, cityToText, dateText, timeText, departureTimeText, arrivalTimeText  }, passengers, payment: { idempotenceKey, loading, error } }) => ({
   seats,
   cityFrom,
   cityTo,
   cityFromText,
   cityToText,
   dateText,
+  departureTimeText,
+  arrivalTimeText,
   timeText,
   passengers,
   loading,

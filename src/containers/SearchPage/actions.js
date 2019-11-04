@@ -21,12 +21,14 @@ export const getTripsError = error => ({
   error,
 });
 
-export const chooseTrip = (cityFromText, cityToText, dateText, timeText) => ({
+export const chooseTrip = (cityFromText, cityToText, dateText, timeText, departureTimeText, arrivalTimeText) => ({
   type: CHOOSE_TRIP,
   cityFromText,
   cityToText,
   dateText,
-  timeText
+  timeText,
+  departureTimeText,
+  arrivalTimeText
 });
 
 export const tripsReset = () => ({
