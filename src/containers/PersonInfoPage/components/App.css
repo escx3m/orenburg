@@ -43,7 +43,7 @@ body{
 	margin-left: 72pt;
 }
 .link-to-doc {
-    color: blue;
+    color: #3f51b5;
 }
 .link-to-doc:hover {
     cursor: pointer;

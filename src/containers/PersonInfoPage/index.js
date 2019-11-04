@@ -28,6 +28,10 @@ import 'antd/dist/antd.css';
 const { Step } = Steps;
 const { ym } = window;
 
+const grid = {
+  width: '100%',
+};
+
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3, 2),
@@ -43,6 +47,7 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
   },
   personInfo: {
+    maxWidth: '500px',
     width: '100%',
     textAlign: 'center',
     marginTop: 50,
@@ -194,7 +199,7 @@ const PersonInfoPage = (props) => {
         {dateText} {timeText}
       </Typography> */}
       
-      <div className={classes.personInfo}>
+      <div className={classes.personInfo} style={grid}>
       <div className={classes.head}>
         <div className={classes.elista}>
           <div>{cityFromText} <img src={car2} alt="car2" width="120" /> {cityToText}</div>
@@ -210,7 +215,7 @@ const PersonInfoPage = (props) => {
       </div>
       </div>
 
-      {cityFrom && cityTo && <PassengersForm
+      {/* {cityFrom && cityTo && <PassengersForm
         cityFrom={cityFrom}
         cityTo={cityTo}
         cityFromText={cityFromText}
@@ -252,9 +257,9 @@ const PersonInfoPage = (props) => {
           <li>Получить отчетные документы вы можете в офис компании.</li>
           <li>Если у вас нет возможности приехать в офисе, то вы можете воспользоваться платной услугой доставки отчетных документов. Стоимость 150 рублей.</li>
         </ol>
-      </Modal>
+      </Modal> */}
 
-      {/* <Grid container spacing={2} className={classes.root}>
+      <Grid container spacing={2} className={classes.root}>
         {passengers.map(({ lastName, firstName, middleName, phone, addressFrom, addressTo }, index) => (
           <Grid key={seats - index} item xs={12}>
             <Divider />
@@ -368,7 +373,7 @@ const PersonInfoPage = (props) => {
         cityFromText={cityFromText}
         cityToText={cityToText}
         seats={seats}
-      /> */}
+      />
     </div>
   );
 };

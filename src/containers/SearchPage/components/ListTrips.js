@@ -10,21 +10,29 @@ import moment from 'moment-timezone';
 import { Modal } from 'antd';
 import { cityOptions, timeWindowPhoneRedir, arriveInterval, cityTimeZones, waysTime } from '../constants';
 import { ticketPrices, discountChild } from '../../PersonInfoPage/constants';
+
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import InfoIcon from '@material-ui/icons/Info';
 import LocalTaxiIcon from '@material-ui/icons/LocalTaxi';
 import EventIcon from '@material-ui/icons/Event';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
-import { Timeline } from 'antd';
 
 const useStyles = makeStyles(theme => ({
+  divider: {
+    width: '100%',
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+  tripInfo: {
+    marginTop: theme.spacing(2),
+  },
   card: {
     width: '100%',
     marginTop: '20px',
     borderColor: '#3f51b5',
+    padding:'16px',
+    paddingBottom: '3px',
   },
   title: {
     fontSize: '20px',
@@ -35,33 +43,6 @@ const useStyles = makeStyles(theme => ({
   infoRoad: {
     fontSize: '24px',
     marginTop: '20px',
-  },
-  textTrip: {
-    float: 'left',
-    textAlign: 'right',
-    marginTop: '-7px',
-  },
-  timelineItem: {
-    paddingBottom: '22px',
-  },
-  places: {
-    textAlign: 'center',
-    marginTop: '-6px',
-  },
-  btn: {
-    borderColor: '#3f51b5',
-    background: '#3f51b5',
-    color: 'white',
-    width: '105px',
-    margin: 'auto',
-    marginTop: '5px',
-    marginLeft: '99px',
-  },
-  itemLine: {
-    float:'left',
-    minHeight: '1px',
-    height: '100%',
-    marginBottom: '-7em',
   },
 }));
 
@@ -89,7 +70,7 @@ const calculatePriceFrom = (cityFrom, cityTo) => {
 
 
 export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handleButtonClick }) {
-  // const classes = useStyles();
+  const classes = useStyles();
   const cityFromText = cityOptions.find(({ value }) => value === cityFrom).text;
   const cityToText = cityOptions.find(({ value }) => value === cityTo).text;
   const cityFromTZ = cityTimeZones.find(value => value.city === cityFrom).timeZone;
@@ -97,7 +78,6 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
   const dateText = formatDate(date);
   const priceFrom = calculatePriceFrom(cityFrom, cityTo);
   const { wayTime } = waysTime.find(({ fromCityId, toCityId }) => (fromCityId === cityFrom && toCityId === cityTo));
-  const classes = useStyles();
 
   const diffMinutes = (t1, t2) => {
     let diff = (t2.getTime() - t1.getTime()) / 1000;
@@ -109,10 +89,9 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
 
   const renderListTrips = (
     <React.Fragment>
-      <Typography className={classes.info}><AccessTimeIcon style={{ fontSize: 'medium', color: '#3f51b5' }} />  Отправление и прибытие указано по местному времени</Typography>
+       <Typography className={classes.info}><AccessTimeIcon style={{ fontSize: 'medium', color: '#3f51b5' }} />  Отправление и прибытие указано по местному времени</Typography>
       <div className={classes.infoRoad}> <InfoIcon style={{ color: '#3f51b5' }} />  Информация о рейсе</div>
       <Card className={classes.card}>
-        <CardContent>
           <Typography className={classes.title} gutterBottom>
             <LocalTaxiIcon style={{ color: '#3f51b5' }} /> Рейс: {cityFromText} - {cityToText}
           </Typography>
@@ -122,15 +101,9 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           <Typography className={classes.title} gutterBottom>
             <AccountBalanceWalletIcon style={{ color: '#3f51b5' }} /> От: {priceFrom} рублей
          </Typography>
-        </CardContent>
       </Card>
-      {/* <Typography className={classes.tripInfo} component="h3" variant="h5" align="center">
-        {cityFromText} - {cityToText} от {priceFrom} р.
-      </Typography>
-      <Typography component="h3" variant="h5" align="center">
-        {dateText}
-      </Typography> */}
-      {/* <Grid container>
+
+      <Grid container style={{marginTop:'20px'}}>
         <Grid item xs={3}>
           <Typography variant="body1" align="center">Отпр.</Typography>
         </Grid>
@@ -140,7 +113,7 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
         <Grid item xs={3}>
           <Typography variant="body1" align="center">Кол-во мест</Typography>
         </Grid>
-      </Grid> */}
+      </Grid>
       {trips.map(({ fromTime, availableRoute, availableSeats }, index) => {
 
         const timeText = `0${fromTime.hours}`.slice(-2) + ':' + `0${fromTime.minutes}`.slice(-2);
@@ -149,25 +122,25 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           hours: 0,
           minutes: 0,
         },
-          arrTime = {
-            hours: 0,
-            minutes: 0,
-          };
+        arrTime = {
+          hours: 0,
+          minutes: 0,
+        };
 
         let upArrTime = {
           hours: 0,
           minutes: 0,
         },
-          lowArrTime = {
-            hours: 0,
-            minutes: 0,
-          };
+        lowArrTime = {
+          hours: 0,
+          minutes: 0,
+        };
 
-        if ((cityFromText === 'Элиста' && cityToText === 'Волгоград') ||
+        if ( (cityFromText === 'Элиста' && cityToText === 'Волгоград') ||
           (cityFromText === 'Элиста' && cityToText === 'Астрахань') ||
           (cityFromText === 'Элиста' && cityToText === 'Ростов-на-Дону') ||
           (cityFromText === 'Астрахань' && cityToText === 'Волгоград') ||
-          (cityFromText === 'Волгоград' && cityToText === 'Астрахань')) {
+          (cityFromText === 'Волгоград' && cityToText === 'Астрахань') ) {
 
           arrTime.hours = fromTime.hours;
 
@@ -187,7 +160,7 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           lowArrTime.hours = (fromTime.hours + wayTime.hours) % 24;
           lowArrTime.minutes = fromTime.minutes;
 
-          if ((lowArrTime.minutes + wayTime.minutes) >= 60) {
+          if ( (lowArrTime.minutes + wayTime.minutes) >= 60 ) {
             lowArrTime.hours++;
             lowArrTime.minutes = (fromTime.minutes + wayTime.minutes) % 60;
           } else {
@@ -210,13 +183,13 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
 
             + ' - ' + `0${fromTime.hours}`.slice(-2) + ':' + `0${fromTime.minutes}`.slice(-2);
 
-          arrivalTimeText = `0${(lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
-            + ':' + `0${(lowArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2)
+          arrivalTimeText = `0${(lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour()) ) % 24}`.slice(-2)
+            + ':' + `0${(lowArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes()) ) % 60}`.slice(-2)
 
             + ' - ' + `0${(upArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
             + ':' + `0${upArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())}`.slice(-2);
-
-        } else if ((cityFromText === 'Волгоград' && cityToText === 'Элиста') ||
+          
+        } else if ( (cityFromText === 'Волгоград' && cityToText === 'Элиста') ||
           (cityFromText === 'Астрахань' && cityToText === 'Элиста') ||
           (cityFromText === 'Ростов-на-Дону' && cityToText === 'Элиста')) {
 
@@ -224,7 +197,10 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           lowArrTime.hours = (fromTime.hours + wayTime.hours + 1) % 24;
           lowArrTime.minutes = fromTime.minutes;
 
-          if ((lowArrTime.minutes + wayTime.minutes) >= 60) {
+          
+
+          if ( (lowArrTime.minutes + wayTime.minutes) >= 60 ) {
+
             lowArrTime.hours++;
             lowArrTime.minutes = (fromTime.minutes + wayTime.minutes) % 60;
           } else {
@@ -233,6 +209,7 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
 
           upArrTime.hours = lowArrTime.hours;
           upArrTime.minutes = lowArrTime.minutes;
+          
 
           if (upArrTime.minutes + 30 >= 60) {
             upArrTime.hours++;
@@ -253,8 +230,8 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
             + ' - ' + `0${(upArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
             + ':' + `0${(upArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2);
 
-        } else if ((cityFromText === 'Ростов-на-Дону' && cityToText === 'Астрахань')
-          || (cityFromText === 'Астрахань' && cityToText === 'Ростов-на-Дону')) {
+        } else if ( (cityFromText === 'Ростов-на-Дону' && cityToText === 'Астрахань')
+           || (cityFromText === 'Астрахань' && cityToText === 'Ростов-на-Дону') ) {
 
 
           departureTimeText = `0${fromTime.hours}`.slice(-2)
@@ -265,7 +242,7 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
 
           arrTime.hours = fromTime.hours;
 
-          if ((fromTime.minutes + 30) >= 60) {
+          if ( (fromTime.minutes + 30) >= 60 ) {
             arrTime.hours++;
             arrTime.minutes = 60 - (fromTime.minutes + 30);
           } else {
@@ -276,45 +253,21 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
             arrTime.hours++;
             arrTime.minutes = (arrTime.minutes + wayTime.minutes) % 60;
           }
-
+          
           arrivalTimeText = `0${(fromTime.hours + wayTime.hours
             + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
             + ':' + `0${(fromTime.minutes + wayTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2)
 
             + ' - ' + `0${(arrTime.hours + wayTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
             + ':' + `0${(arrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2);
+            
         }
+        console.log(`lowArrTime.hours: ${lowArrTime.hours} \n lowArrTime.minutes: ${lowArrTime.minutes}`)
+          console.log(`upArrTime.hours: ${lowArrTime.hours} \n upArrTime.minutes: ${upArrTime.minutes}`)
         return availableRoute
           ? (
             <React.Fragment key={index}>
-              <Card className={classes.card}>
-                <CardContent>
-                  <div className={classes.textTrip}>
-                    <div className={classes.timelineItem} >Отпр.</div>
-                    <div>Приб.</div>
-                  </div>
-                  <Timeline className={classes.itemLine}>
-                    <Timeline.Item color="#3f51b5" >{departureTimeText}</Timeline.Item>
-                    <Timeline.Item color="#3f51b5" >{arrivalTimeText}</Timeline.Item>
-                  </Timeline>
-                  <div className={classes.places}>
-                    <div>Кол-во мест: {availableSeats}</div>
-                    <div><Button className={classes.btn} disabled={availableSeats < seats} onClick={(diffMinutes(new Date(fromTime.time), new Date()) < timeWindowPhoneRedir.maxMinutes) ? () => setVisiblePhoneRedirect(!visiblePhoneRedirect) : () => handleButtonClick(cityFromText, cityToText, dateText, timeText, departureTimeText, arrivalTimeText)} variant="contained" color="primary">Купить</Button>
-                    <Modal
-                      title="Перенаправление"
-                      visible={visiblePhoneRedirect}departureTimeText
-                      
-                      onCancel={() => { setVisiblePhoneRedirect(!visiblePhoneRedirect) }}
-                      footer={<Button type="primary" onClick={() => { setVisiblePhoneRedirect(!visiblePhoneRedirect) }}>Ok</Button>}
-                    >
-                      <p>Продажа билетов через сайт прекращается за 2 часа до отправления.</p>
-                      <p>Пожалуйста, позвоните по телефону <a href="tel:+79374646000">+7 (937) 464-6000</a> и забронируйте себе билет.</p>
-                    </Modal>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              {/* <Divider className={classes.divider} />
+              <Divider className={classes.divider} />
               <Grid container alignItems="center">
                 <Grid item xs={3}>
                   <Typography variant="body1" align="center">{departureTimeText}</Typography>
@@ -327,19 +280,30 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
                 </Grid>
                 <Grid item xs={3}>
                   <Grid container alignItems="flex-end" justify="flex-end" direction="row">
-                    <Button disabled={availableSeats < seats} onClick={(diffMinutes(new Date(fromTime.time), new Date()) < timeWindowPhoneRedir.maxMinutes) ? () => setVisiblePhoneRedirect(!visiblePhoneRedirect) : () => handleButtonClick(cityFromText, cityToText, dateText, timeText)} variant="contained" color="primary">Купить</Button>
+                    <Button
+                      disabled={availableSeats < seats}
+                      onClick={
+                        (diffMinutes(new Date(fromTime.time), new Date()) < timeWindowPhoneRedir.maxMinutes)
+                        ? () => setVisiblePhoneRedirect(!visiblePhoneRedirect)
+                        : () => handleButtonClick(cityFromText, cityToText, dateText, timeText)}
+                      variant="contained"
+                      color="primary"
+                    >Купить</Button>
                     <Modal
                       title="Перенаправление"
                       visible={visiblePhoneRedirect}
                       onCancel={() => { setVisiblePhoneRedirect(!visiblePhoneRedirect) }}
-                      footer={<Button type="primary" onClick={() => { setVisiblePhoneRedirect(!visiblePhoneRedirect) }}>Ok</Button>}
+                      footer={
+                        <Button
+                          type="primary"
+                          onClick={() => { setVisiblePhoneRedirect(!visiblePhoneRedirect) }}>Ok</Button>}
                     >
                       <p>Продажа билетов через сайт прекращается за 2 часа до отправления.</p>
                       <p>Пожалуйста, позвоните по телефону <a href="tel:+79374646000">+7 (937) 464-6000</a> и забронируйте себе билет.</p>
                     </Modal>
                   </Grid>
                 </Grid>
-              </Grid> */}
+              </Grid>
             </React.Fragment>
           )
           : '';

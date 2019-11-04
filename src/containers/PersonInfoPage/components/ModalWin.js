@@ -3,6 +3,7 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import offer from './offero';
 import confidential from './confidential';
+import './App.css';
   
 class ModalWin extends React.Component {
   state = { 
@@ -59,7 +60,7 @@ class ModalWin extends React.Component {
         <div style={{margin: '10px auto'}} className="div-policy">
           <Checkbox 
             onChange={this.props.toggleBtnFindTickets}
-          ></Checkbox> Я соглашаюсь с <span className="link-to-doc" onClick={this.showOfferModal}> условиями </span>
+          ></Checkbox> Я соглашаюсь с <span className="link-to-doc"  onClick={this.showOfferModal}> условиями </span>
             и <span className="link-to-doc" onClick={this.showConfidentialModal}> политикой конфиденциальности </span>         
           <Modal
             width="100%"
