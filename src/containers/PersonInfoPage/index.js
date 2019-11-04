@@ -20,9 +20,8 @@ import PassengerInfoDialog from './components/PassengerInfoDialog';
 import { updatePassenger, addPassenger, sendOrder, passangersReset } from './actions';
 import { discountSale } from './constants';
 import car2 from './image/car2.png';
-import { Steps, Modal } from 'antd';
+import { Steps } from 'antd';
 import './index.css';
-import PassengersForm from './components/PassengersForm';
 import 'antd/dist/antd.css';
 
 const { Step } = Steps;
@@ -341,12 +340,12 @@ const PersonInfoPage = (props) => {
               </Typography>
           }
         </Grid>
+        <ModalWin toggleBtnFindTickets={() => setDisabledBtnFind(!disabledBntFind)} />
         <Grid item xs={12}>
           <Grid container justify="center">
             <Button disabled={!(readyToOrder && !loading && !disabledBntFind)} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Оплатить</Button>
           </Grid>
         </Grid>
-        <ModalWin toggleBtnFindTickets={() => setDisabledBtnFind(!disabledBntFind)} />
         {error &&
           <Grid item xs={12}>
             <Grid container justify="center">
