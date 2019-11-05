@@ -128,3 +128,14 @@
 }
 
 
+@media(max-width:320px) {
+    .ant-steps-dot .ant-steps-item-content, .ant-steps-dot.ant-steps-small .ant-steps-item-content {
+        width: 105px;
+    }
+    .ant-steps-dot .ant-steps-item-icon .ant-steps-icon-dot, .ant-steps-dot.ant-steps-small .ant-steps-item-icon .ant-steps-icon-dot {
+        left: 1px;
+    }
+    .ant-steps-dot .ant-steps-item-tail, .ant-steps-dot.ant-steps-small .ant-steps-item-tail {
+        left: -6px;
+    }
+}

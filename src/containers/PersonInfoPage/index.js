@@ -46,8 +46,6 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
   },
   personInfo: {
-    maxWidth: '500px',
-    width: '100%',
     textAlign: 'center',
     marginTop: 50,
   },
@@ -202,7 +200,6 @@ const PersonInfoPage = (props) => {
       <div className={classes.head}>
         <div className={classes.elista}>
           <div>{cityFromText} <img src={car2} alt="car2" width="120" /> {cityToText}</div>
-          {/* <div >{dateText}</div> */}
         </div>
         <div style={{ marginTop: '20px' }}>
           <Steps progressDot current={3}>

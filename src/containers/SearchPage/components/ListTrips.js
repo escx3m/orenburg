@@ -111,7 +111,7 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           <Typography variant="body1" align="center">Приб.</Typography>
         </Grid>
         <Grid item xs={3}>
-          <Typography variant="body1" align="center">Кол-во мест</Typography>
+          <Typography variant="body1" align="center">Билеты</Typography>
         </Grid>
       </Grid>
       {trips.map(({ fromTime, availableRoute, availableSeats }, index) => {
@@ -285,7 +285,7 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
                       onClick={
                         (diffMinutes(new Date(fromTime.time), new Date()) < timeWindowPhoneRedir.maxMinutes)
                         ? () => setVisiblePhoneRedirect(!visiblePhoneRedirect)
-                        : () => handleButtonClick(cityFromText, cityToText, dateText, timeText)}
+                        : () => handleButtonClick(cityFromText, cityToText, dateText, timeText, departureTimeText, arrivalTimeText)}
                       variant="contained"
                       color="primary"
                     >Купить</Button>
