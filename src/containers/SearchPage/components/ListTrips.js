@@ -161,10 +161,9 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           (cityFromText === 'Астрахань' && cityToText === 'Элиста') ||
           (cityFromText === 'Ростов-на-Дону' && cityToText === 'Элиста')) {
 
-           
           lowArrTime.hours = (fromTime.hours + wayTime.hours + 1) % 24;
           lowArrTime.minutes = fromTime.minutes;    
-
+ 
           if ( (lowArrTime.minutes + wayTime.minutes) >= 60 ) {
             lowArrTime.hours++;
             lowArrTime.minutes = (fromTime.minutes + wayTime.minutes) % 60;
@@ -182,13 +181,19 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
             upArrTime.minutes = upArrTime.minutes + 30;
           }
 
+          //fix -1:30 - 0:30
+          if (lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour()) < 0) {
+            lowArrTime.hours = 23;
+          } else {
+           lowArrTime.hours = (lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) %24; 
+          }
+
           departureTimeText = `0${fromTime.hours}`.slice(-2)
             + ':' + `0${fromTime.minutes}`.slice(-2)
 
             + ' - ' + `0${(fromTime.hours + 1) % 24}`.slice(-2) + ':' + `0${(fromTime.minutes + arriveInterval.minutes) % 60}`.slice(-2);
-          
 
-          arrivalTimeText = `0${(lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
+          arrivalTimeText = `0${lowArrTime.hours % 24}`.slice(-2)
             + ':' + `0${(lowArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2)
 
             + ' - ' + `0${(upArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
@@ -196,7 +201,6 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
 
         } else if ( (cityFromText === 'Ростов-на-Дону' && cityToText === 'Астрахань')
            || (cityFromText === 'Астрахань' && cityToText === 'Ростов-на-Дону') ) {
-          
 
           departureTimeText = `0${fromTime.hours}`.slice(-2)
             + ':' + `0${fromTime.minutes}`.slice(-2)
