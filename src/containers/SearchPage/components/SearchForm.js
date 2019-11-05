@@ -79,7 +79,6 @@ const SearchForm = props => {
   const cityToOptions = cityOptions.filter(city => city.value !== values.cityFrom);
   
   
-  
   return (
     <React.Fragment>
       <form onSubmit={handleSubmit} className={classes.form}>
@@ -129,6 +128,7 @@ const SearchForm = props => {
               onChange={handleChange}
               onBlur={handleBlur}
               labelWidth={labelWidth}
+              // inputProps={{ min: 1, max: 24}}
             />
             {touched.seats && errors.seats && <FormHelperText>{errors.seats}</FormHelperText>}
           </FormControl>
