@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -8,18 +8,15 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
 import Fab from '@material-ui/core/Fab';
 import SwapIcon from '@material-ui/icons/SwapVert';
-import Button from '@material-ui/core/Button';
+import {Button, TextField} from '@material-ui/core';
 
-import { withFormik } from 'formik';
+import {withFormik} from 'formik';
 
-import ruLocale from "date-fns/locale/ru";
+import ruLocale from 'date-fns/locale/ru';
 import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  DatePicker,
-} from '@material-ui/pickers';
+import {MuiPickersUtilsProvider, DatePicker} from '@material-ui/pickers';
 
-import { cityOptions } from '../constants';
+import {cityOptions} from '../constants';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -42,6 +39,23 @@ const useStyles = makeStyles(theme => ({
   },
   fab: {
     margin: theme.spacing(1),
+  },
+  seatsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  seats: {
+    minWidth: '50px',
+    width: '35px',
+    borderRadius: '0',
+  },
+  minus: {
+    width: 40,
+    borderRadius: '5px 0 0 5px',
+  },
+  plus: {
+    width: '40px',
+    borderRadius: '0 5px 5px 0',
   },
 }));
 
@@ -67,37 +81,54 @@ const SearchForm = props => {
 
   const handleSwitchButtonClick = e => {
     e.preventDefault();
-    const { values: { cityFrom, cityTo, date, seats }, setFieldValue, handleReset } = props;
+    const {
+      values: {cityFrom, cityTo, date, seats},
+      setFieldValue,
+      handleReset,
+    } = props;
     handleReset();
     setFieldValue('cityFrom', cityTo);
     setFieldValue('cityTo', cityFrom);
     setFieldValue('date', date);
     setFieldValue('seats', seats);
-  }
+  };
 
-  const cityFromOptions = cityOptions.filter(city => city.value !== values.cityTo);
-  const cityToOptions = cityOptions.filter(city => city.value !== values.cityFrom);
-  
-  
-  
+  const cityFromOptions = cityOptions.filter(
+    city => city.value !== values.cityTo,
+  );
+  const cityToOptions = cityOptions.filter(
+    city => city.value !== values.cityFrom,
+  );
+
   return (
     <React.Fragment>
       <form onSubmit={handleSubmit} className={classes.form}>
-        <FormControl className={classes.formControl} error={touched.cityFrom && errors.cityFrom} fullWidth variant="outlined">
-          <InputLabel ref={inputLabel} htmlFor="cityFrom">Откуда</InputLabel>
+        <FormControl
+          className={classes.formControl}
+          error={touched.cityFrom && errors.cityFrom}
+          fullWidth
+          variant="outlined">
+          <InputLabel ref={inputLabel} htmlFor="cityFrom">
+            Откуда
+          </InputLabel>
           <Select
             value={values.cityFrom}
             onChange={handleChange}
             onBlur={handleBlur}
-            input={<OutlinedInput labelWidth={50}/>}
+            input={<OutlinedInput labelWidth={50} />}
             inputProps={{
               name: 'cityFrom',
               id: 'cityFrom',
-            }}
-          >
-            {cityFromOptions.map(city => (<MenuItem key={city.value} value={city.value}>{city.text}</MenuItem>))}
+            }}>
+            {cityFromOptions.map(city => (
+              <MenuItem key={city.value} value={city.value}>
+                {city.text}
+              </MenuItem>
+            ))}
           </Select>
-          {touched.cityFrom && errors.cityFrom && <FormHelperText>{errors.cityFrom}</FormHelperText>}
+          {touched.cityFrom && errors.cityFrom && (
+            <FormHelperText>{errors.cityFrom}</FormHelperText>
+          )}
         </FormControl>
         <div className={classes.swapButtonAndDatePicker}>
           <div>
@@ -109,7 +140,7 @@ const SearchForm = props => {
                 inputVariant="outlined"
                 label="Когда"
                 disablePast
-                name='date'
+                name="date"
                 value={values.date}
                 format="dd/MM/yyyy"
                 helperText={errors.date}
@@ -119,55 +150,107 @@ const SearchForm = props => {
               />
             </MuiPickersUtilsProvider>
           </div>
-          <FormControl className={classes.formControl} error={errors.seats && touched.seats} variant="outlined">
-            <InputLabel ref={inputLabel} htmlFor="seats">Мест</InputLabel>
-            <OutlinedInput
-              id="seats"
-              name="seats"
-              type="number"
-              value={values.seats}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              labelWidth={labelWidth}
-            />
-            {touched.seats && errors.seats && <FormHelperText>{errors.seats}</FormHelperText>}
+          <FormControl className={classes.formControl}>
+            <div className={classes.seatsContainer}>
+              <Button
+                variant="outlined"
+                className={classes.minus}
+                onClick={e => {
+                  values.seats =
+                    values.seats <= 1
+                      ? 1
+                      : setFieldValue('seats', values.seats - 1);
+                }}>
+                -
+              </Button>
+              <TextField
+                style={{borderRadius: '0', color: 'red'}}
+                className={classes.seats}
+                label="Мест"
+                variant="outlined"
+                InputProps={{
+                  readOnly: true,
+                }}
+                id="seats"
+                name="seats"
+                value={values.seats}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                labelWidth={labelWidth}
+              />
+              {touched.seats && errors.seats && (
+                <FormHelperText>{errors.seats}</FormHelperText>
+              )}
+              <Button
+                variant="outlined"
+                className={classes.plus}
+                onClick={e => {
+                  values.seats =
+                    values.seats >= 24
+                      ? 24
+                      : setFieldValue('seats', values.seats + 1);
+                }}>
+                +
+              </Button>
+            </div>
           </FormControl>
           <div>
-            <Fab color="primary" onClick={handleSwitchButtonClick} size="small" aria-label="swap">
+            <Fab
+              color="primary"
+              onClick={handleSwitchButtonClick}
+              size="small"
+              aria-label="swap">
               <SwapIcon />
             </Fab>
           </div>
         </div>
-        <FormControl className={classes.formControl} error={touched.cityTo && errors.cityTo} fullWidth variant="outlined">
-          <InputLabel ref={inputLabel} htmlFor="cityTo">Куда</InputLabel>
+        <FormControl
+          className={classes.formControl}
+          error={touched.cityTo && errors.cityTo}
+          fullWidth
+          variant="outlined">
+          <InputLabel ref={inputLabel} htmlFor="cityTo">
+            Куда
+          </InputLabel>
           <Select
             value={values.cityTo}
             onChange={handleChange}
             onBlur={handleBlur}
-            input={<OutlinedInput labelWidth={labelWidth}/>}
+            input={<OutlinedInput labelWidth={labelWidth} />}
             inputProps={{
               name: 'cityTo',
               id: 'cityTo',
-            }}
-          >
-            {cityToOptions.map(city => (<MenuItem key={city.value} value={city.value}>{city.text}</MenuItem>))}
+            }}>
+            {cityToOptions.map(city => (
+              <MenuItem key={city.value} value={city.value}>
+                {city.text}
+              </MenuItem>
+            ))}
           </Select>
-          {touched.cityTo && errors.cityTo && <FormHelperText>{errors.cityTo}</FormHelperText>}
+          {touched.cityTo && errors.cityTo && (
+            <FormHelperText>{errors.cityTo}</FormHelperText>
+          )}
         </FormControl>
-        <Button size="large" fullWidth onClick={handleSubmit} variant="contained" color="primary" >Найти билеты</Button>
+        <Button
+          size="large"
+          fullWidth
+          onClick={handleSubmit}
+          variant="contained"
+          color="primary">
+          Найти билеты
+        </Button>
       </form>
-      
     </React.Fragment>
   );
-}
+};
 
 export default withFormik({
-  mapPropsToValues: ({ initialValues }) => ({
+  mapPropsToValues: ({initialValues}) => ({
     cityFrom: '',
     cityTo: '',
     date: new Date(),
     seats: 1,
-    ...initialValues
+    ...initialValues,
   }),
 
   validate: values => {
@@ -187,7 +270,7 @@ export default withFormik({
     return errors;
   },
 
-  handleSubmit: (values, { props }) => {
+  handleSubmit: (values, {props}) => {
     props.onSubmit(values);
   },
 })(SearchForm);
