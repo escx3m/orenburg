@@ -106,6 +106,7 @@ const PersonInfoPage = (props) => {
     departureTimeText,
     arrivalTimeText,
     addPassenger,
+    sendOrder,
     updatePassenger,
     passangersReset,
     loading,
