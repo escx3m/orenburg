@@ -17,13 +17,16 @@ const initialState = {
 export const trips = (state = initialState, action) => {
   switch(action.type) {
     case GET_TRIPS:
-      const { cityFrom, cityTo, seats, date } = action;
+      const { cityFrom, cityTo, seats, date, dateStart, dateEnd } = action;
+      console.log('action', action);
       return {
         ...state,
         cityFrom,
         cityTo,
         seats,
         date,
+        dateStart,
+        dateEnd,
         trips: [],
         loading: true,
         showTrips: false,

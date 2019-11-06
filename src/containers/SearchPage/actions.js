@@ -3,12 +3,14 @@ import { GET_TRIPS, GET_TRIPS_SUCCESS, GET_TRIPS_ERROR, CHOOSE_TRIP, RESET } fro
 import api from '../../api';
 import { getCombinedTrips } from './index';
 
-export const getTripsStart = ({ cityFrom, cityTo, seats, date }) => ({
+export const getTripsStart = ({ cityFrom, cityTo, seats, date, dateStart, dateEnd }) => ({
   type: GET_TRIPS,
   cityFrom,
   cityTo,
   seats,
   date,
+  dateStart,
+  dateEnd
 });
 
 export const getTripsSuccess = trips => ({

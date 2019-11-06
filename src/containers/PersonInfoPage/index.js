@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ModalWin from './components/ModalWin';
-
+import moment from 'moment-timezone';
 import { connect } from 'react-redux';
 import uuidv4 from 'uuid/v4';
 import { makeStyles } from '@material-ui/core/styles';
@@ -18,6 +18,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import PassengerInfoDialog from './components/PassengerInfoDialog';
 import { updatePassenger, addPassenger, sendOrder, passangersReset } from './actions';
+import api from '../../api';
+import { getCombinedTrips } from '../SearchPage/index';
 import { discountSale } from './constants';
 import car2 from './image/car2.png';
 import { Steps } from 'antd';
@@ -72,6 +74,8 @@ const PersonInfoPage = (props) => {
   const [prevPassengerValues, setPrevPassengerValues] = React.useState({});
   const [currentIndex, setCurrentIndex] = React.useState(-1);
   const [showTakeFromPrevButton, setShowTakeFromPrevButton] = React.useState(false);
+  const [disabledBntFind, setDisabledBtnFind] = useState(true);
+  const [notEnoughSeats, setNotEnoughSeats] = React.useState(false);
 
   useEffect(() => {
     if (!(!!cityFrom && !!cityTo)) {
@@ -101,9 +105,12 @@ const PersonInfoPage = (props) => {
 
   const {
     passengers,
-    seats,
     cityFrom,
     cityTo,
+    seats,
+    date,
+    dateStart,
+    dateEnd,
     cityFromText,
     cityToText,
     dateText,
@@ -147,15 +154,48 @@ const PersonInfoPage = (props) => {
     date_time: `${dateText} ${timeText}`,
   }
 
-  const handleOrderButtonClick = (data) => {
+  const handleOrderButtonClick = async (data) => {
     ym(34728795, 'reachGoal', 'success_booking');
-    const orderData = {
-      ...data,
-      idempotenceKey: idempotenceKey === '' ? uuidv4() : idempotenceKey
-    };
-    sendOrder(orderData, () => history.push('/orderSuccess'));
+
+    let availableSeats = 0;
+
+    if ([cityFrom, cityTo].every(city => ['119', '23'].includes(city))) {
+      const Elista = '166';
+      const departureTime = {
+        '119': { toElistaTime: 20, fromElistaTime: 3 },
+        '23': { toElistaTime: 21, fromElistaTime: 1 }
+      }[cityFrom];
+      const routesToElista = await api.trips.get({ ...data, cityTo: Elista});
+      const dateStart = moment(data.dateStart).add(1, 'days').format();
+      const dateEnd = moment(data.dateEnd).add(1, 'days').format();
+      const routesFromElista = await api.trips.get({ ...data, cityFrom: Elista, dateStart, dateEnd });
+  
+      const toElista = getCombinedTrips(routesToElista, cityFrom).find(({ fromTime }) => fromTime.hours === departureTime.toElistaTime);
+      const fromElista = getCombinedTrips(routesFromElista, Elista).find(({ fromTime }) => fromTime.hours === departureTime.fromElistaTime);
+  
+      if (toElista && fromElista) {
+        availableSeats = Math.min(toElista.availableSeats, fromElista.availableSeats)
+      }
+    } else {
+      const trips = await api.trips.get({ cityFrom, cityTo, seats, date, dateStart, dateEnd });
+      const timeToCheck = {
+        hours: +timeText.split(':')[0],
+        minutes: +timeText.split(':')[1]
+      }
+      availableSeats = getCombinedTrips(trips, cityFrom).find(({ fromTime }) => (fromTime.hours === timeToCheck.hours && fromTime.minutes === timeToCheck.minutes)).availableSeats;
+    }
+
+    if (availableSeats < seats) {
+      setNotEnoughSeats(true);
+    } else {
+      const orderData = {
+        ...data,
+        idempotenceKey: idempotenceKey === '' ? uuidv4() : idempotenceKey
+      };
+      console.log('orderData', orderData);
+      // sendOrder(orderData, () => history.push('/orderSuccess'));
+    }
   }
-  const [disabledBntFind, setDisabledBtnFind] = useState(true);
   const readyToOrder = passengers.length === seats;
   const priceToPay = passengers.reduce((sum, { ticketPrice }) => {
     return sum + ticketPrice;
@@ -233,47 +273,61 @@ const PersonInfoPage = (props) => {
             </Grid>
           </Grid>
         ))}
-        <Grid item xs={12}>
-          {readyToOrder
-            ? <div>
-                <Grid direction="row" container xs={12} justify="center" alignItems="center">
-                  <Grid xs={6}>
-                    <Typography color="textSecondary" variant="h5" component="h2" align="right">
-                      Стоимость:&nbsp;
-                    </Typography>
-                  </Grid>
-                  <Grid xs={6}>
-                    <Typography color="textSecondary" variant="h5" component="h2">{fullPrice} р.</Typography>
-                  </Grid>
-                </Grid>
-                <Grid direction="row" container xs={12} justify="center" alignItems="center">
-                  <Grid xs={6}>
-                    <Typography color="textSecondary" variant="h5" component="h2" align="right">
-                      Скидка:&nbsp;
-                    </Typography>
-                  </Grid>
-                  <Grid xs={6}><Typography color="textSecondary" variant="h5" component="h2">{totalDiscount} р.</Typography></Grid>
-                </Grid>
-                <Grid direction="row" container xs={12} justify="center" alignItems="center">
-                  <Grid xs={6}>
-                    <Typography variant="h5" component="h2" align="right">
-                      К оплате:&nbsp;
-                    </Typography>
-                  </Grid>
-                  <Grid xs={6}><Typography variant="h5" component="h2">{priceToPay} р.</Typography></Grid>
-                </Grid>
-              </div>
-            : <Typography variant="h5" component="h2" align="center">
-              Заполните данные пассажиров
+        {!notEnoughSeats ?
+          <React.Fragment>
+            <Grid item xs={12}>
+              {readyToOrder
+                ? <div>
+                    <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                      <Grid xs={6}>
+                        <Typography color="textSecondary" variant="h5" component="h2" align="right">
+                          Стоимость:&nbsp;
+                        </Typography>
+                      </Grid>
+                      <Grid xs={6}>
+                        <Typography color="textSecondary" variant="h5" component="h2">{fullPrice} р.</Typography>
+                      </Grid>
+                    </Grid>
+                    <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                      <Grid xs={6}>
+                        <Typography color="textSecondary" variant="h5" component="h2" align="right">
+                          Скидка:&nbsp;
+                        </Typography>
+                      </Grid>
+                      <Grid xs={6}><Typography color="textSecondary" variant="h5" component="h2">{totalDiscount} р.</Typography></Grid>
+                    </Grid>
+                    <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                      <Grid xs={6}>
+                        <Typography variant="h5" component="h2" align="right">
+                          К оплате:&nbsp;
+                        </Typography>
+                      </Grid>
+                      <Grid xs={6}><Typography variant="h5" component="h2">{priceToPay} р.</Typography></Grid>
+                    </Grid>
+                  </div>
+                : <Typography variant="h5" component="h2" align="center">
+                    Заполните данные пассажиров
+                  </Typography>
+              }
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container justify="center">
+                <Button disabled={!(readyToOrder && !loading && !disabledBntFind && !notEnoughSeats)} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Оплатить</Button>
+              </Grid>
+            </Grid>
+          </React.Fragment>
+        : <Grid item xs={12}>
+            <Grid container justify="center">
+              <Typography variant="h5" component="h2" align="center">
+                Недостаточно свободных мест.
               </Typography>
-          }
-        </Grid>
-        <ModalWin toggleBtnFindTickets={() => setDisabledBtnFind(!disabledBntFind)} />
-        <Grid item xs={12}>
-          <Grid container justify="center">
-            <Button disabled={!(readyToOrder && !loading && !disabledBntFind)} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Оплатить</Button>
+            </Grid>
+            <Grid container justify="center">
+              <Button onClick={() => props.history.push('/')} variant="contained" color="primary">На главную</Button>
+            </Grid>
           </Grid>
-        </Grid>
+        }
+        <ModalWin toggleBtnFindTickets={() => setDisabledBtnFind(!disabledBntFind)} />
         {error &&
           <Grid item xs={12}>
             <Grid container justify="center">
@@ -284,7 +338,6 @@ const PersonInfoPage = (props) => {
             </Grid>
           </Grid>
         }
-
       </Grid>
       <PassengerInfoDialog
         open={open}
@@ -305,10 +358,13 @@ const PersonInfoPage = (props) => {
   );
 };
 
-const mapStateToProps = ({ trips: { seats, cityFrom, cityTo, cityFromText, cityToText, dateText, timeText, departureTimeText, arrivalTimeText  }, passengers, payment: { idempotenceKey, loading, error } }) => ({
-  seats,
+const mapStateToProps = ({ trips: { cityFrom, cityTo, seats, date, dateStart, dateEnd, cityFromText, cityToText, dateText, timeText, departureTimeText, arrivalTimeText }, passengers, payment: { idempotenceKey, loading, error } }) => ({
   cityFrom,
   cityTo,
+  seats,
+  date,
+  dateStart,
+  dateEnd,
   cityFromText,
   cityToText,
   dateText,
