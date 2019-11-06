@@ -22,6 +22,7 @@ const useStyles = makeStyles(theme => ({
   "@global": {
     '.MuiButton-root': {
       minWidth: "30px",
+      width: '100%',
     },
   },
   form: {
@@ -49,10 +50,11 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     margin: '0 10px',
+    width: '150px',
   },
   seats: {
     borderRadius: '0',
-    maxWidth: '20px',
+    minWidth: '20px',
     width: '100%',
   },
   minus: {
