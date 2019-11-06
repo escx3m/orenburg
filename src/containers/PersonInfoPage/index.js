@@ -80,12 +80,6 @@ const PersonInfoPage = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [isChildTicket, setIsChildTicket] = useState(false);
-  const [isDocs, setIsDocs] = useState(false);
-  const [isModalDocs, setModalDocs] = useState(false);
-  
-  
-
   const placeOrder = (data) => {
     // ym(34728795, 'reachGoal', 'success_booking');
     const orderData = {
@@ -97,17 +91,6 @@ const PersonInfoPage = (props) => {
   }
   // const [disabledBntFind, setDisabledBtnFind] = useState(true);
   // const readyToOrder = passengers.length === seats;
-
-  const [visibleBaggage, setVisibleBaggage] = useState(false);
-  const [visibleDocs, setVisibleDocs] = useState(false);
-  const handleCloseBaggage = () => {
-    setVisibleBaggage(false);
-  }
-
-  const handleCloseDocs = () => {
-    setVisibleDocs(false);
-  }
-
 
   const handleClose = () => {
     setPassengerValues({});
@@ -189,13 +172,6 @@ const PersonInfoPage = (props) => {
 
   return (
     <div>
-      {/* <Typography variant="h5" component="h2" align="center">
-        {cityFromText} <ArrowForwardIcon /> {cityToText}
-      </Typography>
-      <Typography variant="h5" color="textSecondary" align="center">
-        {dateText} {timeText}
-      </Typography> */}
-      
       <div className={classes.personInfo} style={grid}>
       <div className={classes.head}>
         <div className={classes.elista}>
@@ -210,51 +186,6 @@ const PersonInfoPage = (props) => {
         </div>
       </div>
       </div>
-
-      {/* {cityFrom && cityTo && <PassengersForm
-        cityFrom={cityFrom}
-        cityTo={cityTo}
-        cityFromText={cityFromText}
-        cityToText={cityToText}
-        seats={seats}
-        visibleBaggage={visibleBaggage}
-        setVisibleBaggage={setVisibleBaggage}
-        visibleDocs={visibleDocs}
-        setVisibleDocs={setVisibleDocs}
-        placeOrder={placeOrder}
-      />}
-      <Modal
-        title="Правила провоза багажа"
-        visible={visibleBaggage}
-        onCancel={handleCloseBaggage}
-        footer={
-          <Button className={classes.buttonModal} type="primary" onClick={handleCloseBaggage}>Ok</Button>
-        }
-      >
-        <div>
-          <p>Бесплатно одно место багажа на одного человека размером 80 x 50 x 30 см. и весом не более 23 кг.</p>
-          <p>Стоимость дополнительного багажа 100 рублей.</p>
-          <p>Дополнительный багаж оплачивается водителю.</p>
-          <p>Животные перевозятся только в клетках и с согласования всех остальных пассажиров.</p>
-          <p>В случае габаритного багажа (длина одного измерения более 100 см или вес более 23 кг), уточните у оператора возможность его провоза.</p>
-        </div>
-      </Modal>
-      <Modal
-        title="Как получить отчетные документы?"
-        visible={visibleDocs}
-        onCancel={handleCloseDocs}
-        footer={
-          <Button  className={classes.buttonModal} type="primary" onClick={handleCloseDocs}>Ok</Button>
-        }
-      >
-        <ol>
-          <li>Указать галочку "Нужен отчетный документ"</li>
-          <li>Заполнить поля "Дата рождения" и "Серия и номер паспорта"</li>
-          <li>Получить отчетные документы вы можете в офис компании.</li>
-          <li>Если у вас нет возможности приехать в офисе, то вы можете воспользоваться платной услугой доставки отчетных документов. Стоимость 150 рублей.</li>
-        </ol>
-      </Modal> */}
-
       <Grid container spacing={2} className={classes.root}>
         {passengers.map(({ lastName, firstName, middleName, phone, addressFrom, addressTo }, index) => (
           <Grid key={seats - index} item xs={12}>
