@@ -1,5 +1,5 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -8,17 +8,22 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
 import Fab from '@material-ui/core/Fab';
 import SwapIcon from '@material-ui/icons/SwapVert';
-import {Button, TextField} from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 
-import {withFormik} from 'formik';
+import { withFormik } from 'formik';
 
 import ruLocale from 'date-fns/locale/ru';
 import DateFnsUtils from '@date-io/date-fns';
-import {MuiPickersUtilsProvider, DatePicker} from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 
-import {cityOptions} from '../constants';
+import { cityOptions } from '../constants';
 
 const useStyles = makeStyles(theme => ({
+  "@global": {
+    '.MuiButton-root': {
+      minWidth: "30px",
+    },
+  },
   form: {
     width: '100%',
     marginTop: theme.spacing(2),
@@ -43,18 +48,22 @@ const useStyles = makeStyles(theme => ({
   seatsContainer: {
     display: 'flex',
     flexDirection: 'row',
+    margin: '0 10px',
   },
   seats: {
-    minWidth: '50px',
-    width: '35px',
     borderRadius: '0',
+    maxWidth: '20px',
+    width: '100%',
   },
   minus: {
-    width: 40,
+    maxWidth: '20px',
+    width: '100%',
+    height: '56px',
     borderRadius: '5px 0 0 5px',
   },
   plus: {
-    width: '40px',
+    maxWidth: '20px',
+    width: '100%',
     borderRadius: '0 5px 5px 0',
   },
 }));
@@ -150,7 +159,6 @@ const SearchForm = props => {
               />
             </MuiPickersUtilsProvider>
           </div>
-          <FormControl className={classes.formControl}>
             <div className={classes.seatsContainer}>
               <Button
                 variant="outlined"
@@ -160,40 +168,40 @@ const SearchForm = props => {
                     values.seats <= 1
                       ? 1
                       : setFieldValue('seats', values.seats - 1);
-                }}>
-                -
-              </Button>
-              <TextField
-                style={{borderRadius: '0', color: 'red'}}
+                }}>-</Button>
+              <Button
                 className={classes.seats}
+                classes={{
+                  root: classes.seats
+                }}
                 label="Мест"
                 variant="outlined"
                 InputProps={{
                   readOnly: true,
+                  classes: classes.seats
                 }}
                 id="seats"
                 name="seats"
-                value={values.seats}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 labelWidth={labelWidth}
-              />
+              >{values.seats}</Button>
               {touched.seats && errors.seats && (
                 <FormHelperText>{errors.seats}</FormHelperText>
               )}
               <Button
                 variant="outlined"
+                classes={{
+                  root: classes.plus
+                }}
                 className={classes.plus}
                 onClick={e => {
                   values.seats =
                     values.seats >= 24
                       ? 24
                       : setFieldValue('seats', values.seats + 1);
-                }}>
-                +
-              </Button>
+                }}>+</Button>
             </div>
-          </FormControl>
           <div>
             <Fab
               color="primary"
