@@ -84,18 +84,6 @@ const PersonInfoPage = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const placeOrder = (data) => {
-    // ym(34728795, 'reachGoal', 'success_booking');
-    const orderData = {
-      ...data,
-      idempotenceKey: idempotenceKey === '' ? uuidv4() : idempotenceKey
-    };
-    console.log(orderData);
-    // sendOrder(orderData, () => history.push('/orderSuccess'));
-  }
-  // const [disabledBntFind, setDisabledBtnFind] = useState(true);
-  // const readyToOrder = passengers.length === seats;
-
   const handleClose = () => {
     setPassengerValues({});
     setOpen(false);
@@ -120,7 +108,6 @@ const PersonInfoPage = (props) => {
     addPassenger,
     updatePassenger,
     passangersReset,
-    sendOrder,
     loading,
     error,
     idempotenceKey,
@@ -192,8 +179,7 @@ const PersonInfoPage = (props) => {
         ...data,
         idempotenceKey: idempotenceKey === '' ? uuidv4() : idempotenceKey
       };
-      console.log('orderData', orderData);
-      // sendOrder(orderData, () => history.push('/orderSuccess'));
+      sendOrder(orderData, () => history.push('/orderSuccess'));
     }
   }
   const readyToOrder = passengers.length === seats;
