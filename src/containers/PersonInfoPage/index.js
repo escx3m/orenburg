@@ -26,6 +26,14 @@ import { Steps } from 'antd';
 import './index.css';
 import 'antd/dist/antd.css';
 
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Avatar from '@material-ui/core/Avatar';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Skeleton from '@material-ui/lab/Skeleton';
+
 const { Step } = Steps;
 const { ym } = window;
 
@@ -52,7 +60,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: 50,
   },
   elista: {
-    color: 'black',  
+    color: 'black',
     fontSize: 24,
   },
   head: {
@@ -62,8 +70,29 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
   },
   buttonModal: {
-    background: '#3f51b5', 
-    color:'white',
+    background: '#3f51b5',
+    color: 'white',
+  },
+  media: {
+    height: 190,
+  },
+  cardTitle: {
+    textAlign: 'center',
+  },
+  cardPass: {
+    margin: 'auto',
+    marginTop: 20,
+    maxWidth: 350,
+    Width: "100%",
+  },
+  infoPas: {
+    zIndex: 1,
+  },
+  editButton: {
+    zIndex: 200,
+    position: 'absolute',
+    // marginLeft: '300px',
+    right: '280px',
   },
 }));
 
@@ -153,14 +182,14 @@ const PersonInfoPage = (props) => {
         '119': { toElistaTime: 20, fromElistaTime: 3 },
         '23': { toElistaTime: 21, fromElistaTime: 1 }
       }[cityFrom];
-      const routesToElista = await api.trips.get({ ...data, cityTo: Elista});
+      const routesToElista = await api.trips.get({ ...data, cityTo: Elista });
       const dateStart = moment(data.dateStart).add(1, 'days').format();
       const dateEnd = moment(data.dateEnd).add(1, 'days').format();
       const routesFromElista = await api.trips.get({ ...data, cityFrom: Elista, dateStart, dateEnd });
-  
+
       const toElista = getCombinedTrips(routesToElista, cityFrom).find(({ fromTime }) => fromTime.hours === departureTime.toElistaTime);
       const fromElista = getCombinedTrips(routesFromElista, Elista).find(({ fromTime }) => fromTime.hours === departureTime.fromElistaTime);
-  
+
       if (toElista && fromElista) {
         availableSeats = Math.min(toElista.availableSeats, fromElista.availableSeats)
       }
@@ -189,9 +218,9 @@ const PersonInfoPage = (props) => {
   }, 0);
 
   let totalDiscount = discountSale * passengers.length;
-    if ([cityFrom, cityTo].every(city => ['119', '23'].includes(city))) {
-      totalDiscount *= 2;
-    }
+  if ([cityFrom, cityTo].every(city => ['119', '23'].includes(city))) {
+    totalDiscount *= 2;
+  }
 
   const fullPrice = priceToPay + totalDiscount;
 
@@ -200,24 +229,73 @@ const PersonInfoPage = (props) => {
   return (
     <div>
       <div className={classes.personInfo} style={grid}>
-      <div className={classes.head}>
-        <div className={classes.elista}>
-          <div>{cityFromText} <img src={car2} alt="car2" width="120" /> {cityToText}</div>
+        <div className={classes.head}>
+          <div className={classes.elista}>
+            <div>{cityFromText} <img src={car2} alt="car2" width="120" /> {cityToText}</div>
+          </div>
+          <div style={{ marginTop: '20px' }}>
+            <Steps progressDot current={3}>
+              <Step title={departureTimeText} description="Отправка" />
+              <Step title={dateText} description="Дата" />
+              <Step title={arrivalTimeText} description="Прибытие" />
+            </Steps>
+          </div>
         </div>
-        <div style={{ marginTop: '20px' }}>
-          <Steps progressDot current={3}>
-            <Step title={departureTimeText} description="Отправка" />
-            <Step title={dateText} description="Дата" />
-            <Step title={arrivalTimeText} description="Прибытие" />
-          </Steps>
-        </div>
-      </div>
       </div>
       <Grid container spacing={2} className={classes.root}>
         {passengers.map(({ lastName, firstName, middleName, phone, addressFrom, addressTo }, index) => (
           <Grid key={seats - index} item xs={12}>
             <Divider />
-            <Grid container justify="center" spacing={1} className={classes.root}>
+            <Card onClick={handleClickOpen({}, -1)} className={classes.cardPass}>
+              <CardHeader
+                title={`Пассажир № ${passengers.length + index}`} className={classes.cardTitle}
+              />
+            
+              {/* {loading ? (
+                <Skeleton variant="rect" className={classes.media} />
+              ) : (
+                  <CardMedia
+                    className={classes.media}
+                  >
+                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
+                      <PersonIcon />{`${lastName} ${firstName} ${middleName}`}
+                    </Typography></div>
+                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
+                      <PhoneIcon />{phone}
+                    </Typography></div>
+                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
+                      <ArrowBackIcon />{addressFrom}
+                    </Typography></div>
+                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
+                      <ArrowForwardIcon />{addressTo}
+                    </Typography></div>
+                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
+                      <ArrowBackIcon />{addressFrom}
+                    </Typography></div>
+                  </CardMedia>
+                )} */}
+
+              <CardContent>
+                <div className={classes.infoPas}>
+                  <div><IconButton onClick={handleClickOpen(passengers[index], index)} aria-label="edit" className={classes.editButton}>
+                    <EditIcon />
+                  </IconButton></div>
+              <div><Typography variant="subtitle1" className={classes.wrapIcon}>
+                      <PersonIcon />{`${lastName} ${firstName} ${middleName}`}
+                    </Typography></div>
+                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
+                      <PhoneIcon />{phone}
+                    </Typography></div>
+                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
+                      <ArrowBackIcon />{addressFrom}
+                    </Typography></div>
+                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
+                      <ArrowForwardIcon />{addressTo}
+                    </Typography></div>
+                    </div>
+              </CardContent>
+            </Card>
+            {/* <Grid container justify="center" spacing={1} className={classes.root}>
               <Grid item xs={11}>
                 <Grid container direction="row" alignItems="center">
                   <Typography variant="subtitle1" className={classes.wrapIcon}>
@@ -247,16 +325,38 @@ const PersonInfoPage = (props) => {
                   </IconButton>
                 </Grid>
               </Grid>
-            </Grid>
+            </Grid> */}
           </Grid>
         ))}
         {Array.from({ length: seats - passengers.length }).map((_, index) => (
           <Grid key={index} item xs={12}>
             <Divider />
             <Grid container justify="center" spacing={1} className={classes.root}>
-              <Button onClick={handleClickOpen({}, -1)} size="large" variant="outlined" className={classes.margin}>
+              {/* <Button onClick={handleClickOpen({}, -1)} size="large" variant="outlined" className={classes.margin}>
                 пассажир №{passengers.length + index + 1}
-              </Button>
+              </Button> */}
+                
+              <Card className={classes.cardPass} onClick={handleClickOpen({}, -1)} >
+      <CardHeader
+        title={`Пассажир № ${passengers.length + index + 1}`} className={classes.cardTitle}
+      />
+        <Skeleton variant="rect" className={classes.media} />
+        {/* <CardMedia
+          className={classes.media}
+          image="https://pi.tedcdn.com/r/talkstar-photos.s3.amazonaws.com/uploads/72bda89f-9bbf-4685-910a-2f151c4f3a8a/NicolaSturgeon_2019T-embed.jpg?w=512"
+          title="Ted talk"
+        /> */}
+      <CardContent>
+          <React.Fragment>
+            <Skeleton height={6} />
+            <Skeleton height={6} width="80%" />
+          </React.Fragment>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {}
+          </Typography>
+      </CardContent>
+    </Card>
+
             </Grid>
           </Grid>
         ))}
@@ -265,35 +365,35 @@ const PersonInfoPage = (props) => {
             <Grid item xs={12}>
               {readyToOrder
                 ? <div>
-                    <Grid direction="row" container xs={12} justify="center" alignItems="center">
-                      <Grid xs={6}>
-                        <Typography color="textSecondary" variant="h5" component="h2" align="right">
-                          Стоимость:&nbsp;
+                  <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                    <Grid xs={6}>
+                      <Typography color="textSecondary" variant="h5" component="h2" align="right">
+                        Стоимость:&nbsp;
                         </Typography>
-                      </Grid>
-                      <Grid xs={6}>
-                        <Typography color="textSecondary" variant="h5" component="h2">{fullPrice} р.</Typography>
-                      </Grid>
                     </Grid>
-                    <Grid direction="row" container xs={12} justify="center" alignItems="center">
-                      <Grid xs={6}>
-                        <Typography color="textSecondary" variant="h5" component="h2" align="right">
-                          Скидка:&nbsp;
+                    <Grid xs={6}>
+                      <Typography color="textSecondary" variant="h5" component="h2">{fullPrice} р.</Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                    <Grid xs={6}>
+                      <Typography color="textSecondary" variant="h5" component="h2" align="right">
+                        Скидка:&nbsp;
                         </Typography>
-                      </Grid>
-                      <Grid xs={6}><Typography color="textSecondary" variant="h5" component="h2">{totalDiscount} р.</Typography></Grid>
                     </Grid>
-                    <Grid direction="row" container xs={12} justify="center" alignItems="center">
-                      <Grid xs={6}>
-                        <Typography variant="h5" component="h2" align="right">
-                          К оплате:&nbsp;
+                    <Grid xs={6}><Typography color="textSecondary" variant="h5" component="h2">{totalDiscount} р.</Typography></Grid>
+                  </Grid>
+                  <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                    <Grid xs={6}>
+                      <Typography variant="h5" component="h2" align="right">
+                        К оплате:&nbsp;
                         </Typography>
-                      </Grid>
-                      <Grid xs={6}><Typography variant="h5" component="h2">{priceToPay} р.</Typography></Grid>
                     </Grid>
-                  </div>
+                    <Grid xs={6}><Typography variant="h5" component="h2">{priceToPay} р.</Typography></Grid>
+                  </Grid>
+                </div>
                 : <Typography variant="h5" component="h2" align="center">
-                    Заполните данные пассажиров
+                  Заполните данные пассажиров
                   </Typography>
               }
             </Grid>
@@ -303,7 +403,7 @@ const PersonInfoPage = (props) => {
               </Grid>
             </Grid>
           </React.Fragment>
-        : <Grid item xs={12}>
+          : <Grid item xs={12}>
             <Grid container justify="center">
               <Typography variant="h5" component="h2" align="center">
                 Недостаточно свободных мест.
