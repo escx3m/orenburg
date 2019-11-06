@@ -128,7 +128,6 @@ const SearchForm = props => {
               onChange={handleChange}
               onBlur={handleBlur}
               labelWidth={labelWidth}
-              // inputProps={{ min: 1, max: 24}}
             />
             {touched.seats && errors.seats && <FormHelperText>{errors.seats}</FormHelperText>}
           </FormControl>
