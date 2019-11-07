@@ -18,6 +18,8 @@ import { ticketPrices, discountChild } from '../constants';
 const { ymaps } = window;
 
 const phoneRegExp = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){11}(\s*)?$/;
+const passportRegExp = /\d{2}\s\d{2}\s\d{3}\s\d{3}/;
+const birthdayRegExp = /\d{2}\.\d{2}\.\d{4}/;
 
 const useStyles = makeStyles(theme => ({
   stepper: {
@@ -154,6 +156,7 @@ const PassengerInfoDialog = (props) => {
 
   const stepSchemas = [
     Yup.object().shape({
+      sendDocs: Yup.boolean(),
       firstName: Yup.string()
         .max(50, 'Слишком длинное имя!')
         .required('Обязательное поле'),
@@ -163,6 +166,20 @@ const PassengerInfoDialog = (props) => {
       phone: Yup.string()
         .matches(phoneRegExp, 'Неправильный номер')
         .required('Обязательное поле'),
+      birthday: Yup.string()
+        .when('sendDocs', {
+          is: true,
+          then: Yup.string()
+            .required("Обязательное поле")
+            .matches(birthdayRegExp, "Неполные данные")
+        }),
+      passport: Yup.string()
+       .when('sendDocs', {
+          is: true,
+          then: Yup.string()
+            .required("Обязательное поле")
+            .matches(passportRegExp, "Неполные данные")
+        }),
     }),
     Yup.object().shape({
       comment: Yup.string()

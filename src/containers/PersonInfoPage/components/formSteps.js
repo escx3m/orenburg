@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import InputMask from 'react-input-mask';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Paper from "@material-ui/core/Paper";
@@ -14,14 +15,10 @@ import { Field } from 'formik';
 import Downshift from "downshift";
 import ModalWinBaggage from './ModalWinBaggage';
 import ModalDocs from './ModalDocs';
-
 import { cityZones, fastAccessLocation } from '../constants';
 
-
 const useStyles = makeStyles(theme => ({
-  stepper: {
-  },
-  form: {
+ form: {
     display: "flex",
     flexDirection: "column",
   },
@@ -138,6 +135,48 @@ const renderDownShift = (props) => {
     </Downshift>
   );
 }
+const renderPhoneInput = ({ field, form: { touched, errors }, ...props }) => (
+  <InputMask {...field} {...props} mask="8 (999) 999 99 99" maskChar="_" alwaysShowMask>
+    {(inputProps) =>
+      <TextField
+        {...inputProps}
+        fullWidth
+        margin="dense"
+        variant="outlined"
+        error={touched[field.name] && !!errors[field.name]}
+        helperText={touched[field.name] && errors[field.name]}
+      />
+    }
+  </InputMask>
+);
+const renderBirthdayInput = ({ field, form: { touched, errors }, ...props }) => (
+  <InputMask {...field} {...props} mask="99.99.9999" maskChar="_" alwaysShowMask>
+    {(inputProps) =>
+      <TextField
+        {...inputProps}
+        fullWidth
+        margin="dense"
+        variant="outlined"
+        error={touched[field.name] && !!errors[field.name]}
+        helperText={touched[field.name] && errors[field.name]}
+      />
+    }
+  </InputMask>
+);
+const renderPassportInput = ({ field, form: { touched, errors }, ...props }) => (
+  <InputMask {...field} {...props} mask="99 99 999 999" maskChar="_" alwaysShowMask>
+    {(inputProps) =>
+      <TextField
+        {...inputProps}
+        fullWidth
+        margin="dense"
+        variant="outlined"
+        error={touched[field.name] && !!errors[field.name]}
+        helperText={touched[field.name] && errors[field.name]}
+      />
+    }
+  </InputMask>
+);
 
 const renderTextField = ({ field, form: { touched, errors }, ...props }) => (
   <TextField
@@ -229,7 +268,7 @@ export const PassengerForm = (props) => {
         required
         name="phone"
         label="Телефон"
-        component={renderTextField}
+        component={renderPhoneInput}
       />
       <Field
         name="child"
@@ -253,16 +292,22 @@ export const PassengerForm = (props) => {
         setOpenModal={setOpenDocsModal}
         component={renderCheckbox}
       />
-      {showSendDocs && <Field
-        name="birthday"
-        label="Дата рождения"
-        component={renderTextField}
-      />}
-      {showSendDocs && <Field
-        name="passport"
-        label="Серия и номер паспорта"
-        component={renderTextField}
-      />}
+      {showSendDocs && 
+        <React.Fragment>
+        <Field
+          required
+          name="birthday"
+          label="Дата рождения"
+          component={renderBirthdayInput}
+        />
+        <Field
+          required
+          name="passport"
+          label="Серия и номер паспорта"
+          component={renderPassportInput}
+        />
+        </React.Fragment>
+      }
       {showTakeFromPrevButton && <Chip
         label="Взять у предыдущего"
         size="small"
