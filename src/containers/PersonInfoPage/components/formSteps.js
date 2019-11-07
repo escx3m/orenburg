@@ -136,7 +136,7 @@ const renderDownShift = (props) => {
   );
 }
 const renderPhoneInput = ({ field, form: { touched, errors }, ...props }) => (
-  <InputMask {...field} {...props} mask="8 (999) 999 99 99" maskChar="_" alwaysShowMask>
+  <InputMask {...field} {...props} mask="7 (999) 999 99 99" maskChar="_">
     {(inputProps) =>
       <TextField
         {...inputProps}
@@ -150,7 +150,7 @@ const renderPhoneInput = ({ field, form: { touched, errors }, ...props }) => (
   </InputMask>
 );
 const renderBirthdayInput = ({ field, form: { touched, errors }, ...props }) => (
-  <InputMask {...field} {...props} mask="99.99.9999" maskChar="_" alwaysShowMask>
+  <InputMask {...field} {...props} mask="99.99.9999" maskChar="_">
     {(inputProps) =>
       <TextField
         {...inputProps}
@@ -164,7 +164,7 @@ const renderBirthdayInput = ({ field, form: { touched, errors }, ...props }) => 
   </InputMask>
 );
 const renderPassportInput = ({ field, form: { touched, errors }, ...props }) => (
-  <InputMask {...field} {...props} mask="99 99 999 999" maskChar="_" alwaysShowMask>
+  <InputMask {...field} {...props} mask="99 99 999 999" maskChar="_">
     {(inputProps) =>
       <TextField
         {...inputProps}
