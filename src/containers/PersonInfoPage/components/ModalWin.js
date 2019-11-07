@@ -61,7 +61,7 @@ class ModalWin extends React.Component {
           <Checkbox 
             onChange={this.props.toggleBtnFindTickets}
           ></Checkbox> Я соглашаюсь с <span className="link-to-doc"  onClick={this.showOfferModal}> условиями </span>
-            и <span className="link-to-doc" onClick={this.showConfidentialModal}> политикой конфиденциальности </span>         
+            и <span className="link-to-doc" onClick={this.showConfidentialModal}> политикой конфиденциальности </span>     
           <Modal
             width="100%"
             title="Условия предоставления услуг"
@@ -69,7 +69,7 @@ class ModalWin extends React.Component {
             onCancel={this.handleOfferCancel}
             className="policy"
             footer={
-              <Button type="primary" style={{color: 'blue', cursor: 'pointer'}} onClick={this.handleOfferOk}>
+              <Button type="primary" className="btnModal" onClick={this.handleOfferOk}>
                 Ok
               </Button>
             }
@@ -83,7 +83,7 @@ class ModalWin extends React.Component {
             onCancel={this.handleConfidentialCancel}
             className="policy"
             footer={
-              <Button type="primary" style={{color: 'blue'}} onClick={this.handleConfidentialOk}>
+              <Button type="primary" className="btnModal" onClick={this.handleConfidentialOk}>
                 Ok
               </Button>
             }
