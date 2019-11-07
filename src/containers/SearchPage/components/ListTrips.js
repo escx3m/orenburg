@@ -44,6 +44,10 @@ const useStyles = makeStyles(theme => ({
     fontSize: '24px',
     marginTop: '20px',
   },
+  btnModal: {
+    background: '#3f51b5',
+    color: 'white',
+  },
 }));
 
 const formatDate = (date) => {
@@ -297,6 +301,7 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
                       onCancel={() => { setVisiblePhoneRedirect(!visiblePhoneRedirect) }}
                       footer={
                         <Button
+                          className={classes.btnModal}
                           type="primary"
                           onClick={() => { setVisiblePhoneRedirect(!visiblePhoneRedirect) }}>Ok</Button>}
                     >

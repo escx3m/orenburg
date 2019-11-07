@@ -29,10 +29,8 @@ import 'antd/dist/antd.css';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Avatar from '@material-ui/core/Avatar';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Skeleton from '@material-ui/lab/Skeleton';
+// import { comment } from 'postcss';
 
 const { Step } = Steps;
 const { ym } = window;
@@ -69,12 +67,11 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     textAlign: 'center',
   },
-  buttonModal: {
-    background: '#3f51b5',
-    color: 'white',
+  iconColor: {
+    color: '#3f51b5',
   },
   media: {
-    height: 190,
+    height: 120,
   },
   cardTitle: {
     textAlign: 'center',
@@ -82,17 +79,11 @@ const useStyles = makeStyles(theme => ({
   cardPass: {
     margin: 'auto',
     marginTop: 20,
-    maxWidth: 350,
-    Width: "100%",
+    maxWidth: 300,
+    width: "100%",
   },
-  infoPas: {
-    zIndex: 1,
-  },
-  editButton: {
-    zIndex: 200,
-    position: 'absolute',
-    // marginLeft: '300px',
-    right: '280px',
+  cardDate: {
+    padding: '0 16px',
   },
 }));
 
@@ -243,59 +234,17 @@ const PersonInfoPage = (props) => {
         </div>
       </div>
       <Grid container spacing={2} className={classes.root}>
-        {passengers.map(({ lastName, firstName, middleName, phone, addressFrom, addressTo }, index) => (
+        {passengers.map(({ lastName, firstName, middleName, phone, addressFrom, addressTo, comment, child, ageGroup, sendDocs,passport, birthday, baggage }, index) => (
           <Grid key={seats - index} item xs={12}>
             <Divider />
-            <Card onClick={handleClickOpen({}, -1)} className={classes.cardPass}>
+            <Card className={classes.cardPass}> {/*Вывод данных после заполнения*/}
               <CardHeader
-                title={`Пассажир № ${passengers.length + index}`} className={classes.cardTitle}
+                title={`Пассажир № ${passengers.length + index}`} 
+                className={classes.cardTitle}
+                subheader={child ? <div style={{color:'black'}}>(Детский билет)</div> : '' }
               />
-            
-              {/* {loading ? (
-                <Skeleton variant="rect" className={classes.media} />
-              ) : (
-                  <CardMedia
-                    className={classes.media}
-                  >
-                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
-                      <PersonIcon />{`${lastName} ${firstName} ${middleName}`}
-                    </Typography></div>
-                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
-                      <PhoneIcon />{phone}
-                    </Typography></div>
-                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
-                      <ArrowBackIcon />{addressFrom}
-                    </Typography></div>
-                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
-                      <ArrowForwardIcon />{addressTo}
-                    </Typography></div>
-                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
-                      <ArrowBackIcon />{addressFrom}
-                    </Typography></div>
-                  </CardMedia>
-                )} */}
-
-              <CardContent>
-                <div className={classes.infoPas}>
-                  <div><IconButton onClick={handleClickOpen(passengers[index], index)} aria-label="edit" className={classes.editButton}>
-                    <EditIcon />
-                  </IconButton></div>
-              <div><Typography variant="subtitle1" className={classes.wrapIcon}>
-                      <PersonIcon />{`${lastName} ${firstName} ${middleName}`}
-                    </Typography></div>
-                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
-                      <PhoneIcon />{phone}
-                    </Typography></div>
-                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
-                      <ArrowBackIcon />{addressFrom}
-                    </Typography></div>
-                    <div><Typography variant="subtitle1" className={classes.wrapIcon}>
-                      <ArrowForwardIcon />{addressTo}
-                    </Typography></div>
-                    </div>
-              </CardContent>
-            </Card>
-            {/* <Grid container justify="center" spacing={1} className={classes.root}>
+              <CardContent className={classes.cardDate}>
+                <Grid container justify="center" spacing={1} >
               <Grid item xs={11}>
                 <Grid container direction="row" alignItems="center">
                   <Typography variant="subtitle1" className={classes.wrapIcon}>
@@ -317,15 +266,39 @@ const PersonInfoPage = (props) => {
                     <ArrowForwardIcon />{addressTo}
                   </Typography>
                 </Grid>}
+                {child && <Grid container direction="row" alignItems="center">
+                  <Typography variant="subtitle1" className={classes.wrapIcon}>
+                    <PhoneIcon />Возрастная группа: {ageGroup}
+                  </Typography>
+                </Grid>}
+                {baggage && <Grid container direction="row" alignItems="center">
+                  <Typography variant="subtitle1" className={classes.wrapIcon}>
+                    <PhoneIcon />Дополнительный багаж {baggage}
+                  </Typography>
+                </Grid>}
+                {sendDocs && <Grid container direction="row" alignItems="center">
+                  <Typography variant="subtitle1" className={classes.wrapIcon}>
+                    <PhoneIcon />Отчетные документы:
+                  </Typography>
+                  <div style={{marginLeft:'30px'}}>дата рождения: {birthday}</div>
+                  <div style={{marginLeft:'30px'}}>пасп. данные: {passport}</div>
+                </Grid>}
+                {comment && <Grid container direction="row" alignItems="center">
+                  <Typography variant="subtitle1" className={classes.wrapIcon}>
+                    <PhoneIcon />{comment}
+                  </Typography>
+                </Grid>}
               </Grid>
               <Grid item xs={1}>
                 <Grid container justify="flex-end">
                   <IconButton onClick={handleClickOpen(passengers[index], index)} aria-label="edit">
-                    <EditIcon />
+                    <EditIcon className={classes.iconColor}/>
                   </IconButton>
                 </Grid>
               </Grid>
-            </Grid> */}
+              </Grid>
+              </CardContent>
+            </Card>
           </Grid>
         ))}
         {Array.from({ length: seats - passengers.length }).map((_, index) => (
@@ -335,28 +308,19 @@ const PersonInfoPage = (props) => {
               {/* <Button onClick={handleClickOpen({}, -1)} size="large" variant="outlined" className={classes.margin}>
                 пассажир №{passengers.length + index + 1}
               </Button> */}
-                
-              <Card className={classes.cardPass} onClick={handleClickOpen({}, -1)} >
-      <CardHeader
-        title={`Пассажир № ${passengers.length + index + 1}`} className={classes.cardTitle}
-      />
-        <Skeleton variant="rect" className={classes.media} />
-        {/* <CardMedia
-          className={classes.media}
-          image="https://pi.tedcdn.com/r/talkstar-photos.s3.amazonaws.com/uploads/72bda89f-9bbf-4685-910a-2f151c4f3a8a/NicolaSturgeon_2019T-embed.jpg?w=512"
-          title="Ted talk"
-        /> */}
-      <CardContent>
-          <React.Fragment>
-            <Skeleton height={6} />
-            <Skeleton height={6} width="80%" />
-          </React.Fragment>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {}
-          </Typography>
-      </CardContent>
-    </Card>
 
+              <Card className={classes.cardPass} onClick={handleClickOpen({}, -1)} >
+                <CardHeader
+                  title={`Пассажир № ${passengers.length + index + 1}`} className={classes.cardTitle}
+                />
+                <Skeleton variant="rect" className={classes.media} />
+                <CardContent>
+                  <React.Fragment>
+                    <Skeleton height={6} width="100%" />
+                    <Skeleton height={6} width="80%" />
+                  </React.Fragment>
+                </CardContent>
+              </Card>
             </Grid>
           </Grid>
         ))}

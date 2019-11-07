@@ -192,9 +192,9 @@ const renderRadioGroup = ({ field, label, form: { touched, errors }, ...props })
       {...field}
       row
     >
-      <FormControlLabel value="1" control={<Radio />} label="0 - 1" />
-      <FormControlLabel value="2" control={<Radio />} label="1 - 4" />
-      <FormControlLabel value="3" control={<Radio />} label="4 - 7" />
+      <FormControlLabel value="0-1" control={<Radio />} label="0 - 1" />
+      <FormControlLabel value="1-4" control={<Radio />} label="1 - 4" />
+      <FormControlLabel value="4-7" control={<Radio />} label="4 - 7" />
     </RadioGroup>
   </FormControl>
 );

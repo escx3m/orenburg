@@ -184,7 +184,11 @@ const PassengerInfoDialog = (props) => {
         addressTo: '',
         comment: '',
         child: false,
-        ageGroup: '1',
+        ageGroup: '0-1',
+        sendDocs: false,
+        passport: '', 
+        birthday: '',
+
         ...passengerValues,
       }}
       enableReinitialize
