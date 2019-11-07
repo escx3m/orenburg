@@ -97,10 +97,6 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: '74px',
   },
-  price: {
-    textAlign: 'center',
-    fontSize: '20px',
-  },
   payButton: {
     maxWidth: 300,
     width: "100%",
