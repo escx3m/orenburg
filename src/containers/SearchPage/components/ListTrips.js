@@ -268,8 +268,6 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
             + ':' + `0${(arrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2);
             
         }
-        console.log(`lowArrTime.hours: ${lowArrTime.hours} \n lowArrTime.minutes: ${lowArrTime.minutes}`)
-          console.log(`upArrTime.hours: ${lowArrTime.hours} \n upArrTime.minutes: ${upArrTime.minutes}`)
         return availableRoute
           ? (
             <React.Fragment key={index}>

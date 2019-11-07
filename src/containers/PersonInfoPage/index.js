@@ -12,9 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import PersonIcon from '@material-ui/icons/Person';
-import PhoneIcon from '@material-ui/icons/Phone';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import PassengerInfoDialog from './components/PassengerInfoDialog';
 import { updatePassenger, addPassenger, sendOrder, passangersReset } from './actions';
@@ -30,7 +27,13 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Skeleton from '@material-ui/lab/Skeleton';
-// import { comment } from 'postcss';
+import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import ChildCareIcon from '@material-ui/icons/ChildCare';
+import WorkIcon from '@material-ui/icons/Work';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import DescriptionIcon from '@material-ui/icons/Description';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const { Step } = Steps;
 const { ym } = window;
@@ -48,7 +51,7 @@ const useStyles = makeStyles(theme => ({
   },
   wrapIcon: {
     verticalAlign: 'middle',
-    display: 'inline-flex'
+    display: 'inline-flex',
   },
   margin: {
     margin: theme.spacing(1),
@@ -61,6 +64,9 @@ const useStyles = makeStyles(theme => ({
     color: 'black',
     fontSize: 24,
   },
+  fillData: {
+    marginTop: '20px',
+  },
   head: {
     display: 'flex',
     flexDirection: 'column',
@@ -69,6 +75,7 @@ const useStyles = makeStyles(theme => ({
   },
   iconColor: {
     color: '#3f51b5',
+    marginRight: '10px',
   },
   media: {
     height: 120,
@@ -84,9 +91,21 @@ const useStyles = makeStyles(theme => ({
   },
   cardDate: {
     padding: '0 16px',
+    position: 'relative',
+  },
+  arrowDown: {
+    position: 'absolute',
+    top: '74px',
+  },
+  price: {
+    textAlign: 'center',
+    fontSize: '20px',
+  },
+  payButton: {
+    maxWidth: 300,
+    width: "100%",
   },
 }));
-
 
 const PersonInfoPage = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -215,8 +234,6 @@ const PersonInfoPage = (props) => {
 
   const fullPrice = priceToPay + totalDiscount;
 
-
-
   return (
     <div>
       <div className={classes.personInfo} style={grid}>
@@ -234,69 +251,84 @@ const PersonInfoPage = (props) => {
         </div>
       </div>
       <Grid container spacing={2} className={classes.root}>
-        {passengers.map(({ lastName, firstName, middleName, phone, addressFrom, addressTo, comment, child, ageGroup, sendDocs,passport, birthday, baggage }, index) => (
+        <Grid item xs={12}>
+        {!readyToOrder ?
+          <Typography
+            className={classes.fillData}
+            variant="h5"
+            component="h2"
+            align="center">
+            Заполните данные пассажир{
+              seats > 1 ? 'ов' : 'а'
+            }
+          </Typography> : ''}
+          </Grid>
+          {passengers.map(({ lastName, firstName, middleName, phone, addressFrom, addressTo, comment, child, ageGroup, sendDocs, passport, birthday, baggage }, index) => (
           <Grid key={seats - index} item xs={12}>
             <Divider />
             <Card className={classes.cardPass}> {/*Вывод данных после заполнения*/}
               <CardHeader
-                title={`Пассажир № ${passengers.length + index}`} 
+                title={`Пассажир № ${index + 1}`}
                 className={classes.cardTitle}
-                subheader={child ? <div style={{color:'black'}}>(Детский билет)</div> : '' }
+                subheader={child ? <div style={{ color: 'black' }}>(Детский билет)</div> : ''}
               />
               <CardContent className={classes.cardDate}>
                 <Grid container justify="center" spacing={1} >
-              <Grid item xs={11}>
-                <Grid container direction="row" alignItems="center">
-                  <Typography variant="subtitle1" className={classes.wrapIcon}>
-                    <PersonIcon />{`${lastName} ${firstName} ${middleName}`}
-                  </Typography>
+                  <Grid item xs={11}>
+                    <Grid container direction="row" alignItems="center">
+                      <Typography variant="subtitle1" className={classes.wrapIcon}>
+                        <PersonIcon className={classes.iconColor} />{`${lastName} ${firstName} ${middleName}`}
+                      </Typography>
+                    </Grid>
+                    <Grid container direction="row" alignItems="center">
+                      <Typography variant="subtitle1" className={classes.wrapIcon}>
+                        <PhoneIphoneIcon className={classes.iconColor} />{phone}
+                      </Typography>
+                    </Grid>
+                    {addressFrom && <Grid container direction="row" alignItems="center">
+                      <Typography variant="subtitle1" className={classes.wrapIcon}>
+                        <FiberManualRecordIcon className={classes.iconColor} />{addressFrom}
+                      </Typography>
+                    </Grid>}
+                    {addressFrom && addressTo && <Grid container direction="row" alignItems="center" className={classes.arrowDown}>
+                      <ExpandMoreIcon className={classes.iconColor} />
+                    </Grid>}
+                    {addressTo && <Grid container direction="row" alignItems="center">
+                      <Typography variant="subtitle1" className={classes.wrapIcon}>
+                        <FiberManualRecordIcon className={classes.iconColor} />{addressTo}
+                      </Typography>
+                    </Grid>}
+                    {child && <Grid container direction="row" alignItems="center">
+                      <Typography variant="subtitle1" className={classes.wrapIcon}>
+                        <ChildCareIcon className={classes.iconColor} />Возрастная группа: {ageGroup}
+                      </Typography>
+                    </Grid>}
+                    {baggage && <Grid container direction="row" alignItems="center">
+                      <Typography variant="subtitle1" className={classes.wrapIcon}>
+                        <WorkIcon className={classes.iconColor} />Дополнительный багаж {baggage}
+                      </Typography>
+                    </Grid>}
+                    {sendDocs && <Grid container direction="row" alignItems="center">
+                      <Typography variant="subtitle1" className={classes.wrapIcon}>
+                        <DescriptionIcon className={classes.iconColor} />Отчетные документы:
+                      </Typography>
+                      <div style={{ marginLeft: '30px' }}>дата рождения: {birthday}</div>
+                      <div style={{ marginLeft: '30px' }}>пасп. данные: {passport}</div>
+                    </Grid>}
+                    {comment && <Grid container direction="row" alignItems="center">
+                      <Typography variant="subtitle1" className={classes.wrapIcon}>
+                        <ChatBubbleIcon className={classes.iconColor} />{comment}
+                      </Typography>
+                    </Grid>}
+                  </Grid>
+                  <Grid item xs={1}>
+                    <Grid container justify="flex-end">
+                      <IconButton onClick={handleClickOpen(passengers[index], index)} aria-label="edit">
+                        <EditIcon className={classes.iconColor} />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
                 </Grid>
-                <Grid container direction="row" alignItems="center">
-                  <Typography variant="subtitle1" className={classes.wrapIcon}>
-                    <PhoneIcon />{phone}
-                  </Typography>
-                </Grid>
-                {addressFrom && <Grid container direction="row" alignItems="center">
-                  <Typography variant="subtitle1" className={classes.wrapIcon}>
-                    <ArrowBackIcon />{addressFrom}
-                  </Typography>
-                </Grid>}
-                {addressTo && <Grid container direction="row" alignItems="center">
-                  <Typography variant="subtitle1" className={classes.wrapIcon}>
-                    <ArrowForwardIcon />{addressTo}
-                  </Typography>
-                </Grid>}
-                {child && <Grid container direction="row" alignItems="center">
-                  <Typography variant="subtitle1" className={classes.wrapIcon}>
-                    <PhoneIcon />Возрастная группа: {ageGroup}
-                  </Typography>
-                </Grid>}
-                {baggage && <Grid container direction="row" alignItems="center">
-                  <Typography variant="subtitle1" className={classes.wrapIcon}>
-                    <PhoneIcon />Дополнительный багаж {baggage}
-                  </Typography>
-                </Grid>}
-                {sendDocs && <Grid container direction="row" alignItems="center">
-                  <Typography variant="subtitle1" className={classes.wrapIcon}>
-                    <PhoneIcon />Отчетные документы:
-                  </Typography>
-                  <div style={{marginLeft:'30px'}}>дата рождения: {birthday}</div>
-                  <div style={{marginLeft:'30px'}}>пасп. данные: {passport}</div>
-                </Grid>}
-                {comment && <Grid container direction="row" alignItems="center">
-                  <Typography variant="subtitle1" className={classes.wrapIcon}>
-                    <PhoneIcon />{comment}
-                  </Typography>
-                </Grid>}
-              </Grid>
-              <Grid item xs={1}>
-                <Grid container justify="flex-end">
-                  <IconButton onClick={handleClickOpen(passengers[index], index)} aria-label="edit">
-                    <EditIcon className={classes.iconColor}/>
-                  </IconButton>
-                </Grid>
-              </Grid>
-              </Grid>
               </CardContent>
             </Card>
           </Grid>
@@ -324,46 +356,48 @@ const PersonInfoPage = (props) => {
             </Grid>
           </Grid>
         ))}
+        
         {!notEnoughSeats ?
           <React.Fragment>
             <Grid item xs={12}>
+              <ModalWin toggleBtnFindTickets={() => setDisabledBtnFind(!disabledBntFind)} />
               {readyToOrder
                 ? <div>
+                  <Card className={classes.cardPass}>
                   <Grid direction="row" container xs={12} justify="center" alignItems="center">
-                    <Grid xs={6}>
-                      <Typography color="textSecondary" variant="h5" component="h2" align="right">
-                        Стоимость:&nbsp;
-                        </Typography>
-                    </Grid>
-                    <Grid xs={6}>
-                      <Typography color="textSecondary" variant="h5" component="h2">{fullPrice} р.</Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid direction="row" container xs={12} justify="center" alignItems="center">
-                    <Grid xs={6}>
-                      <Typography color="textSecondary" variant="h5" component="h2" align="right">
-                        Скидка:&nbsp;
-                        </Typography>
-                    </Grid>
-                    <Grid xs={6}><Typography color="textSecondary" variant="h5" component="h2">{totalDiscount} р.</Typography></Grid>
-                  </Grid>
-                  <Grid direction="row" container xs={12} justify="center" alignItems="center">
-                    <Grid xs={6}>
-                      <Typography variant="h5" component="h2" align="right">
-                        К оплате:&nbsp;
-                        </Typography>
-                    </Grid>
-                    <Grid xs={6}><Typography variant="h5" component="h2">{priceToPay} р.</Typography></Grid>
-                  </Grid>
+                   <Grid xs={7}>
+                     <Typography color="textSecondary" variant="h5" component="h2" align="right">
+                       Стоимость:&nbsp;
+                       </Typography>
+                   </Grid>
+                   <Grid xs={5}>
+                     <Typography color="textSecondary" variant="h5" component="h2">{fullPrice} р.</Typography>
+                   </Grid>
+                 </Grid>
+                 <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                   <Grid xs={7}>
+                     <Typography color="textSecondary" variant="h5" component="h2" align="right">
+                       Скидка:&nbsp;
+                       </Typography>
+                   </Grid>
+                   <Grid xs={5}><Typography color="textSecondary" variant="h5" component="h2">{totalDiscount} р.</Typography></Grid>
+                 </Grid>
+                 <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                   <Grid xs={7}>
+                     <Typography variant="h5" component="h2" align="right">
+                      К оплате:&nbsp;
+                      </Typography>
+                   </Grid>
+                   <Grid xs={5}><Typography variant="h5" component="h2">{priceToPay} р.</Typography></Grid>
+                 </Grid>
+                  </Card>
                 </div>
-                : <Typography variant="h5" component="h2" align="center">
-                  Заполните данные пассажиров
-                  </Typography>
+                : ''
               }
             </Grid>
             <Grid item xs={12}>
               <Grid container justify="center">
-                <Button disabled={!(readyToOrder && !loading && !disabledBntFind && !notEnoughSeats)} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Оплатить</Button>
+                <Button className={classes.payButton} disabled={!(readyToOrder && !loading && !disabledBntFind && !notEnoughSeats)} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Оплатить</Button>
               </Grid>
             </Grid>
           </React.Fragment>
@@ -371,14 +405,13 @@ const PersonInfoPage = (props) => {
             <Grid container justify="center">
               <Typography variant="h5" component="h2" align="center">
                 Недостаточно свободных мест.
-              </Typography>
+                </Typography>
             </Grid>
             <Grid container justify="center">
               <Button onClick={() => props.history.push('/')} variant="contained" color="primary">На главную</Button>
             </Grid>
           </Grid>
         }
-        <ModalWin toggleBtnFindTickets={() => setDisabledBtnFind(!disabledBntFind)} />
         {error &&
           <Grid item xs={12}>
             <Grid container justify="center">
