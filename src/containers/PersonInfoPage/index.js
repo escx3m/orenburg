@@ -201,23 +201,24 @@ const PersonInfoPage = (props) => {
         '119': { toElistaTime: 20, fromElistaTime: 3 },
         '23': { toElistaTime: 21, fromElistaTime: 1 }
       }[cityFrom];
-      const routesToElista = await api.trips.get({ ...data, cityTo: Elista });
-      const dateStart = moment(data.dateStart).add(1, 'days').format();
-      const dateEnd = moment(data.dateEnd).add(1, 'days').format();
-      const routesFromElista = await api.trips.get({ ...data, cityFrom: Elista, dateStart, dateEnd });
+      const routesToElista = await api.trips.get({ cityFrom, cityTo: Elista, dateStart, dateEnd });
+      const dateStartElista = moment(dateStart).add(1, 'days').format();
+      const dateEndElista = moment(dateEnd).add(1, 'days').format();
+      const routesFromElista = await api.trips.get({ cityFrom: Elista, cityTo, dateStart: dateStartElista, dateEnd: dateEndElista });
 
       const toElista = getCombinedTrips(routesToElista, cityFrom).find(({ fromTime }) => fromTime.hours === departureTime.toElistaTime);
       const fromElista = getCombinedTrips(routesFromElista, Elista).find(({ fromTime }) => fromTime.hours === departureTime.fromElistaTime);
-
+      
       if (toElista && fromElista) {
         availableSeats = Math.min(toElista.availableSeats, fromElista.availableSeats)
       }
     } else {
-      const trips = await api.trips.get({ cityFrom, cityTo, seats, date, dateStart, dateEnd });
+      const trips = await api.trips.get({ cityFrom, cityTo, dateStart, dateEnd });
       const timeToCheck = {
         hours: +timeText.split(':')[0],
         minutes: +timeText.split(':')[1]
       }
+
       availableSeats = getCombinedTrips(trips, cityFrom).find(({ fromTime }) => (fromTime.hours === timeToCheck.hours && fromTime.minutes === timeToCheck.minutes)).availableSeats;
     }
 

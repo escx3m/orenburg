@@ -53,7 +53,7 @@ export const getTrips = data => async dispatch => {
 
     const toElista = getCombinedTrips(routesToElista, cityFrom).find(({ fromTime }) => fromTime.hours === departureTime.toElistaTime);
     const fromElista = getCombinedTrips(routesFromElista, Elista).find(({ fromTime }) => fromTime.hours === departureTime.fromElistaTime);
-
+    
     if (toElista && fromElista) {
       const availableSeats = Math.min(toElista.availableSeats, fromElista.availableSeats)
       return dispatch(getTripsSuccess([{ ...toElista, availableSeats }]));
