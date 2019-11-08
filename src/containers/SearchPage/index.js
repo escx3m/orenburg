@@ -83,10 +83,16 @@ const SearchPage = (props) => {
   
   const { trips, cityFrom, cityTo, seats, date, loading, showTrips, location } = props;
   const { city_from, city_to } = (qs.parse(location.search, { ignoreQueryPrefix: true }));
+  const initialValues = {
+    cityFrom: city_from || cityFrom,
+    cityTo: city_to || cityTo,
+    date: date || new Date(),
+    seats,
+  };
 
   return (
     <div className={classes.root}>
-      <SearchForm onSubmit={submit} initialValues={{ cityFrom: city_from, cityTo: city_to }} trips={trips} />
+      <SearchForm onSubmit={submit} initialValues={initialValues} trips={trips} />
       
       {loading && <CircularProgress disableShrink />}
       {showTrips && <ListTrips trips={trips} cityFrom={cityFrom} cityTo={cityTo} date={date} seats={seats} handleButtonClick={buyButtonClickHandler} />}
