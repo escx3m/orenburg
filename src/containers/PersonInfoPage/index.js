@@ -88,6 +88,14 @@ const useStyles = makeStyles(theme => ({
     marginTop: 20,
     maxWidth: 300,
     width: "100%",
+      "&:hover": {
+        cursor: 'pointer'
+      },
+  },
+  cardPrice: {
+    margin: 'auto',
+    marginTop: 20,
+    maxWidth: 300,
   },
   cardDate: {
     padding: '0 16px',
@@ -100,6 +108,11 @@ const useStyles = makeStyles(theme => ({
   payButton: {
     maxWidth: 300,
     width: "100%",
+  },
+  homeButton: {
+    maxWidth: 300,
+    width: "100%",
+    marginTop:'20px',
   },
 }));
 
@@ -248,18 +261,18 @@ const PersonInfoPage = (props) => {
       </div>
       <Grid container spacing={2} className={classes.root}>
         <Grid item xs={12}>
-        {!readyToOrder ?
-          <Typography
-            className={classes.fillData}
-            variant="h5"
-            component="h2"
-            align="center">
-            Заполните данные пассажир{
-              seats > 1 ? 'ов' : 'а'
-            }
-          </Typography> : ''}
-          </Grid>
-          {passengers.map(({ lastName, firstName, middleName, phone, addressFrom, addressTo, comment, child, ageGroup, sendDocs, passport, birthday, baggage }, index) => (
+          {!readyToOrder ?
+            <Typography
+              className={classes.fillData}
+              variant="h5"
+              component="h2"
+              align="center">
+              Заполните данные пассажир{
+                seats > 1 ? 'ов' : 'а'
+              }
+            </Typography> : ''}
+        </Grid>
+        {passengers.map(({ lastName, firstName, middleName, phone, addressFrom, addressTo, comment, child, ageGroup, sendDocs, passport, birthday, baggage }, index) => (
           <Grid key={seats - index} item xs={12}>
             <Divider />
             <Card className={classes.cardPass}> {/*Вывод данных после заполнения*/}
@@ -352,40 +365,42 @@ const PersonInfoPage = (props) => {
             </Grid>
           </Grid>
         ))}
-        
+
         {!notEnoughSeats ?
           <React.Fragment>
             <Grid item xs={12}>
               <ModalWin toggleBtnFindTickets={() => setDisabledBtnFind(!disabledBntFind)} />
               {readyToOrder
                 ? <div>
-                  <Card className={classes.cardPass}>
-                  <Grid direction="row" container xs={12} justify="center" alignItems="center">
-                   <Grid xs={7}>
-                     <Typography color="textSecondary" variant="h5" component="h2" align="right">
-                       Стоимость:&nbsp;
+                  <Card className={classes.cardPrice}>
+                  <CardContent>
+                    <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                      <Grid xs={7}>
+                        <Typography color="textSecondary" variant="h5" component="h2" align="right">
+                          Стоимость:&nbsp;
                        </Typography>
-                   </Grid>
-                   <Grid xs={5}>
-                     <Typography color="textSecondary" variant="h5" component="h2">{fullPrice} р.</Typography>
-                   </Grid>
-                 </Grid>
-                 <Grid direction="row" container xs={12} justify="center" alignItems="center">
-                   <Grid xs={7}>
-                     <Typography color="textSecondary" variant="h5" component="h2" align="right">
-                       Скидка:&nbsp;
+                      </Grid>
+                      <Grid xs={5}>
+                        <Typography color="textSecondary" variant="h5" component="h2">{fullPrice} р.</Typography>
+                      </Grid>
+                    </Grid>
+                    <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                      <Grid xs={7}>
+                        <Typography color="textSecondary" variant="h5" component="h2" align="right">
+                          Скидка:&nbsp;
                        </Typography>
-                   </Grid>
-                   <Grid xs={5}><Typography color="textSecondary" variant="h5" component="h2">{totalDiscount} р.</Typography></Grid>
-                 </Grid>
-                 <Grid direction="row" container xs={12} justify="center" alignItems="center">
-                   <Grid xs={7}>
-                     <Typography variant="h5" component="h2" align="right">
-                      К оплате:&nbsp;
+                      </Grid>
+                      <Grid xs={5}><Typography color="textSecondary" variant="h5" component="h2">{totalDiscount} р.</Typography></Grid>
+                    </Grid>
+                    <Grid direction="row" container xs={12} justify="center" alignItems="center">
+                      <Grid xs={7}>
+                        <Typography variant="h5" component="h2" align="right">
+                          К оплате:&nbsp;
                       </Typography>
-                   </Grid>
-                   <Grid xs={5}><Typography variant="h5" component="h2">{priceToPay} р.</Typography></Grid>
-                 </Grid>
+                      </Grid>
+                      <Grid xs={5}><Typography variant="h5" component="h2">{priceToPay} р.</Typography></Grid>
+                    </Grid>
+                    </CardContent>
                   </Card>
                 </div>
                 : ''
@@ -404,7 +419,7 @@ const PersonInfoPage = (props) => {
                 </Typography>
             </Grid>
             <Grid container justify="center">
-              <Button onClick={() => props.history.push('/')} variant="contained" color="primary">На главную</Button>
+              <Button className={classes.homeButton} onClick={() => props.history.push('/')} variant="contained" color="primary">На главную</Button>
             </Grid>
           </Grid>
         }
