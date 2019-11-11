@@ -16,6 +16,7 @@ import Downshift from "downshift";
 import ModalWinBaggage from './ModalWinBaggage';
 import ModalDocs from './ModalDocs';
 import { cityZones, fastAccessLocation } from '../constants';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
  form: {
@@ -32,6 +33,9 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1),
     left: 0,
     right: 0
+  },
+  button: {
+
   },
 }));
 
@@ -308,11 +312,11 @@ export const PassengerForm = (props) => {
         />
         </React.Fragment>
       }
-      {showTakeFromPrevButton && <Chip
-        label="Взять у предыдущего"
-        size="small"
-        onClick={() => setPrevPassengerValues()}
-      />}
+      {showTakeFromPrevButton &&  <Button variant="contained" style={{background:'rgb(224,224,224)', color:'rgb(128,128,128)', marginTop:'10px'}}
+        // label="Взять у предыдущего"
+        // size="large"
+        onClick={() => setPrevPassengerValues()} > Взять у предыдущего
+      </Button>}
        <ModalWinBaggage open={openBaggageModal} setOpen={setOpenBaggageModal} styles={{borderRadius:'5px'}} />
        <ModalDocs open={openDocsModal} setOpen={setOpenDocsModal} />
     </>

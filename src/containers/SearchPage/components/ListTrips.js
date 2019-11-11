@@ -93,7 +93,6 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
 
   const renderListTrips = (
     <React.Fragment>
-       <Typography className={classes.info}><AccessTimeIcon style={{ fontSize: 'medium', color: '#3f51b5' }} />  Отправление и прибытие указано по местному времени</Typography>
       <div className={classes.infoRoad}> <InfoIcon style={{ color: '#3f51b5' }} />  Информация о рейсе</div>
       <Card className={classes.card}>
           <Typography className={classes.title} gutterBottom>
@@ -313,6 +312,7 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           )
           : '';
       })}
+      <Typography className={classes.info}><AccessTimeIcon style={{ fontSize: 'medium', color: '#3f51b5' }} />  Отправление и прибытие указано по местному времени</Typography>
     </React.Fragment>
   );
 
