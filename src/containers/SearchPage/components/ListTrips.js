@@ -48,6 +48,15 @@ const useStyles = makeStyles(theme => ({
     background: '#3f51b5',
     color: 'white',
   },
+  iconsMUI: {
+    color: '#3f51b5',
+    verticalAlign: 'sub',
+  },
+  iconTime: {
+    fontSize: 'medium', 
+    color: '#3f51b5',
+    verticalAlign: 'text-top',
+  },
 }));
 
 const formatDate = (date) => {
@@ -96,13 +105,13 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
       <div className={classes.infoRoad}> <InfoIcon style={{ color: '#3f51b5' }} />  Информация о рейсе</div>
       <Card className={classes.card}>
           <Typography className={classes.title} gutterBottom>
-            <LocalTaxiIcon style={{ color: '#3f51b5' }} /> Рейс: {cityFromText} - {cityToText}
+            <LocalTaxiIcon className={classes.iconsMUI} /> Рейс: {cityFromText} - {cityToText}
           </Typography>
           <Typography className={classes.title} gutterBottom>
-            <EventIcon style={{ color: '#3f51b5' }} /> Дата: {dateText}
+            <EventIcon className={classes.iconsMUI} /> Дата: {dateText}
           </Typography>
           <Typography className={classes.title} gutterBottom>
-            <AccountBalanceWalletIcon style={{ color: '#3f51b5' }} /> От: {priceFrom} рублей
+            <AccountBalanceWalletIcon className={classes.iconsMUI} /> От: {priceFrom} рублей
          </Typography>
       </Card>
 
@@ -312,7 +321,7 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           )
           : '';
       })}
-      <Typography className={classes.info}><AccessTimeIcon style={{ fontSize: 'medium', color: '#3f51b5' }} />  Отправление и прибытие указано по местному времени</Typography>
+      <Typography className={classes.info}><AccessTimeIcon className={classes.iconTime} />  Отправление и прибытие указано по местному времени</Typography>
     </React.Fragment>
   );
 
