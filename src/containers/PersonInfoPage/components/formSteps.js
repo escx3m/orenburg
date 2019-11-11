@@ -251,6 +251,9 @@ export const PassengerForm = (props) => {
 
   return (
     <>
+      {showTakeFromPrevButton &&  <Button variant="contained" style={{background:'rgb(224,224,224)', color:'rgb(128,128,128)',marginBottom: '5px'}}
+        onClick={() => setPrevPassengerValues()} > Скопировать из предыдущего
+      </Button>}
       <Field
         required
         name="lastName"
@@ -312,11 +315,6 @@ export const PassengerForm = (props) => {
         />
         </React.Fragment>
       }
-      {showTakeFromPrevButton &&  <Button variant="contained" style={{background:'rgb(224,224,224)', color:'rgb(128,128,128)', marginTop:'10px'}}
-        // label="Взять у предыдущего"
-        // size="large"
-        onClick={() => setPrevPassengerValues()} > Взять у предыдущего
-      </Button>}
        <ModalWinBaggage open={openBaggageModal} setOpen={setOpenBaggageModal} styles={{borderRadius:'5px'}} />
        <ModalDocs open={openDocsModal} setOpen={setOpenDocsModal} />
     </>
