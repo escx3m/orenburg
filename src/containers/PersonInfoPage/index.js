@@ -19,6 +19,7 @@ import api from '../../api';
 import { getCombinedTrips } from '../SearchPage/index';
 import { discountSale } from './constants';
 import car2 from './image/car2.png';
+import payment from './image/payment.png';
 import { Steps } from 'antd';
 import './index.css';
 import 'antd/dist/antd.css';
@@ -113,6 +114,10 @@ const useStyles = makeStyles(theme => ({
     maxWidth: 300,
     width: "100%",
     marginTop:'20px',
+  },
+  payment: {
+    width: '200px',
+    marginTop: '20px',
   },
 }));
 
@@ -347,10 +352,6 @@ const PersonInfoPage = (props) => {
           <Grid key={index} item xs={12}>
             <Divider />
             <Grid container justify="center" spacing={1} className={classes.root}>
-              {/* <Button onClick={handleClickOpen({}, -1)} size="large" variant="outlined" className={classes.margin}>
-                пассажир №{passengers.length + index + 1}
-              </Button> */}
-
               <Card className={classes.cardPass} onClick={handleClickOpen({}, -1)} >
                 <CardHeader
                   title={`Пассажир № ${passengers.length + index + 1}`} className={classes.cardTitle}
@@ -410,6 +411,9 @@ const PersonInfoPage = (props) => {
             <Grid item xs={12}>
               <Grid container justify="center">
                 <Button className={classes.payButton} disabled={!(readyToOrder && !loading && !disabledBntFind && !notEnoughSeats)} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Оплатить</Button>
+                <div style={{width:'100%', textAlign:'center'}}>
+                  <img src={payment} alt="logo" className={classes.payment} />
+                </div>
               </Grid>
             </Grid>
           </React.Fragment>
