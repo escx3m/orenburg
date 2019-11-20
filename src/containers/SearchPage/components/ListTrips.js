@@ -148,11 +148,11 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           minutes: 0,
         };
 
-        if ( (cityFromText === 'Элиста' && cityToText === 'Волгоград') ||
-          (cityFromText === 'Элиста' && cityToText === 'Астрахань') ||
-          (cityFromText === 'Элиста' && cityToText === 'Ростов-на-Дону') ||
-          (cityFromText === 'Астрахань' && cityToText === 'Волгоград') ||
-          (cityFromText === 'Волгоград' && cityToText === 'Астрахань') ) {
+        // if ( (cityFromText === 'Элиста' && cityToText === 'Волгоград') ||
+        //   (cityFromText === 'Элиста' && cityToText === 'Астрахань') ||
+        //   (cityFromText === 'Элиста' && cityToText === 'Ростов-на-Дону') ||
+        //   (cityFromText === 'Астрахань' && cityToText === 'Волгоград') ||
+        //   (cityFromText === 'Волгоград' && cityToText === 'Астрахань') ) {
 
           arrTime.hours = fromTime.hours;
 
@@ -182,12 +182,12 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           upArrTime.hours = lowArrTime.hours;
           upArrTime.minutes = lowArrTime.minutes;
 
-          if (upArrTime.minutes + 30 >= 60) {
-            upArrTime.hours++;
-            upArrTime.minutes = (upArrTime.minutes + 30) % 60;
-          } else {
-            upArrTime.minutes = upArrTime.minutes + 30;
-          }
+          // if (upArrTime.minutes + 30 >= 60) {
+          //   upArrTime.hours++;
+          //   upArrTime.minutes = (upArrTime.minutes + 30) % 60;
+          // } else {
+          //   upArrTime.minutes = upArrTime.minutes + 30;
+          // }
 
 
           departureTimeText = `0${(lowBrdDepTime.hours) % 24}`.slice(-2)
@@ -201,81 +201,81 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
             + ' - ' + `0${(upArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
             + ':' + `0${upArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())}`.slice(-2);
           
-        } else if ( (cityFromText === 'Волгоград' && cityToText === 'Элиста') ||
-          (cityFromText === 'Астрахань' && cityToText === 'Элиста') ||
-          (cityFromText === 'Ростов-на-Дону' && cityToText === 'Элиста')) {
+        // } else if ( (cityFromText === 'Волгоград' && cityToText === 'Элиста') ||
+        //   (cityFromText === 'Астрахань' && cityToText === 'Элиста') ||
+        //   (cityFromText === 'Ростов-на-Дону' && cityToText === 'Элиста')) {
 
-          lowArrTime.hours = (fromTime.hours + wayTime.hours + 1) % 24;
-          lowArrTime.minutes = fromTime.minutes;    
+        //   lowArrTime.hours = (fromTime.hours + wayTime.hours + 1) % 24;
+        //   lowArrTime.minutes = fromTime.minutes;    
  
-          if ( (lowArrTime.minutes + wayTime.minutes) >= 60 ) {
+        //   if ( (lowArrTime.minutes + wayTime.minutes) >= 60 ) {
 
-            lowArrTime.hours++;
-            lowArrTime.minutes = (fromTime.minutes + wayTime.minutes) % 60;
-          } else {
-            lowArrTime.minutes = fromTime.minutes + wayTime.minutes;
-          }
+        //     lowArrTime.hours++;
+        //     lowArrTime.minutes = (fromTime.minutes + wayTime.minutes) % 60;
+        //   } else {
+        //     lowArrTime.minutes = fromTime.minutes + wayTime.minutes;
+        //   }
 
-          upArrTime.hours = lowArrTime.hours;
-          upArrTime.minutes = lowArrTime.minutes;
+        //   upArrTime.hours = lowArrTime.hours;
+        //   upArrTime.minutes = lowArrTime.minutes;
           
 
-          if (upArrTime.minutes + 30 >= 60) {
-            upArrTime.hours++;
-            upArrTime.minutes = (upArrTime.minutes + 30) % 60;
-          } else {
-            upArrTime.minutes = upArrTime.minutes + 30;
-          }
+        //   if (upArrTime.minutes + 30 >= 60) {
+        //     upArrTime.hours++;
+        //     upArrTime.minutes = (upArrTime.minutes + 30) % 60;
+        //   } else {
+        //     upArrTime.minutes = upArrTime.minutes + 30;
+        //   }
 
-          //fix -1:30 - 0:30
-          if (lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour()) < 0) {
-            lowArrTime.hours = 23;
-          } else {
-           lowArrTime.hours = (lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) %24; 
-          }
+        //   //fix -1:30 - 0:30
+        //   if (lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour()) < 0) {
+        //     lowArrTime.hours = 23;
+        //   } else {
+        //    lowArrTime.hours = (lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) %24; 
+        //   }
 
-          departureTimeText = `0${fromTime.hours}`.slice(-2)
-            + ':' + `0${fromTime.minutes}`.slice(-2)
+        //   departureTimeText = `0${fromTime.hours}`.slice(-2)
+        //     + ':' + `0${fromTime.minutes}`.slice(-2)
 
-            + ' - ' + `0${(fromTime.hours + 1) % 24}`.slice(-2) + ':' + `0${(fromTime.minutes + arriveInterval.minutes) % 60}`.slice(-2);
+        //     + ' - ' + `0${(fromTime.hours + 1) % 24}`.slice(-2) + ':' + `0${(fromTime.minutes + arriveInterval.minutes) % 60}`.slice(-2);
 
-          arrivalTimeText = `0${lowArrTime.hours % 24}`.slice(-2)
-            + ':' + `0${(lowArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2)
+        //   arrivalTimeText = `0${lowArrTime.hours % 24}`.slice(-2)
+        //     + ':' + `0${(lowArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2)
 
-            + ' - ' + `0${(upArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
-            + ':' + `0${(upArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2);
+        //     + ' - ' + `0${(upArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
+        //     + ':' + `0${(upArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2);
 
-        } else if ( (cityFromText === 'Ростов-на-Дону' && cityToText === 'Астрахань')
-           || (cityFromText === 'Астрахань' && cityToText === 'Ростов-на-Дону') ) {
+        // } else if ( (cityFromText === 'Ростов-на-Дону' && cityToText === 'Астрахань')
+        //    || (cityFromText === 'Астрахань' && cityToText === 'Ростов-на-Дону') ) {
 
-          departureTimeText = `0${fromTime.hours}`.slice(-2)
-            + ':' + `0${fromTime.minutes}`.slice(-2)
+        //   departureTimeText = `0${fromTime.hours}`.slice(-2)
+        //     + ':' + `0${fromTime.minutes}`.slice(-2)
 
-            + ' - ' + `0${(fromTime.hours + 1) % 24}`.slice(-2) + ':' + `0${(fromTime.minutes + arriveInterval.minutes) % 60}`.slice(-2);
+        //     + ' - ' + `0${(fromTime.hours + 1) % 24}`.slice(-2) + ':' + `0${(fromTime.minutes + arriveInterval.minutes) % 60}`.slice(-2);
 
 
-          arrTime.hours = fromTime.hours;
+        //   arrTime.hours = fromTime.hours;
 
-          if ( (fromTime.minutes + 30) >= 60 ) {
-            arrTime.hours++;
-            arrTime.minutes = 60 - (fromTime.minutes + 30);
-          } else {
-            arrTime.minutes = fromTime.minutes + 30;
-          }
+        //   if ( (fromTime.minutes + 30) >= 60 ) {
+        //     arrTime.hours++;
+        //     arrTime.minutes = 60 - (fromTime.minutes + 30);
+        //   } else {
+        //     arrTime.minutes = fromTime.minutes + 30;
+        //   }
 
-          if (arrTime.minutes + wayTime.minutes >= 60) {
-            arrTime.hours++;
-            arrTime.minutes = (arrTime.minutes + wayTime.minutes) % 60;
-          }
+        //   if (arrTime.minutes + wayTime.minutes >= 60) {
+        //     arrTime.hours++;
+        //     arrTime.minutes = (arrTime.minutes + wayTime.minutes) % 60;
+        //   }
           
-          arrivalTimeText = `0${(fromTime.hours + wayTime.hours
-            + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
-            + ':' + `0${(fromTime.minutes + wayTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2)
+        //   arrivalTimeText = `0${(fromTime.hours + wayTime.hours
+        //     + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
+        //     + ':' + `0${(fromTime.minutes + wayTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2)
 
-            + ' - ' + `0${(arrTime.hours + wayTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
-            + ':' + `0${(arrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2);
+        //     + ' - ' + `0${(arrTime.hours + wayTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
+        //     + ':' + `0${(arrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2);
             
-        }
+        // }
         return availableRoute
           ? (
             <React.Fragment key={index}>
@@ -311,8 +311,8 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
                           type="primary"
                           onClick={() => { setVisiblePhoneRedirect(!visiblePhoneRedirect) }}>Ok</Button>}
                     >
-                      <p>Продажа билетов через сайт прекращается за 2 часа до отправления.</p>
-                      <p>Пожалуйста, позвоните по телефону <a href="tel:+79374646000">+7 (937) 464-6000</a> и забронируйте себе билет.</p>
+                      <p>Продажа билетов через сайт прекращается за 24 часа до отправления.</p>
+                      <p>Пожалуйста, позвоните по телефону <a href="tel:+79228800333">+7 (922) 880-0333</a> или <a href="tel:+79228888121">+7 (922) 888-8121</a> и забронируйте себе билет.</p> 
                     </Modal>
                   </Grid>
                 </Grid>

@@ -5,118 +5,106 @@ export const CHOOSE_TRIP = 'CHOOSE_TRIP';
 export const RESET = 'trips/RESET';
 
 export const cityOptions = [
-  { key: 'elista', value: '166', text: 'Элиста' },
-  { key: 'rostov', value: '119', text: 'Ростов-на-Дону' },
-  { key: 'volgograd', value: '10', text: 'Волгоград' },
-  { key: 'astrakhan', value: '23', text: 'Астрахань' },
+  { key: 'orenburg', value: '106', text: 'Оренбург' },
+  { key: 'buzuluk', value: '2404', text: 'Бузулук' },
+  { key: 'samara', value: '123', text: 'Самара' },
+  // { key: 'kurumoch', value: '23', text: 'Курумоч' },
+  { key: 'tolyatti', value: '143', text: 'Тольятти' },
+  { key: 'yekaterinburg', value: '49', text: 'Екатеринбург' },
 ];
 
 export const cityTimeZones = [
-  { city: '166', timeZone: 'Europe/Moscow' },
-  { city: '119', timeZone: 'Europe/Moscow' },
-  { city: '10', timeZone: 'Europe/Volgograd' },
-  { city: '23', timeZone: 'Europe/Astrakhan' },
+  { city: '106', timeZone: 'Europe/Orenburg' },
+  { city: '2404', timeZone: 'Europe/Orenburg' },
+  { city: '123', timeZone: 'Europe/Samara' },
+  // { city: '23', timeZone: 'Europe/Astrakhan' },
+  { city: '143', timeZone: 'Europe/Tolyatti' },
+  { city: '49', timeZone: 'Europe/Yekaterinburg' },
 ]
 
 export const timeWindowPhoneRedir = {
-  maxMinutes: 120,
+  maxMinutes: 1440,
 }
 
 export const waysTime = [
   {
-    fromCityId: '166', 
-    toCityId: '119', 
+    fromCityId: '106', 
+    toCityId: '2404', 
     wayTime: {
-      hours: 5, 
-      minutes: 30,
+      hours: 3, 
+      minutes: 0,
     } 
   },
   {
-    fromCityId: '119', 
-    toCityId: '166', 
-    wayTime: {
-      hours: 5, 
-      minutes: 30,
-    }
-  },
-  {
-    fromCityId: '166', 
-    toCityId: '10', 
-    wayTime: {
-      hours: 4, 
-      minutes: 0,
-    }
-  },
-  {
-    fromCityId: '10', 
-    toCityId: '166', 
-    wayTime: {
-      hours: 4, 
-      minutes: 0,
-    }
-  },
-  {
-    fromCityId: '166', 
-    toCityId: '23', 
-    wayTime: {
-      hours: 4, 
-      minutes: 0,
-    }
-  },
-  {
-    fromCityId: '23', 
-    toCityId: '166', 
+    fromCityId: '2404', 
+    toCityId: '106', 
     wayTime: {
       hours: 3, 
-      minutes: 30,
-    }
-  },
-  {
-    fromCityId: '119', 
-    toCityId: '23', 
-    wayTime: {
-      hours: 11, 
-      minutes: 30,
-    }
-  },
-  {
-    fromCityId: '23', 
-    toCityId: '119', 
-    wayTime: {
-      hours: 10, 
-      minutes: 30,
-    }
-  },
-  {
-    fromCityId: '119', 
-    toCityId: '10', 
-    wayTime: {
-      hours: 12, 
-      minutes: 30,
-    }
-  },
-  {
-    fromCityId: '10', 
-    toCityId: '119', 
-    wayTime: {
-      hours: 10, 
       minutes: 0,
     }
   },
   {
-    fromCityId: '10', 
-    toCityId: '23', 
+    fromCityId: '106', 
+    toCityId: '123', 
     wayTime: {
-      hours: 5, 
-      minutes: 30,
+      hours: 6, 
+      minutes: 0,
     }
   },
   {
-    fromCityId: '23', 
-    toCityId: '10', 
+    fromCityId: '123', 
+    toCityId: '106', 
     wayTime: {
-      hours: 5, 
-      minutes: 30,
+      hours: 6, 
+      minutes: 0,
+    }
+  },
+  // {
+  //   fromCityId: '106', 
+  //   toCityId: '23', 
+  //   wayTime: {
+  //     hours: 7, 
+  //     minutes: 0,
+  //   }
+  // },
+  // {
+  //   fromCityId: '23', 
+  //   toCityId: '106', 
+  //   wayTime: {
+  //     hours: 7, 
+  //     minutes: 0,
+  //   }
+  // },
+  {
+    fromCityId: '106', 
+    toCityId: '143', 
+    wayTime: {
+      hours: 8, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '143', 
+    toCityId: '106', 
+    wayTime: {
+      hours: 8, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '106', 
+    toCityId: '49', 
+    wayTime: {
+      hours: 13, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '49', 
+    toCityId: '106', 
+    wayTime: {
+      hours: 13, 
+      minutes: 0,
     }
   },
 ];

@@ -47,16 +47,17 @@ const OrderSuccessPage = (props) => {
         </Typography>
         <br />
         <Typography align="center" >
-          За день до поездки с 19:00 до 20:00 вам придёт смс с телефоном водителя и маркой машины.
+          За час до поездки Вам придёт смс с телефоном водителя и маркой машины.
         </Typography>
         <br />
         <Typography align="center" >
-          В указанный интервал сбора пассажиров будьте готовы. Водитель вам позвонит за 5-10 минут до прибытия.
+          В указанный интервал сбора пассажиров будьте готовы. Водитель вам позвонит за 5-20 минут до прибытия.
         </Typography>
         <br />
         <Typography align="center" >Круглосуточная диспетчерская:</Typography>
         <Typography variant="h5" align="center" >
-          <a href="tel:+79374646000" className={classes.href}>8(937)464-6000</a>
+          <a href="tel:+79228800333" className={classes.href}>8(922)880-0333</a> <br />
+          <a href="tel:+79228888121" className={classes.href}>8(922)888-8121</a>
         </Typography>
         <Grid container spacing={2} justify="center" className={classes.heroButtons}>
           <Grid item>
