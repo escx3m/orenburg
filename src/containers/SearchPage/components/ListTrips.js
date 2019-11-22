@@ -136,12 +136,17 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           hours: 0,
           minutes: 0,
         };
-
-        if (fromTime.hours - 1 < 0) {
-          lowBrdDepTime.hours = 23;
-
+        if (fromTime.minutes - arriveInterval.minutes < 0) {
+          lowBrdDepTime.hours--;
+          lowBrdDepTime.minutes = fromTime.minutes - (arriveInterval.minutes) % 60;
         } else {
-          lowBrdDepTime.hours = fromTime.hours - 1;
+          lowBrdDepTime.minutes = fromTime.minutes - arriveInterval.minutes;
+        }
+
+        if (fromTime.hours - arriveInterval.hours < 0) {
+          lowBrdDepTime.hours = 23;
+        } else {
+          lowBrdDepTime.hours = fromTime.hours - arriveInterval.hours;
         }
 
         lowArrTime.hours = (fromTime.hours + wayTime.hours + moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour()) % 24;
@@ -153,16 +158,13 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
         } else {
           lowArrTime.minutes = fromTime.minutes + wayTime.minutes;
         }
-
-        upArrTime.hours = lowArrTime.hours;
-        upArrTime.minutes = lowArrTime.minutes;
        
         if (lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour()) < 0) {
           lowArrTime.hours = 23;
-        } else {
-          lowArrTime.hours = (lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) %24; 
-        }
-        upArrTime.hours = (lowArrTime.hours + arriveInterval.hours) >= 24 ? 23 : (lowArrTime.hours + arriveInterval.hours); 
+        } 
+        
+        upArrTime.hours = (lowArrTime.hours + arriveInterval.hours) % 24; 
+        upArrTime.minutes = lowArrTime.minutes;
 
         console.log("прибытие", lowArrTime, upArrTime);
         
