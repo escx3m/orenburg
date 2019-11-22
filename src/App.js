@@ -12,7 +12,7 @@ import OrderSuccessPage from './containers/OrderSuccessPage';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © Альфа-Тур '}
+      {'Copyright © Такси-Межгород '}
       {new Date().getFullYear()}
     </Typography>
   );
@@ -51,9 +51,9 @@ function App() {
       <CssBaseline />
       <AppBar position="static" className={classes.appBar}>
         <Container maxWidth="sm" >
-          <a href='https://alphatour.ru' className={classes.homeLink}>
+          <a href='https://taxi.mezhgorod.info/' className={classes.homeLink}>
             <Typography variant="h6" color="inherit" align="center">
-              Альфа-Тур
+              Такси-Межгород
             </Typography>
           </a>
         </Container>

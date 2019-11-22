@@ -73,12 +73,12 @@ const formatDate = (date) => {
 }
 
 const calculatePriceFrom = (cityFrom, cityTo) => {
-  const Elista = '166';
-  if ([cityFrom, cityTo].every(city => ['119', '23'].includes(city))) {
-    return ticketPrices[`${cityFrom}-${Elista}`] + ticketPrices[`${Elista}-${cityTo}`] - discountChild * 2;
-  } else {
-    return ticketPrices[`${cityFrom}-${cityTo}`] - discountChild;
-  }
+  // const Elista = '166';
+  // if ([cityFrom, cityTo].every(city => ['119', '23'].includes(city))) {
+  //   return ticketPrices[`${cityFrom}-${Elista}`] + ticketPrices[`${Elista}-${cityTo}`] - discountChild * 2;
+  // } else {
+    return ticketPrices[`${cityFrom}-${cityTo}`];
+  // }
 }
 
 
@@ -148,8 +148,8 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           minutes: 0,
         };
 
-        // if ( (cityFromText === 'Элиста' && cityToText === 'Волгоград') ||
-        //   (cityFromText === 'Элиста' && cityToText === 'Астрахань') ||
+        // if ( (cityFromText === 'Оренбург' && cityToText === 'Самара') ||
+        //   (cityFromText === 'Оренбург' && cityToText === 'Тольятти') ||
         //   (cityFromText === 'Элиста' && cityToText === 'Ростов-на-Дону') ||
         //   (cityFromText === 'Астрахань' && cityToText === 'Волгоград') ||
         //   (cityFromText === 'Волгоград' && cityToText === 'Астрахань') ) {
@@ -182,12 +182,12 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           upArrTime.hours = lowArrTime.hours;
           upArrTime.minutes = lowArrTime.minutes;
 
-          // if (upArrTime.minutes + 30 >= 60) {
-          //   upArrTime.hours++;
-          //   upArrTime.minutes = (upArrTime.minutes + 30) % 60;
-          // } else {
-          //   upArrTime.minutes = upArrTime.minutes + 30;
-          // }
+          if (upArrTime.minutes + 30 >= 60) {
+            upArrTime.hours++;
+            upArrTime.minutes = (upArrTime.minutes + 30) % 60;
+          } else {
+            upArrTime.minutes = upArrTime.minutes + 30;
+          }
 
 
           departureTimeText = `0${(lowBrdDepTime.hours) % 24}`.slice(-2)
@@ -201,7 +201,8 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
             + ' - ' + `0${(upArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
             + ':' + `0${upArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())}`.slice(-2);
           
-        // } else if ( (cityFromText === 'Волгоград' && cityToText === 'Элиста') ||
+        // }
+        //  else if ( (cityFromText === 'Волгоград' && cityToText === 'Элиста') ||
         //   (cityFromText === 'Астрахань' && cityToText === 'Элиста') ||
         //   (cityFromText === 'Ростов-на-Дону' && cityToText === 'Элиста')) {
 

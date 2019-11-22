@@ -199,8 +199,8 @@ const SearchForm = props => {
                 className={classes.plus}
                 onClick={e => {
                   values.seats =
-                    values.seats >= 24
-                      ? 24
+                    values.seats >= 36
+                      ? 36
                       : setFieldValue('seats', values.seats + 1);
                 }}>+</Button>
             </div>
@@ -282,5 +282,6 @@ export default withFormik({
 
   handleSubmit: (values, {props}) => {
     props.onSubmit(values);
+    console.log('ASDSADAD', values);
   },
 })(SearchForm);

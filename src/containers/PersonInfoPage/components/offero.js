@@ -98,7 +98,7 @@ export default (<Policy className="c7">
     </ol>
     <div><strong>5. Расписание движения</strong></div>
     <ol>
-        <li>Регулярные рейсы: актуальная информация на сайте <a href="https://alphatour.ru/">http://alphatour.ru</a></li>
+        <li>Регулярные рейсы: актуальная информация на сайте <a href="https://taxi.mezhgorod.info/">taxi.mezhgorod.info</a></li>
         <li>Дополнительные рейсы: отправление в отличное от регулярного времени.</li>
         <li>Точное время подачи транспорта назначает водитель, но не позднее времени отправления рейса.</li>
     </ol>

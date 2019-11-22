@@ -22,10 +22,10 @@ const useStyles = makeStyles(theme => ({
 
 export const getCombinedTrips = (trips, cityFrom) => {
   const correctedTrips = trips.map(trip => {
-    if ([10, 23].includes(trip.fromCityId) && trip.external === 1) {
-      const fromTime = moment(trip.fromTime).subtract(1, 'hours').toISOString();
-      return { ...trip, fromTime };
-    }
+    // if ([10, 23].includes(trip.fromCityId) && trip.external === 1) {
+    //   const fromTime = moment(trip.fromTime).subtract(1, 'hours').toISOString();
+    //   return { ...trip, fromTime };
+    // }
     return trip;
   });
 
@@ -96,6 +96,7 @@ const SearchPage = (props) => {
       
       {loading && <CircularProgress disableShrink />}
       {showTrips && <ListTrips trips={trips} cityFrom={cityFrom} cityTo={cityTo} date={date} seats={seats} handleButtonClick={buyButtonClickHandler} />}
+      {console.log(trips)}
             
     </div>
   );

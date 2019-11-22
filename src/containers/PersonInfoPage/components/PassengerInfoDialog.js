@@ -13,7 +13,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
 import { PassengerForm, AddressForm } from './formSteps';
-import { ticketPrices, discountChild } from '../constants';
+import { ticketPrices, discountChild, discountSale } from '../constants';
 
 const { ymaps } = window;
 
@@ -73,7 +73,7 @@ const PassengerInfoDialog = (props) => {
     handleClose();
   }
 
-  const calculateTicketPrice = (cityFrom, cityTo, addressFrom, addressTo, child) => {
+  const calculateTicketPrice = (cityFrom, cityTo, addressFrom, addressTo, child, ageGroup) => {
     let ticketRoute = `${cityFrom}-${cityTo}`
     if ((cityFrom !== '166') && addressFrom.toLowerCase().includes('аэропорт ')) {
       ticketRoute = `${cityFrom}air-${cityTo}`
@@ -81,18 +81,18 @@ const PassengerInfoDialog = (props) => {
       ticketRoute = `${cityFrom}-${cityTo}air`
     }
     const ticketPrice = ticketPrices[ticketRoute]
-    return child ? ticketPrice - discountChild : ticketPrice;
+    return child ? ticketPrice * discountChild[ageGroup] - discountSale : ticketPrice - discountSale;
   }
 
-  const calculateTotalTicketPrice = (cityFrom, cityTo, addressFrom, addressTo, child) => {
+  const calculateTotalTicketPrice = (cityFrom, cityTo, addressFrom, addressTo, child, ageGroup) => {
     const Elista = '166';
     let result = 0;
     if ([cityFrom, cityTo].every(city => ['119', '23'].includes(city))) {
-      const ticketPriceToElista = calculateTicketPrice(cityFrom, Elista, addressFrom, '', child);
-      const ticketPriceFromElista = calculateTicketPrice(Elista, cityTo, '', addressTo, child);
+      const ticketPriceToElista = calculateTicketPrice(cityFrom, Elista, addressFrom, '', child, ageGroup);
+      const ticketPriceFromElista = calculateTicketPrice(Elista, cityTo, '', addressTo, child, ageGroup);
       result = ticketPriceToElista + ticketPriceFromElista;
     } else {
-      result = calculateTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
+      result = calculateTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child, ageGroup);
     }
     if ([cityFrom, cityTo].includes('119') && [addressFrom, addressTo].includes('Аэропорт Платов')) {
       const priceToAirport = Math.max(500, 1500 / seats);
@@ -113,8 +113,9 @@ const PassengerInfoDialog = (props) => {
 
     const { addressFrom, addressTo, child, phone } = values;
     const ageGroup = child ? values.ageGroup : null;
+    console.log('QWERT', ageGroup);
     const phoneOnlyNumbers = phone.replace(/\D+/g,"");
-    const ticketPrice = calculateTotalTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child);
+    const ticketPrice = calculateTotalTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child, ageGroup);
 
     const addressFromPromise = fullAddressFrom !== '' ? ymaps.geocode(fullAddressFrom, { json: true, results: 1 }) : '';
     const addressToPromise = fullAddressTo !== '' ? ymaps.geocode(fullAddressTo, { json: true, results: 1 }) : '';
@@ -201,7 +202,7 @@ const PassengerInfoDialog = (props) => {
         addressTo: '',
         comment: '',
         child: false,
-        ageGroup: '0-1',
+        ageGroup: '0-3',
         sendDocs: false,
         passport: '', 
         birthday: '',

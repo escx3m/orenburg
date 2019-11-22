@@ -60,11 +60,11 @@ class ModalWin extends React.Component {
         <div style={{margin: '10px auto'}} className="div-policy">
           <Checkbox 
             onChange={this.props.toggleBtnFindTickets}
-          ></Checkbox> Я соглашаюсь с <span className="link-to-doc"  onClick={this.showOfferModal}> условиями </span>
-            и <span className="link-to-doc" onClick={this.showConfidentialModal}> политикой конфиденциальности </span>     
+          ></Checkbox> Я соглашаюсь с <span className="link-to-doc"  onClick={this.showOfferModal}> пользовательским соглашением </span>
+            <br />и <span className="link-to-doc" onClick={this.showConfidentialModal}> политикой конфиденциальности </span>     
           <Modal
             width="100%"
-            title="Условия предоставления услуг"
+            title="Пользовательское соглашение"
             visible={this.state.offerVisible}
             onCancel={this.handleOfferCancel}
             className="policy"
