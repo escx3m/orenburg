@@ -17,7 +17,7 @@ function getModalStyle() {
 const useStyles = makeStyles(theme => ({
   paper: {
     position: 'absolute',
-    width: 400,
+    width: 450,
     backgroundColor: theme.palette.background.paper,
     border: '1px solid #3f51b5',
     boxShadow: theme.shadows[5],
@@ -50,13 +50,17 @@ export default function SimpleModal(props) {
         onClose={handleClose}
       >
         <div style={modalStyle} className={classes.paper}>
-          <h2 id="simple-modal-title">Правила провоза багажа</h2>
+          <h2 id="simple-modal-title">Правила провоза багажа в такси MezhGorod</h2>
           <p id="simple-modal-description"></p>
-          <p>Бесплатно одно место багажа на одного человека размером 80 x 50 x 30 см. и весом не более 23 кг.</p>
-          <p>Стоимость дополнительного багажа 100 рублей.</p>
-          <p>Дополнительный багаж оплачивается водителю.</p>
-          <p>Животные перевозятся только в клетках и с согласования всех остальных пассажиров.</p>
-          <p>В случае габаритного багажа (длина одного измерения более 100 см или вес более 23 кг), уточните у оператора возможность его провоза.</p>
+          <p>В такси <strong>MezhGorod</strong> бесплатно разрешается перевозить до одной единиц багажа, вес не должен превышать 10 кг размером 50х50х60 см.</p>
+          <p><strong>Оплачивается отдельно по 200 рублей за каждый последующий багаж:</strong></p>
+          <p>- вторая сумка;</p>
+          <p>- чемодан;</p>
+          <p>- дорожная сумка на колесиках;</p>
+          <p>- солдатские мешки не более 80*60*30;</p>
+          <p>- рюкзак не более 80*60*30;</p>
+          <p>Негабаритный груз по стоимости посадочного места в зависимости от веса и размера (может занимать до нескольки мест)</p>
+          <p><strong>Все вопросы через диспетчера: +7 (922) 880 - 03 - 33 (работаем круглосуточно)</strong></p>
            <Button variant="contained" color="primary" className={classes.button} type="button"  onClick={handleClose} style={{float:'right'}}>Ok</Button>
         </div>
       </Modal>

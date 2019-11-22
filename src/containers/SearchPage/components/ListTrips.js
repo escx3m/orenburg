@@ -73,14 +73,8 @@ const formatDate = (date) => {
 }
 
 const calculatePriceFrom = (cityFrom, cityTo) => {
-  // const Elista = '166';
-  // if ([cityFrom, cityTo].every(city => ['119', '23'].includes(city))) {
-  //   return ticketPrices[`${cityFrom}-${Elista}`] + ticketPrices[`${Elista}-${cityTo}`] - discountChild * 2;
-  // } else {
     return ticketPrices[`${cityFrom}-${cityTo}`];
-  // }
 }
-
 
 export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handleButtonClick }) {
   const classes = useStyles();
@@ -133,12 +127,7 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
         let lowBrdDepTime = {
           hours: 0,
           minutes: 0,
-        },
-        arrTime = {
-          hours: 0,
-          minutes: 0,
         };
-
         let upArrTime = {
           hours: 0,
           minutes: 0,
@@ -148,135 +137,46 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           minutes: 0,
         };
 
-        // if ( (cityFromText === 'Оренбург' && cityToText === 'Самара') ||
-        //   (cityFromText === 'Оренбург' && cityToText === 'Тольятти') ||
-        //   (cityFromText === 'Элиста' && cityToText === 'Ростов-на-Дону') ||
-        //   (cityFromText === 'Астрахань' && cityToText === 'Волгоград') ||
-        //   (cityFromText === 'Волгоград' && cityToText === 'Астрахань') ) {
+        if (fromTime.hours - 1 < 0) {
+          lowBrdDepTime.hours = 23;
 
-          arrTime.hours = fromTime.hours;
+        } else {
+          lowBrdDepTime.hours = fromTime.hours - 1;
+        }
 
-          if (fromTime.hours - 1 < 0) {
-            lowBrdDepTime.hours = 23;
+        lowArrTime.hours = (fromTime.hours + wayTime.hours + moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour()) % 24;
+        lowArrTime.minutes = fromTime.minutes;
 
-          } else {
-            lowBrdDepTime.hours = fromTime.hours - 1;
-          }
+        if ( (lowArrTime.minutes + wayTime.minutes) >= 60 ) {
+          lowArrTime.hours++;
+          lowArrTime.minutes = (fromTime.minutes + wayTime.minutes) % 60;
+        } else {
+          lowArrTime.minutes = fromTime.minutes + wayTime.minutes;
+        }
 
-          if (fromTime.minutes - arriveInterval.minutes < 0) {
-            lowBrdDepTime.hours--;
-            lowBrdDepTime.minutes = 60 + (fromTime.minutes - arriveInterval.minutes);
-          }
+        upArrTime.hours = lowArrTime.hours;
+        upArrTime.minutes = lowArrTime.minutes;
+       
+        if (lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour()) < 0) {
+          lowArrTime.hours = 23;
+        } else {
+          lowArrTime.hours = (lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) %24; 
+        }
+        upArrTime.hours = (lowArrTime.hours + arriveInterval.hours) >= 24 ? 23 : (lowArrTime.hours + arriveInterval.hours); 
 
+        console.log("прибытие", lowArrTime, upArrTime);
+        
+        departureTimeText = `0${(lowBrdDepTime.hours) % 24}`.slice(-2)
+          + ':' + `0${lowBrdDepTime.minutes}`.slice(-2)
 
-          lowArrTime.hours = (fromTime.hours + wayTime.hours) % 24;
-          lowArrTime.minutes = fromTime.minutes;
+          + ' - ' + `0${fromTime.hours}`.slice(-2) + ':' + `0${fromTime.minutes}`.slice(-2);
 
-          if ( (lowArrTime.minutes + wayTime.minutes) >= 60 ) {
-            lowArrTime.hours++;
-            lowArrTime.minutes = (fromTime.minutes + wayTime.minutes) % 60;
-          } else {
-            lowArrTime.minutes = fromTime.minutes + wayTime.minutes;
-          }
+        arrivalTimeText = `0${lowArrTime.hours}`.slice(-2)
+          + ':' + `0${(lowArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes()) ) % 60}`.slice(-2)
 
-          upArrTime.hours = lowArrTime.hours;
-          upArrTime.minutes = lowArrTime.minutes;
-
-          if (upArrTime.minutes + 30 >= 60) {
-            upArrTime.hours++;
-            upArrTime.minutes = (upArrTime.minutes + 30) % 60;
-          } else {
-            upArrTime.minutes = upArrTime.minutes + 30;
-          }
-
-
-          departureTimeText = `0${(lowBrdDepTime.hours) % 24}`.slice(-2)
-            + ':' + `0${lowBrdDepTime.minutes}`.slice(-2)
-
-            + ' - ' + `0${fromTime.hours}`.slice(-2) + ':' + `0${fromTime.minutes}`.slice(-2);
-
-          arrivalTimeText = `0${(lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour()) ) % 24}`.slice(-2)
-            + ':' + `0${(lowArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes()) ) % 60}`.slice(-2)
-
-            + ' - ' + `0${(upArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
-            + ':' + `0${upArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())}`.slice(-2);
+          + ' - ' + `0${upArrTime.hours}`.slice(-2)
+          + ':' + `0${upArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())}`.slice(-2);
           
-        // }
-        //  else if ( (cityFromText === 'Волгоград' && cityToText === 'Элиста') ||
-        //   (cityFromText === 'Астрахань' && cityToText === 'Элиста') ||
-        //   (cityFromText === 'Ростов-на-Дону' && cityToText === 'Элиста')) {
-
-        //   lowArrTime.hours = (fromTime.hours + wayTime.hours + 1) % 24;
-        //   lowArrTime.minutes = fromTime.minutes;    
- 
-        //   if ( (lowArrTime.minutes + wayTime.minutes) >= 60 ) {
-
-        //     lowArrTime.hours++;
-        //     lowArrTime.minutes = (fromTime.minutes + wayTime.minutes) % 60;
-        //   } else {
-        //     lowArrTime.minutes = fromTime.minutes + wayTime.minutes;
-        //   }
-
-        //   upArrTime.hours = lowArrTime.hours;
-        //   upArrTime.minutes = lowArrTime.minutes;
-          
-
-        //   if (upArrTime.minutes + 30 >= 60) {
-        //     upArrTime.hours++;
-        //     upArrTime.minutes = (upArrTime.minutes + 30) % 60;
-        //   } else {
-        //     upArrTime.minutes = upArrTime.minutes + 30;
-        //   }
-
-        //   //fix -1:30 - 0:30
-        //   if (lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour()) < 0) {
-        //     lowArrTime.hours = 23;
-        //   } else {
-        //    lowArrTime.hours = (lowArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) %24; 
-        //   }
-
-        //   departureTimeText = `0${fromTime.hours}`.slice(-2)
-        //     + ':' + `0${fromTime.minutes}`.slice(-2)
-
-        //     + ' - ' + `0${(fromTime.hours + 1) % 24}`.slice(-2) + ':' + `0${(fromTime.minutes + arriveInterval.minutes) % 60}`.slice(-2);
-
-        //   arrivalTimeText = `0${lowArrTime.hours % 24}`.slice(-2)
-        //     + ':' + `0${(lowArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2)
-
-        //     + ' - ' + `0${(upArrTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
-        //     + ':' + `0${(upArrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2);
-
-        // } else if ( (cityFromText === 'Ростов-на-Дону' && cityToText === 'Астрахань')
-        //    || (cityFromText === 'Астрахань' && cityToText === 'Ростов-на-Дону') ) {
-
-        //   departureTimeText = `0${fromTime.hours}`.slice(-2)
-        //     + ':' + `0${fromTime.minutes}`.slice(-2)
-
-        //     + ' - ' + `0${(fromTime.hours + 1) % 24}`.slice(-2) + ':' + `0${(fromTime.minutes + arriveInterval.minutes) % 60}`.slice(-2);
-
-
-        //   arrTime.hours = fromTime.hours;
-
-        //   if ( (fromTime.minutes + 30) >= 60 ) {
-        //     arrTime.hours++;
-        //     arrTime.minutes = 60 - (fromTime.minutes + 30);
-        //   } else {
-        //     arrTime.minutes = fromTime.minutes + 30;
-        //   }
-
-        //   if (arrTime.minutes + wayTime.minutes >= 60) {
-        //     arrTime.hours++;
-        //     arrTime.minutes = (arrTime.minutes + wayTime.minutes) % 60;
-        //   }
-          
-        //   arrivalTimeText = `0${(fromTime.hours + wayTime.hours
-        //     + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
-        //     + ':' + `0${(fromTime.minutes + wayTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2)
-
-        //     + ' - ' + `0${(arrTime.hours + wayTime.hours + (moment.tz(cityToTZ).hour() - moment.tz(cityFromTZ).hour())) % 24}`.slice(-2)
-        //     + ':' + `0${(arrTime.minutes + (moment.tz(cityToTZ).minutes() - moment.tz(cityFromTZ).minutes())) % 60}`.slice(-2);
-            
-        // }
         return availableRoute
           ? (
             <React.Fragment key={index}>
