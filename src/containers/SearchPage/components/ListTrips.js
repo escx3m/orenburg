@@ -185,10 +185,10 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
               <Divider className={classes.divider} />
               <Grid container alignItems="center">
                 <Grid item xs={3}>
-                  <Typography variant="body1" align="center">{departureTimeText}</Typography>
+                  <Typography variant="body1" align="center">{departureTimeText}&nbsp;</Typography>
                 </Grid>
                 <Grid item xs={3}>
-                  <Typography variant="body1" align="center">{arrivalTimeText}</Typography>
+                  <Typography variant="body1" align="center">{arrivalTimeText}&nbsp;</Typography>
                 </Grid>
                 <Grid item xs={3}>
                   <Typography variant="body1" align="center">{availableSeats}</Typography>

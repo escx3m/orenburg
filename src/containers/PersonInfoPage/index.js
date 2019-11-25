@@ -4,15 +4,9 @@ import moment from 'moment-timezone';
 import { connect } from 'react-redux';
 import uuidv4 from 'uuid/v4';
 import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import PersonIcon from '@material-ui/icons/Person';
-
+import { Grid, Button, Divider, Typography, IconButton, Card, CardHeader, CardContent, CircularProgress } from '@material-ui/core';
 import PassengerInfoDialog from './components/PassengerInfoDialog';
 import { updatePassenger, addPassenger, sendOrder, passangersReset } from './actions';
 import api from '../../api';
@@ -23,10 +17,6 @@ import payment from './image/payment.png';
 import { Steps } from 'antd';
 import './index.css';
 import 'antd/dist/antd.css';
-
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
 import Skeleton from '@material-ui/lab/Skeleton';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
@@ -35,6 +25,7 @@ import WorkIcon from '@material-ui/icons/Work';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import DescriptionIcon from '@material-ui/icons/Description';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 
 const { Step } = Steps;
 const { ym } = window;
@@ -196,7 +187,7 @@ const PersonInfoPage = (props) => {
   }
 
   const handleOrderButtonClick = async (data) => {
-    ym(34728795, 'reachGoal', 'success_booking');
+    // ym(34728795, 'reachGoal', 'success_booking');
 
     let availableSeats = 0;
 
