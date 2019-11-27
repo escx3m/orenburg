@@ -17,7 +17,6 @@ import payment from './image/payment.png';
 import { Steps } from 'antd';
 import './index.css';
 import 'antd/dist/antd.css';
-import Skeleton from '@material-ui/lab/Skeleton';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import ChildCareIcon from '@material-ui/icons/ChildCare';
@@ -109,6 +108,11 @@ const useStyles = makeStyles(theme => ({
   payment: {
     width: '200px',
     marginTop: '20px',
+  },
+  btnFill: {
+    width: '200px',
+    display: 'flex',
+    margin: 'auto',
   },
 }));
 
@@ -343,16 +347,12 @@ const PersonInfoPage = (props) => {
           <Grid key={index} item xs={12}>
             <Divider />
             <Grid container justify="center" spacing={1} className={classes.root}>
-              <Card className={classes.cardPass} onClick={handleClickOpen({}, -1)} >
+              <Card className={classes.cardPass}>
                 <CardHeader
                   title={`Пассажир № ${passengers.length + index + 1}`} className={classes.cardTitle}
                 />
-                <Skeleton variant="rect" className={classes.media} />
                 <CardContent>
-                  <React.Fragment>
-                    <Skeleton height={6} width="100%" />
-                    <Skeleton height={6} width="80%" />
-                  </React.Fragment>
+                <Button className={classes.btnFill} variant="contained" color="primary" onClick={handleClickOpen({}, -1)}> ЗАПОЛНИТЬ </Button>
                 </CardContent>
               </Card>
             </Grid>
