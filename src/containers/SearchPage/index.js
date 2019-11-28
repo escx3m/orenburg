@@ -64,6 +64,7 @@ export const getCombinedTrips = (trips, cityFrom) => {
         availableSeats: availableSeats + item.availableSeats
       }))
     ).filter(({ availableRoute }) => availableRoute);
+  console.log("getCombinedTrips", combinedTrips)
   return combinedTrips;
 }
 const SearchPage = (props) => {
@@ -90,14 +91,13 @@ const SearchPage = (props) => {
     seats,
   };
 
-  return (
+  console.log("index search trips ", trips)             
+    return (
     <div className={classes.root}>
       <SearchForm onSubmit={submit} initialValues={initialValues} trips={trips} />
       
       {loading && <CircularProgress disableShrink />}
       {showTrips && <ListTrips trips={trips} cityFrom={cityFrom} cityTo={cityTo} date={date} seats={seats} handleButtonClick={buyButtonClickHandler} />}
-      {console.log(trips)}
-            
     </div>
   );
 }

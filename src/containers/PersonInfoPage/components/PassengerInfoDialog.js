@@ -113,7 +113,6 @@ const PassengerInfoDialog = (props) => {
 
     const { addressFrom, addressTo, child, phone } = values;
     const ageGroup = child ? values.ageGroup : null;
-    console.log('QWERT', ageGroup);
     const phoneOnlyNumbers = phone.replace(/\D+/g,"");
     const ticketPrice = calculateTotalTicketPrice(cityFrom, cityTo, addressFrom, addressTo, child, ageGroup);
 

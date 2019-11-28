@@ -192,9 +192,8 @@ const PersonInfoPage = (props) => {
 
   const handleOrderButtonClick = async (data) => {
     // ym(34728795, 'reachGoal', 'success_booking');
-
     let availableSeats = 0;
-
+    
     if ([cityFrom, cityTo].every(city => ['119', '23'].includes(city))) {
       const Elista = '166';
       const departureTime = {
@@ -213,13 +212,22 @@ const PersonInfoPage = (props) => {
         availableSeats = Math.min(toElista.availableSeats, fromElista.availableSeats)
       }
     } else {
-      const trips = await api.trips.get({ cityFrom, cityTo, dateStart, dateEnd });
+      const Kurumoch = '10203';
+      const Samara = '123';
+
+      let copyData = { ...data };
+      if (cityFrom === Kurumoch) {
+        copyData.cityFrom = Samara;
+      } else if (cityTo === Kurumoch) {
+        copyData.cityTo = Samara;
+      }
+
+      const trips = await api.trips.get({ cityFrom: copyData.cityFrom, cityTo: copyData.cityTo, dateStart, dateEnd });
       const timeToCheck = {
         hours: +timeText.split(':')[0],
         minutes: +timeText.split(':')[1]
       }
-
-      availableSeats = getCombinedTrips(trips, cityFrom).find(({ fromTime }) => (fromTime.hours === timeToCheck.hours && fromTime.minutes === timeToCheck.minutes)).availableSeats;
+      availableSeats = getCombinedTrips(trips, copyData.cityFrom).find(({ fromTime }) => (fromTime.hours === timeToCheck.hours && fromTime.minutes === timeToCheck.minutes)).availableSeats;
     }
 
     if (availableSeats < seats) {

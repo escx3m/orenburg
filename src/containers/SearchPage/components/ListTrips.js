@@ -165,8 +165,6 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
         
         upArrTime.hours = (lowArrTime.hours + arriveInterval.hours) % 24; 
         upArrTime.minutes = lowArrTime.minutes;
-
-        console.log("прибытие", lowArrTime, upArrTime);
         
         departureTimeText = `0${(lowBrdDepTime.hours) % 24}`.slice(-2)
           + ':' + `0${lowBrdDepTime.minutes}`.slice(-2)

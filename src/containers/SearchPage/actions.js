@@ -40,27 +40,15 @@ export const tripsReset = () => ({
 export const getTrips = data => async dispatch => {
   const { cityFrom, cityTo } = data;
   dispatch(getTripsStart(data));
-  if ([cityFrom, cityTo].every(city => ['119', '23'].includes(city))) {
-    const Elista = '166';
-    const departureTime = {
-      '119': { toElistaTime: 20, fromElistaTime: 3 },
-      '23': { toElistaTime: 21, fromElistaTime: 1 }
-    }[cityFrom];
-    const routesToElista = await api.trips.get({ ...data, cityTo: Elista});
-    const dateStart = moment(data.dateStart).add(1, 'days').format();
-    const dateEnd = moment(data.dateEnd).add(1, 'days').format();
-    const routesFromElista = await api.trips.get({ ...data, cityFrom: Elista, dateStart, dateEnd });
+  const Kurumoch = '10203';
+  const Samara = '123';
 
-    const toElista = getCombinedTrips(routesToElista, cityFrom).find(({ fromTime }) => fromTime.hours === departureTime.toElistaTime);
-    const fromElista = getCombinedTrips(routesFromElista, Elista).find(({ fromTime }) => fromTime.hours === departureTime.fromElistaTime);
-    
-    if (toElista && fromElista) {
-      const availableSeats = Math.min(toElista.availableSeats, fromElista.availableSeats)
-      return dispatch(getTripsSuccess([{ ...toElista, availableSeats }]));
-    }
-    return dispatch(getTripsSuccess([]));
-  } else {
-    const trips = await api.trips.get(data);
-    return dispatch(getTripsSuccess(getCombinedTrips(trips, cityFrom)));
+  let copyData = { ...data };
+  if (cityFrom === Kurumoch) {
+    copyData.cityFrom = Samara;
+  } else if (cityTo === Kurumoch) {
+    copyData.cityTo = Samara;
   }
+  const trips = await api.trips.get(copyData);
+  return dispatch(getTripsSuccess(getCombinedTrips(trips, cityFrom)));
 }
