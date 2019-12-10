@@ -6,6 +6,7 @@ export const RESET = 'trips/RESET';
 
 export const cityOptions = [
   { key: 'orenburg', value: '106', text: 'Оренбург' },
+  { key: 'byzylyk', value: '2404', text: 'Бузулук' },
   { key: 'samara', value: '123', text: 'Самара' },
   { key: 'kurumoch', value: '10203', text: 'Курумоч' },
   { key: 'tolyatti', value: '143', text: 'Тольятти' },
@@ -18,6 +19,7 @@ export const cityTimeZones = [
   { city: '10203', timeZone: 'Europe/Samara' },
   { city: '143', timeZone: 'Europe/Samara' },
   { city: '49', timeZone: 'Asia/Yekaterinburg' },
+  { city: '2404', timeZone: 'Asia/Yekaterinburg' },
 ]
 
 export const timeWindowPhoneRedir = {
@@ -185,7 +187,102 @@ export const waysTime = [
       minutes: 0,
     }
   },
-  
+  {
+    fromCityId: '106', 
+    toCityId: '2404', 
+    wayTime: {
+      hours: 3, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '2404', 
+    toCityId: '106', 
+    wayTime: {
+      hours: 3, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '2404', 
+    toCityId: '123', 
+    wayTime: {
+      hours: 1, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '123', 
+    toCityId: '2404', 
+    wayTime: {
+      hours: 1, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '2404', 
+    toCityId: '143', 
+    wayTime: {
+      hours: 0, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '143', 
+    toCityId: '2404', 
+    wayTime: {
+      hours: 0, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '2404', 
+    toCityId: '49', 
+    wayTime: {
+      hours: 0, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '49', 
+    toCityId: '2404', 
+    wayTime: {
+      hours: 0, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '2404', 
+    toCityId: '10203', 
+    wayTime: {
+      hours: 0, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '10203', 
+    toCityId: '2404', 
+    wayTime: {
+      hours: 0, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '2404', 
+    toCityId: '10203', 
+    wayTime: {
+      hours: 0, 
+      minutes: 0,
+    }
+  },
+  {
+    fromCityId: '10203', 
+    toCityId: '2404', 
+    wayTime: {
+      hours: 0, 
+      minutes: 0,
+    }
+  },
 ];
 
 export const arriveInterval = {
