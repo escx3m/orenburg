@@ -15,11 +15,11 @@ export const cityOptions = [
 
 export const cityTimeZones = [
   { city: '106', timeZone: 'Asia/Yekaterinburg' }, 
+  { city: '2404', timeZone: 'Asia/Yekaterinburg' },
   { city: '123', timeZone: 'Europe/Samara' },
   { city: '10203', timeZone: 'Europe/Samara' },
   { city: '143', timeZone: 'Europe/Samara' },
   { city: '49', timeZone: 'Asia/Yekaterinburg' },
-  { city: '2404', timeZone: 'Asia/Yekaterinburg' },
 ]
 
 export const timeWindowPhoneRedir = {
@@ -140,7 +140,7 @@ export const waysTime = [
     }
   },
   {
-    fromCityId: '10203', 
+    fromCityId: '2404', 
     toCityId: '123', 
     wayTime: {
       hours: 1, 
@@ -149,9 +149,9 @@ export const waysTime = [
   },
   {
     fromCityId: '123', 
-    toCityId: '10203', 
+    toCityId: '2404', 
     wayTime: {
-      hours: 1, 
+      hours: 3, 
       minutes: 0,
     }
   },

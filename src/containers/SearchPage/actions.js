@@ -42,13 +42,24 @@ export const getTrips = data => async dispatch => {
   dispatch(getTripsStart(data));
   const Kurumoch = '10203';
   const Samara = '123';
+  const Byzylyk = '2404';
+  const Orenburg = '106';
 
   let copyData = { ...data };
-  if (cityFrom === Kurumoch) {
+  if (cityFrom === Kurumoch || cityFrom === Byzylyk) {
     copyData.cityFrom = Samara;
-  } else if (cityTo === Kurumoch) {
+  } else if (cityTo === Kurumoch || cityTo === Byzylyk) {
     copyData.cityTo = Samara;
   }
+  if (cityFrom === Byzylyk && cityTo === Samara) {
+    copyData.cityFrom = Orenburg;
+    copyData.cityTo = Samara;
+  }
+  if (cityFrom === Samara && cityTo === Byzylyk) {
+    copyData.cityFrom = Orenburg;
+    copyData.cityTo = Samara;
+  }
+
   const trips = await api.trips.get(copyData);
   return dispatch(getTripsSuccess(getCombinedTrips(trips, cityFrom)));
 }

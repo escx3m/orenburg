@@ -409,7 +409,7 @@ const PersonInfoPage = (props) => {
             </Grid>
             <Grid item xs={12}>
               <Grid container justify="center">
-                <Button className={classes.payButton} disabled={!(readyToOrder && !loading && !disabledBntFind && !notEnoughSeats)} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Оплатить</Button>
+                <Button className={classes.payButton} disabled={!(readyToOrder && !loading && !disabledBntFind && !notEnoughSeats)} onClick={() => handleOrderButtonClick(data)} variant="contained" color="primary">Забронировать</Button>
                 <div style={{width:'100%', textAlign:'center'}}>
                   <img src={payment} alt="logo" className={classes.payment} />
                 </div>

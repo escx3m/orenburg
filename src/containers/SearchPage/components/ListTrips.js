@@ -201,7 +201,7 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
                         : () => handleButtonClick(cityFromText, cityToText, dateText, timeText, departureTimeText, arrivalTimeText)}
                       variant="contained"
                       color="primary"
-                    >Купить</Button>
+                    >Забронировать</Button>
                     <Modal
                       title="Перенаправление"
                       visible={visiblePhoneRedirect}
