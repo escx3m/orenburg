@@ -153,7 +153,7 @@ export default (<Policy className="c7">
     </ol>
     <div><strong>13. Контакты</strong></div>
     <ol>
-        <li>Фактический адрес: 461041, Оренбургская область, г. Бузулук, ул. Маяковского, 49 а</li>
+        <li>Фактический адрес: 461041, Оренбургская область, г. Оренбург, ул. Туркестанская, 5</li>
         <li>Электронная почта: <a href="mailto:someone@example.com?Subject=Hello%20again" target="_top">nadejda.ryabyh70@mail.ru</a></li>
         <li>Телефон: <a href="tel:+79228888121">+7 (922) 888 - 81 - 21</a> или <a href="tel:+79228800333">+7 (922) 880 - 03 - 33</a></li>
     </ol>
