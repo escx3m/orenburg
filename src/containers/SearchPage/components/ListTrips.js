@@ -139,7 +139,8 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           minutes: 0,
         };
         if (cityFrom === byzylyk) {
-          fromTime.hours += 6;
+          fromTime.hours += 3;
+          fromTime.hours %= 24;
         }
         if (fromTime.minutes - arriveInterval.minutes < 0) {
           lowBrdDepTime.hours--;
@@ -171,6 +172,13 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
         upArrTime.hours = (lowArrTime.hours + arriveInterval.hours) % 24; 
         upArrTime.minutes = lowArrTime.minutes;
         
+        if (fromTime.minutes === 30) {
+          lowArrTime.minutes = 0;
+          lowArrTime.hours++;
+          upArrTime.minutes = 0;
+          upArrTime.hours++;
+        }
+
         departureTimeText = `0${(lowBrdDepTime.hours) % 24}`.slice(-2)
           + ':' + `0${lowBrdDepTime.minutes}`.slice(-2)
 

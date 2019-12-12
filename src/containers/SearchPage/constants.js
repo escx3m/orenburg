@@ -201,7 +201,7 @@ export const waysTime = [
     fromCityId: '2404', 
     toCityId: '106', 
     wayTime: {
-      hours: 3, 
+      hours: 2, 
       minutes: 0,
     }
   },
