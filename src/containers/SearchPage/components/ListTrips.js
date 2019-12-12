@@ -17,7 +17,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import LocalTaxiIcon from '@material-ui/icons/LocalTaxi';
 import EventIcon from '@material-ui/icons/Event';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
-import { byzylyk } from '../constants';
+import { byzylyk, orenburg } from '../constants';
 
 const useStyles = makeStyles(theme => ({
   divider: {
