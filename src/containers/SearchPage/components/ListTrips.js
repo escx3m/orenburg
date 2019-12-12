@@ -17,6 +17,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import LocalTaxiIcon from '@material-ui/icons/LocalTaxi';
 import EventIcon from '@material-ui/icons/Event';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
+import { byzylyk } from '../constants';
 
 const useStyles = makeStyles(theme => ({
   divider: {
@@ -77,6 +78,7 @@ const calculatePriceFrom = (cityFrom, cityTo) => {
 }
 
 export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handleButtonClick }) {
+  console.log ('BRONIROVANIE', arguments);
   const classes = useStyles();
   const cityFromText = cityOptions.find(({ value }) => value === cityFrom).text;
   const cityToText = cityOptions.find(({ value }) => value === cityTo).text;
@@ -136,6 +138,9 @@ export default function ListTrips({ trips, cityFrom, cityTo, date, seats, handle
           hours: 0,
           minutes: 0,
         };
+        if (cityFrom === byzylyk) {
+          fromTime.hours += 6;
+        }
         if (fromTime.minutes - arriveInterval.minutes < 0) {
           lowBrdDepTime.hours--;
           lowBrdDepTime.minutes = fromTime.minutes - (arriveInterval.minutes) % 60;

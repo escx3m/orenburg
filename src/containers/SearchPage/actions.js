@@ -44,7 +44,7 @@ export const getTrips = data => async dispatch => {
   const Samara = '123';
   const Byzylyk = '2404';
   const Orenburg = '106';
-
+  
   let copyData = { ...data };
   if (cityFrom === Kurumoch || cityFrom === Byzylyk) {
     copyData.cityFrom = Samara;

@@ -4,6 +4,8 @@ export const GET_TRIPS_ERROR = 'GET_TRIPS_ERROR';
 export const CHOOSE_TRIP = 'CHOOSE_TRIP';
 export const RESET = 'trips/RESET';
 
+export const byzylyk = '2404';
+
 export const cityOptions = [
   { key: 'orenburg', value: '106', text: 'Оренбург' },
   { key: 'byzylyk', value: '2404', text: 'Бузулук' },
@@ -215,7 +217,7 @@ export const waysTime = [
     fromCityId: '123', 
     toCityId: '2404', 
     wayTime: {
-      hours: 1, 
+      hours: 3, 
       minutes: 0,
     }
   },
