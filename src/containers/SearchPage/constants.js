@@ -6,6 +6,7 @@ export const RESET = 'trips/RESET';
 
 export const byzylyk = '2404';
 export const orenburg = '106';
+export const samara = '123';
 
 export const cityOptions = [
   { key: 'orenburg', value: '106', text: 'Оренбург' },
@@ -154,7 +155,7 @@ export const waysTime = [
     fromCityId: '123', 
     toCityId: '2404', 
     wayTime: {
-      hours: 3, 
+      hours: 2, 
       minutes: 0,
     }
   },

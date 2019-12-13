@@ -56,8 +56,8 @@ export const getTrips = data => async dispatch => {
     copyData.cityTo = Samara;
   }
   if (cityFrom === Samara && cityTo === Byzylyk) {
-    copyData.cityFrom = Orenburg;
-    copyData.cityTo = Samara;
+    copyData.cityFrom = Samara;
+    copyData.cityTo = Orenburg;
   }
 
   const trips = await api.trips.get(copyData);
