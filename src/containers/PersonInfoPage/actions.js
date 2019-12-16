@@ -44,10 +44,12 @@ export const passangersReset = () => ({
 
 export const sendOrder = (orderData, redirectToSuccessPage) => dispatch => {
   dispatch(sendOrderStart(orderData));
+  // console.log('ORDERDATA', orderData)
   api.sendOrder(orderData).then(
     result => {
-      const { confirmation_url } = result.data.confirmation;
-      window.open(confirmation_url, '_self');
+      console.log('reuslt', result.data)
+      const { formUrl } = result.data;
+      window.open(formUrl, '_self');
       dispatch(sendOrderSuccess(result));
     },
     error => dispatch(sendOrderError(error))
