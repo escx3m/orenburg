@@ -44,7 +44,6 @@ export const passangersReset = () => ({
 
 export const sendOrder = (orderData, redirectToSuccessPage) => dispatch => {
   dispatch(sendOrderStart(orderData));
-  // console.log('ORDERDATA', orderData)
   api.sendOrder(orderData).then(
     result => {
       console.log('reuslt', result.data)
