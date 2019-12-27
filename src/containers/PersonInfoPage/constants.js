@@ -15,7 +15,7 @@ export const discountChild = {
 export const discountSale = 100;
 
 export const ticketPrices = {
-  "106-123": 101,
+  "106-123": 1000,
   "123-106": 1000,
   "106-143": 1300,
   "143-106": 1300,
