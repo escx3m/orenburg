@@ -206,6 +206,7 @@ const PersonInfoPage = props => {
   const handleOrderButtonClick = async data => {
     // ym(34728795, 'reachGoal', 'success_booking');
     let availableSeats = 0;
+    console.log("handle order button click = ", data);
 
     if ([cityFrom, cityTo].every(city => ["119", "23"].includes(city))) {
       const Elista = "166";
@@ -249,6 +250,8 @@ const PersonInfoPage = props => {
       const Kurumoch = "10203";
       const Samara = "123";
       const Byzylyk = "2404";
+      const Orenburg = "106";
+      console.log("CITY", cityFrom, cityTo);
 
       let copyData = { ...data };
       if (cityFrom === Kurumoch) {
@@ -256,9 +259,14 @@ const PersonInfoPage = props => {
       } else if (cityTo === Kurumoch) {
         copyData.cityTo = Samara;
       }
-      if (cityFrom === Byzylyk) {
+      if (cityFrom === Byzylyk && cityTo === Samara) {
+        copyData.cityFrom = Orenburg;
+      } else if (cityFrom === Samara && cityTo === Byzylyk) {
+        copyData.cityTo = Orenburg;
+      }
+      if (cityFrom === Byzylyk && cityTo === Orenburg) {
         copyData.cityFrom = Samara;
-      } else if (cityTo === Byzylyk) {
+      } else if (cityFrom === Orenburg && cityTo === Byzylyk) {
         copyData.cityTo = Samara;
       }
 

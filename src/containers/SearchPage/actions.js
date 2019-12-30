@@ -57,6 +57,7 @@ export const tripsReset = () => ({
 });
 
 export const getTrips = data => async dispatch => {
+  console.log("getTrips", getTrips);
   const { cityFrom, cityTo } = data;
   dispatch(getTripsStart(data));
   const Kurumoch = "10203";
