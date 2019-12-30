@@ -1,73 +1,70 @@
-import React from 'react';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Select from '@material-ui/core/Select';
-import Fab from '@material-ui/core/Fab';
-import SwapIcon from '@material-ui/icons/SwapVert';
-import { Button, TextField } from '@material-ui/core';
-
-import { withFormik } from 'formik';
-
-import ruLocale from 'date-fns/locale/ru';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
-
-import { cityOptions } from '../constants';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Select from "@material-ui/core/Select";
+import Fab from "@material-ui/core/Fab";
+import SwapIcon from "@material-ui/icons/SwapVert";
+import { Button } from "@material-ui/core";
+import { withFormik } from "formik";
+import ruLocale from "date-fns/locale/ru";
+import DateFnsUtils from "@date-io/date-fns";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+import { cityOptions } from "../constants";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
-    '.MuiButton-root': {
+    ".MuiButton-root": {
       minWidth: "30px",
-      width: '100%',
-    },
+      width: "100%"
+    }
   },
   form: {
-    width: '100%',
+    width: "100%",
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 120
   },
   swapButtonAndDatePicker: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   fab: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   seatsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    margin: '0 10px',
-    width: '150px',
+    display: "flex",
+    flexDirection: "row",
+    margin: "0 10px",
+    width: "150px"
   },
   seats: {
-    borderRadius: '0',
-    minWidth: '20px',
-    width: '100%',
+    borderRadius: "0",
+    minWidth: "20px",
+    width: "100%"
   },
   minus: {
-    maxWidth: '20px',
-    width: '100%',
-    height: '56px',
-    borderRadius: '5px 0 0 5px',
+    maxWidth: "20px",
+    width: "100%",
+    height: "56px",
+    borderRadius: "5px 0 0 5px"
   },
   plus: {
-    maxWidth: '20px',
-    width: '100%',
-    borderRadius: '0 5px 5px 0',
-  },
+    maxWidth: "20px",
+    width: "100%",
+    borderRadius: "0 5px 5px 0"
+  }
 }));
 
 const SearchForm = props => {
@@ -79,7 +76,7 @@ const SearchForm = props => {
     handleBlur,
     handleSubmit,
     setFieldValue,
-    setFieldError,
+    setFieldError
   } = props;
 
   const inputLabel = React.useRef(null);
@@ -93,32 +90,33 @@ const SearchForm = props => {
   const handleSwitchButtonClick = e => {
     e.preventDefault();
     const {
-      values: {cityFrom, cityTo, date, seats},
+      values: { cityFrom, cityTo, date, seats },
       setFieldValue,
-      handleReset,
+      handleReset
     } = props;
     handleReset();
-    setFieldValue('cityFrom', cityTo);
-    setFieldValue('cityTo', cityFrom);
-    setFieldValue('date', date);
-    setFieldValue('seats', seats);
+    setFieldValue("cityFrom", cityTo);
+    setFieldValue("cityTo", cityFrom);
+    setFieldValue("date", date);
+    setFieldValue("seats", seats);
   };
 
   const cityFromOptions = cityOptions.filter(
-    city => city.value !== values.cityTo,
+    city => city.value !== values.cityTo
   );
   const cityToOptions = cityOptions.filter(
-    city => city.value !== values.cityFrom,
+    city => city.value !== values.cityFrom
   );
 
- return (
+  return (
     <React.Fragment>
       <form onSubmit={handleSubmit} className={classes.form}>
         <FormControl
           className={classes.formControl}
           error={touched.cityFrom && errors.cityFrom}
           fullWidth
-          variant="outlined">
+          variant="outlined"
+        >
           <InputLabel ref={inputLabel} htmlFor="cityFrom">
             Откуда
           </InputLabel>
@@ -128,9 +126,10 @@ const SearchForm = props => {
             onBlur={handleBlur}
             input={<OutlinedInput labelWidth={50} />}
             inputProps={{
-              name: 'cityFrom',
-              id: 'cityFrom',
-            }}>
+              name: "cityFrom",
+              id: "cityFrom"
+            }}
+          >
             {cityFromOptions.map(city => (
               <MenuItem key={city.value} value={city.value}>
                 {city.text}
@@ -156,60 +155,69 @@ const SearchForm = props => {
                 format="dd/MM/yyyy"
                 helperText={errors.date}
                 error={Boolean(errors.date)}
-                onError={(_, error) => setFieldError('date', error)}
-                onChange={date => date && setFieldValue('date', date, true)}
+                onError={(_, error) => setFieldError("date", error)}
+                onChange={date => date && setFieldValue("date", date, true)}
               />
             </MuiPickersUtilsProvider>
           </div>
-            <div className={classes.seatsContainer}>
-              <Button
-                variant="outlined"
-                className={classes.minus}
-                onClick={e => {
-                  values.seats =
-                    values.seats <= 1
-                      ? 1
-                      : setFieldValue('seats', values.seats - 1);
-                }}>-</Button>
-              <Button
-                className={classes.seats}
-                classes={{
-                  root: classes.seats
-                }}
-                label="Мест"
-                variant="outlined"
-                InputProps={{
-                  readOnly: true,
-                  classes: classes.seats
-                }}
-                id="seats"
-                name="seats"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                labelWidth={labelWidth}
-              >{values.seats}</Button>
-              {touched.seats && errors.seats && (
-                <FormHelperText>{errors.seats}</FormHelperText>
-              )}
-              <Button
-                variant="outlined"
-                classes={{
-                  root: classes.plus
-                }}
-                className={classes.plus}
-                onClick={e => {
-                  values.seats =
-                    values.seats >= 36
-                      ? 36
-                      : setFieldValue('seats', values.seats + 1);
-                }}>+</Button>
-            </div>
+          <div className={classes.seatsContainer}>
+            <Button
+              variant="outlined"
+              className={classes.minus}
+              onClick={e => {
+                values.seats =
+                  values.seats <= 1
+                    ? 1
+                    : setFieldValue("seats", values.seats - 1);
+              }}
+            >
+              -
+            </Button>
+            <Button
+              className={classes.seats}
+              classes={{
+                root: classes.seats
+              }}
+              label="Мест"
+              variant="outlined"
+              InputProps={{
+                readOnly: true,
+                classes: classes.seats
+              }}
+              id="seats"
+              name="seats"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              labelWidth={labelWidth}
+            >
+              {values.seats}
+            </Button>
+            {touched.seats && errors.seats && (
+              <FormHelperText>{errors.seats}</FormHelperText>
+            )}
+            <Button
+              variant="outlined"
+              classes={{
+                root: classes.plus
+              }}
+              className={classes.plus}
+              onClick={e => {
+                values.seats =
+                  values.seats >= 36
+                    ? 36
+                    : setFieldValue("seats", values.seats + 1);
+              }}
+            >
+              +
+            </Button>
+          </div>
           <div>
             <Fab
               color="primary"
               onClick={handleSwitchButtonClick}
               size="small"
-              aria-label="swap">
+              aria-label="swap"
+            >
               <SwapIcon />
             </Fab>
           </div>
@@ -218,7 +226,8 @@ const SearchForm = props => {
           className={classes.formControl}
           error={touched.cityTo && errors.cityTo}
           fullWidth
-          variant="outlined">
+          variant="outlined"
+        >
           <InputLabel ref={inputLabel} htmlFor="cityTo">
             Куда
           </InputLabel>
@@ -228,9 +237,10 @@ const SearchForm = props => {
             onBlur={handleBlur}
             input={<OutlinedInput labelWidth={labelWidth} />}
             inputProps={{
-              name: 'cityTo',
-              id: 'cityTo',
-            }}>
+              name: "cityTo",
+              id: "cityTo"
+            }}
+          >
             {cityToOptions.map(city => (
               <MenuItem key={city.value} value={city.value}>
                 {city.text}
@@ -246,7 +256,8 @@ const SearchForm = props => {
           fullWidth
           onClick={handleSubmit}
           variant="contained"
-          color="primary">
+          color="primary"
+        >
           Найти билеты
         </Button>
       </form>
@@ -255,33 +266,33 @@ const SearchForm = props => {
 };
 
 export default withFormik({
-  mapPropsToValues: ({initialValues}) => ({
-    cityFrom: '',
-    cityTo: '',
+  mapPropsToValues: ({ initialValues }) => ({
+    cityFrom: "",
+    cityTo: "",
     date: new Date(),
     seats: 1,
-    ...initialValues,
+    ...initialValues
   }),
 
   validate: values => {
     const errors = {};
     if (!values.cityFrom) {
-      errors.cityFrom = 'Обязательное поле';
+      errors.cityFrom = "Обязательное поле";
     }
     if (!values.cityTo) {
-      errors.cityTo = 'Обязательное поле';
+      errors.cityTo = "Обязательное поле";
     }
     if (!values.date) {
-      errors.date = 'Обязательное поле';
+      errors.date = "Обязательное поле";
     }
     if (values.seats < 1) {
-      errors.seats = 'Должно быть больше нуля';
+      errors.seats = "Должно быть больше нуля";
     }
     return errors;
   },
 
-  handleSubmit: (values, {props}) => {
+  handleSubmit: (values, { props }) => {
     props.onSubmit(values);
-    console.log('handleSubmit: values', values);
-  },
+    console.log("handleSubmit: values", values);
+  }
 })(SearchForm);

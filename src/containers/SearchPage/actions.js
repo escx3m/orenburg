@@ -1,9 +1,21 @@
-import moment from 'moment-timezone';
-import { GET_TRIPS, GET_TRIPS_SUCCESS, GET_TRIPS_ERROR, CHOOSE_TRIP, RESET } from './constants';
-import api from '../../api';
-import { getCombinedTrips } from './index';
+import {
+  GET_TRIPS,
+  GET_TRIPS_SUCCESS,
+  GET_TRIPS_ERROR,
+  CHOOSE_TRIP,
+  RESET
+} from "./constants";
+import api from "../../api";
+import { getCombinedTrips } from "./index";
 
-export const getTripsStart = ({ cityFrom, cityTo, seats, date, dateStart, dateEnd }) => ({
+export const getTripsStart = ({
+  cityFrom,
+  cityTo,
+  seats,
+  date,
+  dateStart,
+  dateEnd
+}) => ({
   type: GET_TRIPS,
   cityFrom,
   cityTo,
@@ -15,15 +27,22 @@ export const getTripsStart = ({ cityFrom, cityTo, seats, date, dateStart, dateEn
 
 export const getTripsSuccess = trips => ({
   type: GET_TRIPS_SUCCESS,
-  trips,
+  trips
 });
 
 export const getTripsError = error => ({
   type: GET_TRIPS_ERROR,
-  error,
+  error
 });
 
-export const chooseTrip = (cityFromText, cityToText, dateText, timeText, departureTimeText, arrivalTimeText) => ({
+export const chooseTrip = (
+  cityFromText,
+  cityToText,
+  dateText,
+  timeText,
+  departureTimeText,
+  arrivalTimeText
+) => ({
   type: CHOOSE_TRIP,
   cityFromText,
   cityToText,
@@ -40,11 +59,11 @@ export const tripsReset = () => ({
 export const getTrips = data => async dispatch => {
   const { cityFrom, cityTo } = data;
   dispatch(getTripsStart(data));
-  const Kurumoch = '10203';
-  const Samara = '123';
-  const Byzylyk = '2404';
-  const Orenburg = '106';
-  
+  const Kurumoch = "10203";
+  const Samara = "123";
+  const Byzylyk = "2404";
+  const Orenburg = "106";
+
   let copyData = { ...data };
   if (cityFrom === Kurumoch || cityFrom === Byzylyk) {
     copyData.cityFrom = Samara;
@@ -62,4 +81,4 @@ export const getTrips = data => async dispatch => {
 
   const trips = await api.trips.get(copyData);
   return dispatch(getTripsSuccess(getCombinedTrips(trips, cityFrom)));
-}
+};
