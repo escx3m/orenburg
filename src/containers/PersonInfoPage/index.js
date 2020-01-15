@@ -269,7 +269,7 @@ const PersonInfoPage = props => {
       } else if (cityFrom === Orenburg && cityTo === Byzylyk) {
         copyData.cityTo = Samara;
       }
-
+      console.log("===CPYDATA===", copyData);
       const trips = await api.trips.get({
         cityFrom: copyData.cityFrom,
         cityTo: copyData.cityTo,
@@ -280,7 +280,7 @@ const PersonInfoPage = props => {
         hours: +timeText.split(":")[0],
         minutes: +timeText.split(":")[1]
       };
-      availableSeats = getCombinedTrips(trips, copyData.cityFrom).find(
+      availableSeats = getCombinedTrips(trips, cityFrom).find(
         ({ fromTime }) =>
           fromTime.hours === timeToCheck.hours &&
           fromTime.minutes === timeToCheck.minutes

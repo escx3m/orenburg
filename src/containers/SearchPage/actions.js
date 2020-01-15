@@ -75,6 +75,10 @@ export const getTrips = data => async dispatch => {
     copyData.cityFrom = Orenburg;
     copyData.cityTo = Samara;
   }
+  if (cityFrom === Byzylyk && cityTo === Orenburg) {
+    copyData.cityFrom = Samara;
+    copyData.cityTo = Orenburg;
+  }
   if (cityFrom === Samara && cityTo === Byzylyk) {
     copyData.cityFrom = Samara;
     copyData.cityTo = Orenburg;
