@@ -69,13 +69,11 @@ export const getCombinedTrips = (trips, cityFrom) => {
         }))
     )
     .filter(({ availableRoute }) => availableRoute);
-  console.log("getCombinedTrips", combinedTrips);
   return combinedTrips;
 };
 const SearchPage = props => {
   const classes = useStyles();
   const submit = data => {
-    console.log("DATA", data);
     ym(34728795, "reachGoal", "search");
     const localTimeZone = cityTimeZones.find(
       ({ city }) => city === data.cityFrom
@@ -130,7 +128,6 @@ const SearchPage = props => {
     seats
   };
 
-  // console.log("index search trips ", trips)
   return (
     <div className={classes.root}>
       <SearchForm

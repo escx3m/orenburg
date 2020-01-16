@@ -206,7 +206,6 @@ const PersonInfoPage = props => {
   const handleOrderButtonClick = async data => {
     // ym(34728795, 'reachGoal', 'success_booking');
     let availableSeats = 0;
-    console.log("handle order button click = ", data);
 
     if ([cityFrom, cityTo].every(city => ["119", "23"].includes(city))) {
       const Elista = "166";
@@ -251,7 +250,6 @@ const PersonInfoPage = props => {
       const Samara = "123";
       const Byzylyk = "2404";
       const Orenburg = "106";
-      console.log("CITY", cityFrom, cityTo);
 
       let copyData = { ...data };
       if (cityFrom === Kurumoch) {
@@ -269,7 +267,6 @@ const PersonInfoPage = props => {
       } else if (cityFrom === Orenburg && cityTo === Byzylyk) {
         copyData.cityTo = Samara;
       }
-      console.log("===CPYDATA===", copyData);
       const trips = await api.trips.get({
         cityFrom: copyData.cityFrom,
         cityTo: copyData.cityTo,
