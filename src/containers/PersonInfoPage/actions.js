@@ -5,24 +5,24 @@ import {
   SEND_ORDER,
   SEND_ORDER_SUCCESS,
   SEND_ORDER_ERROR,
-  RESET,
-} from './constants';
-import api from '../../api';
+  RESET
+} from "./constants";
+import api from "../../api";
 
 export const addPassenger = values => ({
   type: ADD_PASSENGER,
-  values,
+  values
 });
 
 export const removePassenger = index => ({
   type: REMOVE_PASSENGER,
-  index,
+  index
 });
 
 export const updatePassenger = (index, values) => ({
   type: UPDATE_PASSENGER,
   index,
-  values,
+  values
 });
 
 export const sendOrderStart = data => ({
@@ -31,11 +31,11 @@ export const sendOrderStart = data => ({
 });
 
 export const sendOrderSuccess = () => ({
-  type: SEND_ORDER_SUCCESS,
+  type: SEND_ORDER_SUCCESS
 });
 
 export const sendOrderError = () => ({
-  type: SEND_ORDER_ERROR,
+  type: SEND_ORDER_ERROR
 });
 
 export const passangersReset = () => ({
@@ -46,11 +46,10 @@ export const sendOrder = (orderData, redirectToSuccessPage) => dispatch => {
   dispatch(sendOrderStart(orderData));
   api.sendOrder(orderData).then(
     result => {
-      console.log('reuslt', result.data)
       const { formUrl } = result.data;
-      window.open(formUrl, '_self');
+      window.open(formUrl, "_self");
       dispatch(sendOrderSuccess(result));
     },
     error => dispatch(sendOrderError(error))
   );
-}
+};

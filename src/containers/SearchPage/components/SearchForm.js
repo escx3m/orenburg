@@ -293,6 +293,5 @@ export default withFormik({
 
   handleSubmit: (values, { props }) => {
     props.onSubmit(values);
-    console.log("handleSubmit: values", values);
   }
 })(SearchForm);

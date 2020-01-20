@@ -89,7 +89,6 @@ export default function ListTrips({
   seats,
   handleButtonClick
 }) {
-  console.log("BRONIROVANIE", arguments);
   const classes = useStyles();
   const cityFromText = cityOptions.find(({ value }) => value === cityFrom).text;
   const cityToText = cityOptions.find(({ value }) => value === cityTo).text;
