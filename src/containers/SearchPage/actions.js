@@ -25,10 +25,20 @@ export const getTripsStart = ({
   dateEnd
 });
 
-export const getTripsSuccess = trips => ({
-  type: GET_TRIPS_SUCCESS,
-  trips
-});
+export const getTripsSuccess = trips => {
+  // console.log("===TRIPS===", trips);
+  return {
+    type: GET_TRIPS_SUCCESS,
+    trips
+  };
+};
+// const sad = trips => {
+// console.log(trips)
+//   return {
+//     type: GET_TRIPS_SUCCESS,
+//     trips
+//   };
+// };
 
 export const getTripsError = error => ({
   type: GET_TRIPS_ERROR,

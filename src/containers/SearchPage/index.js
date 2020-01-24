@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const getCombinedTrips = (trips, cityFrom) => {
+  console.log("***TRIPS***", trips);
   const correctedTrips = trips.map(trip => {
     // if ([10, 23].includes(trip.fromCityId) && trip.external === 1) {
     //   const fromTime = moment(trip.fromTime).subtract(1, 'hours').toISOString();
@@ -27,8 +28,10 @@ export const getCombinedTrips = (trips, cityFrom) => {
     // }
     return trip;
   });
-
   const combinedTrips = correctedTrips
+    .filter(curentTrip => {
+      return curentTrip.external === 0;
+    })
     .map(trip => {
       return trip;
     })

@@ -237,6 +237,7 @@ export default function ListTrips({
             (moment.tz(cityToTZ).minutes() -
               moment.tz(cityFromTZ).minutes())}`.slice(-2);
 
+        // return availableRoute && availableSeats > 0 ? (
         return availableRoute ? (
           <React.Fragment key={index}>
             <Divider className={classes.divider} />
